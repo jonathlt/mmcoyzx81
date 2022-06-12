@@ -1,0 +1,545 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 4
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter04');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter03.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter05.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">Peeking and Poking and More About Loading</h1>
+																<h4 align="center">PEEKING AND POKEING AND MORE ABOUT LD-ING</h4>
+																<p>For those of you who thought maybe seven registers might not be enough, it's just as well we can PEEK and POKE, and thus make use of all the addresses in the RAM (The RAM, which stands for Random Access memory by the way, is the portion of memory which we are allowed to alter - the addresses numbered from 16384 upwards. The add-on 16K pack is RAM for instance). If there's any number we have to store somewhere, either permanently or temporarily, then it makes sense to just POKE that number somewhere - (almost anywhere will do) then when we need it again all we have to do is to PEEK at that address and voila - there it is!</p>
+																<h4 align="center">A LESSON IN PEEKING</h4>
+																<p>If you've ever seen any machine language printed anywhere, you may have wondered why obscure brackets kept turning up here and there. What, for example, is the difference between LD HL,16396 and LD HL,(16396)?</p>
+																<p>It's not just for variety, or to make it look pretty, they do actually mean something: brackets around a number or register-pair will refer to the contents of the ADDRESS in the brackets.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+So   LD HL,16396    means  LET HL=16396
+
+and  LD HL,(16396)  means  LET HL=PEEK 16396+256*PEEK 16397
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The second example may have confused you. The only address in brackets is 16396, so how does 16397 come into it? What happened is a kind of side-effect. H and L can each hold ONE BYTE, so the pair HL stores TWO BYTES altogether. The address 16396 only holds ONE byte, so another one has to come in from somewhere. In practice this other byte comes from the next possible address, in the above case, 16397. The real effect of the instruction LD HL,(16396) is LET L=PEEK 16396, followed by LET H=PEEK 16397.</p>
+																<p>There is also a reverse instruction, which is</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+LD (16396),HL
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>This is effectively POKEing. The result of the instruction is</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+POKE 16396,HL-INT (HL/256)*256
+POKE 16397,INT (HL/256)
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>or if you think of H and L seperately:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+POKE 16396,L
+POKE 16397,H
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>In BASIC, this particular pair of instructions is used quite frequently. I'll give you an example. Suppose you've just written a BASIC program, and you want to know how long it is. You can find out the number of bytes your program occupies by using the expression PEEK 16404+256*PEEK 16405 to find the address of the END of your program (including the screen and all of your variables) and then subtract 16509 (the START of your program) from this number. There is a similar expression for the OLD ROM, which is PEEK (16394)+256*PEEK (16395)-16424. A very simple machine code program to calculate this value would be:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>                    <u>NEW ROM</u>
+112840    LD DE,16424      117D40    LD DE,16509
+2A0A40    LD HL,(16394)    2A1440    LD HL,(16404)
+C600      ADD A,0          C600      ADD A,0
+ED52      SBC HL,DE        ED52      SBC HL,DE
+C9        RET              44        LD B,H
+                           4D        LD C,L
+                           C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The instruction ADD A,0 is used to set the carry flag to zero, so that the immediately following instruction will always produce the correct answer. Remember that there is no such instruction as SUB HL,DE so if we ever need to subtract HL from DE we are forced to use SBC instead. This won't subtract properly unless CARRY equals zero.</p>
+																<p>Notice how the hex-code for LD HL,(16404) is built up. The first byte is 2A. Now, although you're not expected to remember this, the last time we used a LD HL instruction the code was 21 (hex). The difference is the BRACKETS! LD INSTRUCTIONS WHICH USE BRACKETS HAVE A COMPLETELY DIFFERENT HEX-CODE. The next two bytes are 14h and 40h:- this is the number 16404 in hexadecimal - if you divide 16404 by 256 you get sixty-four (40h) remainder twenty (14h). In the HEX-CODE these two bytes have been switched around to give 1440 rather than 4014. You must always remember to do this in machine code.</p>
+																<p>If you store this machine code program above RAMTOP (this is something that only NEW ROM users can do easily) as I've described then you can type in or LOAD any BASIC program and find its length in bytes simply by the now familiar direct command PRINT USR 30000.</p>
+																<p>16404 will ALWAYS contain the address of the end of all the variables in your program - this is its job. It is one of the SYSTEM VARIABLES which are used to help the ROM know what it is doing. If you alter this value by POKEing or LDing then the poor machine will get very confused, although, as we shall see later, this is sometimes an advantage.</p>
+																<p>Make sure you understand exactly how the above program works, and why every line is needed. The most important instruction is still the first one we learned - RET. If any of the others are missing then you will get the wrong answer, but at least you'll get AN answer. Without RET the program will CRASH.</p>
+																<p>Not all of the variables (registers) can be LDed from addresses. The instructions you are allowed to use, together with their codes, and a breakdown of exactly what they do, are listed here.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>PEEKING</u>
+3A        LD A,(pq)     LET A=PEEK pq
+ED4B      LD BC,(pq)    LET C=PEEK pq
+                        LET B=PEEK (pq+1)
+ED5B      LD DE,(pq)    LET E=PEEK pq
+                        LET D=PEEK (pq+1)
+2A        LD HL,(pq)    LET L=PEEK pq
+                        LET H=PEEK (pq+1)
+
+<u>AND POKEING</u>
+32        LD (pq),A     POKE pq,A
+ED43      LD (pq),BC    POKE pq,C
+                        POKE pq+1,B
+ED53      LD (pq),DE    POKE pq,E
+                        POKE pq+1,D
+22        LD (pq),HL    POKE pq,L
+                        POKE pq+1,H
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>You will notice that only the variable [(register)] A may be assigned a PEEK value, or POKEd anywhere, by itself - all of the other registers may be used in pairs. Usually this is quite a useful feature, but there are times when you'll want to assign a single register (a usual choice is L) without disturbing the value of A. There isn't really any way around this I'm afraid, but what you can do is to assign both halves of a register pair as described above, and then reset one of the registers to zero afterwards.</p>
+																<p>Suppose you needed to know how far down the screen the PRINT position was. If you look in your instruction manual you'll find that PEEKing 16442 will tell you exactly that (on the OLD ROM you'll need 16421 instead). The problem is to LD this into HL, because the number we're after is ONE BYTE long - it ISN'T stored in either 16441 or 16443 - and one way of doing it is this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>                    <u>NEW ROM</u>
+2A2540    LD HL,(16421)    ED4B3A40  LD BC,(16442)
+2600      LD H,0           0600      LD B,0
+C9        RET              C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>As you can see, the first instruction will successfully load the contents of 16421/16442 into the L or C register as required, but it will also load H or B with 16422/16443, so H or B must be reset to zero before we return to BASIC, otherwise the figure printed by the routine will be virtually meaningless.</p>
+																<p>The other way of getting PEEK 16442 into BC is to go via the A register, since this register can be LDed directly all by itself. But as you will see this offers no advantages, since we still have to reset B to zero anyway.</p>
+																<a name="printpos"></a>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>                   <u>NEW ROM</u>
+3A2540    LD A,(16421)    3A3A40    LD A,(16442)
+2600      LD H,0          0600      LD B,0
+6F        LD L,A          4F        LD C,A
+C9        RET             C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>If you still aren't convinced that the second instruction is necessary try omitting it to see what happens. You'll find you get the number 29952 added to the real answer. Can you see why? You started off with the number 30000 and only altered the LOW part. The HIGH part was unchanged (the HIGH part is INT (30000/256)). It happens to be 117. The factor of 29952 comes in because 117*256 is 29952.</p>
+																<p>Both of the above programs, as they are written, will have the same effect - they will tell you the line number of the PRINT position, that is, they will tell you how far down the screen the next character to be printed will be.</p>
+																<p>Try feeding in ONE of the above two programs, and then type in this BASIC program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+10 FOR I=0 TO 20
+30 PRINT USR 30000
+50 NEXT I
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Remember, only NEW ROM users may type NEW without wiping out the machine code. Run it and see what happens. Now insert more lines</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+20 FOR J=0 TO 3
+30 PRINT TAB (8*J);USR 30000;
+40 NEXT J
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>and again, RUN it and see what happens. OLD ROM users should replace the new line 30 by PRINT USR(30000), (i.e. with a comma at the end of the satement).</p>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter04-printpos.p">chapter04-printpos.p</a>. I have modified this slightly so that RUNning it installs the necessary machine code to 30000 to make it complete and ready to go.]</p>
+																<h4 align="center">POKEING IN MACHINE CODE</h4>
+																<p>POKEing is just as easy. To put line 50 of your BASIC program at the top of the screen at the next automatic listing you can POKE 16419,50 (on the OLD ROM it is POKE 16403,50). You must make sure the cursor is 50 or more first though. In machine code:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>                   <u>NEW ROM</u>
+3E32      LD A,50         3E32      LD A,50
+321340    LD (16403),A    322340    LD (16419),A
+C9        RET             C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Note that it doesn't actually matter what number returns to BASIC - (in actual fact it will be 30000) - the important thing is that the system variable called S-TOP (Screen Top) is POKEd with 50. That is what this program does.</p>
+																<p>Now look at the HEX-CODE of LD (16419),A. The first byte is 32h. This is the code for LD (pq),A where pq represents some arbitrary address. The remainder of the code is 2340, which is the number 16419 in hexadecimal (with of course the first and last bytes switched around). So even though we humans would write our OPCODE with the (16419) first, and the ,A second, the machine language code always puts the instruction itself FIRST - despite the fact that the instruction itself actually incorporates the A at the end of the OPCODE. You must not put the 32h last, for the instruction 234032 would mean something totally different. In fact it would probably end up crashing, because it would take it to mean</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+23        INC HL
+40        LD B,B
+32        LD (????),A
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>with the (????) address made up of your next two bytes of machine code.</p>
+																<p>There are some other PEEK and POKE instructions which use register names throughout. These are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+0A        LD A,(BC)    LET A=PEEK BC
+1A        LD A,(DE)    LET A=PEEK DE
+7E        LD A,(HL)    LET A=PEEK HL
+46        LD B,(HL)    LET B=PEEK HL
+4E        LD C,(HL)    LET C=PEEK HL
+56        LD D,(HL)    LET D=PEEK HL
+5E        LD E,(HL)    LET E=PEEK HL
+66        LD H,(HL)    LET H=PEEK HL
+6E        LD L,(HL)    LET L=PEEK HL
+
+02        LD (BC),A    POKE BC,A
+12        LD (DE),A    POKE DE,A
+77        LD (HL),A    POKE HL,A
+70        LD (HL),B    POKE HL,B
+71        LD (HL),C    POKE HL,C
+72        LD (HL),D    POKE HL,D
+73        LD (HL),E    POKE HL,E
+74        LD (HL),H    POKE HL,H
+75        LD (HL),L    POKE HL,L
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>If you study the codes of the instructions that have (HL) in them you'll see that they form a regular pattern. In fact it looks very much like there ought to be an instruction LD (HL),(HL) with code 76 just to fill up a small hole in the regular pattern. In actual fact there is no such instruction, and code 76 corresponds to an instruction called HALT.</p>
+																<p>To demonstrate what I mean, here is a small table of all of the LD codes, which use registers A to L, and address (HL):</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
++-----+---------------------------------+
+| LD  |  B   C   D   E   H   L  (HL) A  |
++-----+---------------------------------+
+| B   |  40  41  42  43  44  45  46  47 |
+| C   |  48  49  4A  4B  4C  4D  4E  4F |
+| D   |  50  51  52  53  54  55  56  57 |
+| E   |  58  59  5A  5B  5C  5D  5E  5F |
+| H   |  60  61  62  63  64  65  66  67 |
+| L   |  68  69  6A  6B  6C  6D  6E  6F |
+|(HL) |  70  71  72  73  74  75  --  77 |
+| A   |  78  79  7A  7B  7C  7D  7E  7F |
++-----+---------------------------------+
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Do you see what I mean about a regular pattern with LD (HL),(HL) missing? Of course, it's not an instruction you'll ever want to use, since it does absolutely nothing, but it's worth pointing out that you must never even ATTEMPT to use it because, as I've said, 76 is the code for HALT.</p>
+																<p>Why is any variable in brackets a register pair rather that a single register? Why is any variable NOT in brackets a single register rather than a register pair? If HL contained a value of 16434, what is the difference between LD B,(HL) and LD BC,(16434)? What is the precise effect of each? See if you can write a program in machine language which will assign to HL a value of PEEK 16442 <u>ONLY</u>, using one of the LD ,(HL) instructions.</p>
+																<p>We have now covered all of the basic LD instructions which operate on the registers A, B, C, D, E, H, L. We shall now take a look at some of the other ways of loading these variables.</p>
+																<h4 align="center">HOW TO LOAD BLOCKS</h4>
+																<p>Loading BLOCKS means loading huge chunks of memory all in one go. For example, if you had a machine code routine stored beginning at location 30000 and you wanted to move it completely to location 20000, then if you were really really patient you could write a new machine code routine along the lines of</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+11204E    LD DE,20000
+213075    LD HL,30000
+7E        LD A,(HL)
+12        LD (DE),A
+23        INC HL
+13        INC DE
+7E        LD A,(HL)
+12        LD (DE),A
+23        INC HL
+....      ....
+          and so on.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>You could shorten things a bit if you knew about the instruction LDI, which means LOAD WITH INCREMENT. This is a very special instruction which does four things all in one go. First of all it will transfer the contents of the ADDRESS stored in HL into the ADDRESS stored in DE, then it will increment both HL and DE, and it will decrement BC. It will not alter the value of register A. To summarise:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+EDA0      LDI    POKE DE,PEEK HL
+                 LET HL=HL+1
+                 LET DE=DE+1
+                 LET BC=BC-1
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The above program could therefore have been completely rewritten as</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+11204E    LD DE,20000
+213075    LD HL,30000
+EDA0      LDI
+EDA0      LDI
+EDA0      LDI
+....      ....
+          and so on.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>There is no list of variables after the opcode LDI, because the instruction will ALWAYS load from (HL) ro (DE). You must not write LDI (DE),(HL) because this does not make sense. Further, it is impossible to load in this manner in any other combination. Loading from (HL) to (BC) for example simply cannot be done in a single instruction.</p>
+																<p>There is also an instruction LDD, or LOAD WITH DECREMENT, ehich has the same effect as LDI except that DE and HL are decremented and not incremented. Neither of these instructions, as with all LD instructions, will in any way alter the value of CARRY. The code for LDD is EDA8.</p>
+																<h4 align="center">REPEATING THINGS</h4>
+																<p>Even with LDI and LDD at our disposal, it would still be a very tedious affair to move something from, say, 30000 to 20000 if that something were around fifty bytes long. If it were a hundred we'd probably give up in despair. Fortunately for us both LDI and LDD have a REPEAT facility. If, instead of writing LDI we wrote LDIR, with the extra R standing for REPEAT, then the instruction LDI would be carried out over and over again, and would not stop until the value of BC was zero. So if the routine we wanted to move was in fact 100 bytes long then we could move it using the routine</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+016400    LD BC,100
+11204E    LD DE,20000
+213075    LD HL,30000
+EDB0      LDIR
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>When the machine reaches the instruction LDIR, BC will contain a value of 100. After LDI had been carried out once, the first byte would have been transferred, DE would be increased to 20001, HL would be increased to 30001, and BC would be decreased to 99. After a second attempt, the second byte would have been transferred, and BC would contain a value of 98. After LDI had been carried out one hundred times, the whole routine would have been successfully transferred, and BC would contain a value zero and so the program would continue with the next instruction. If this routine were the entire program then the next instruction should of course be RET.</p>
+																<p>The four instructions LDI, LDD, LDIR, LDDR each do slightly different things. Make sure you understand the differences between them. They also each have a different code, all beginning with ED. The codes are</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+EDA0      LDI
+EDA8      LDD
+EDB0      LDIR
+EDB8      LDDR
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="antiscroll"></a>
+																<p>I shall now give you a program which will enable you to SCROLL the screen BACKWARDS, so that the screen moves <u>downwards</u>, not upwards, and the print position is moved to the top of the screen.</p>
+																<p>It will work on the OLD ROM provided [that:]</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>All twenty-two lines of the screen are full, i.e. contain thirty-two characters plus a newline character.</li>
+																	<li>You do not attempt to PRINT anything again (however you can alter the screen by POKEing the display file).</li>
+																</ul>
+																<p>It will work on the NEW ROM provided [that:]</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>RAMTOP is at least 19712 (effectively this means if you have 4K or more plugged in).</li>
+																	<li>Every time you use the statement SCROLL you fill the bottom line (for example by using the statement PRINT "thirty-two spaces", your next PRINT should be a PRINT AT[)].</li>
+																</ul>
+																<p>A complete explanation of the program will also be given.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+01D602    LD BC,726
+2A0C40    LD HL,(16396)
+09        ADD HL,BC
+54        LD D,H
+5D        LD E,L
+01B502    LD BC,693
+2A0C40    LD HL,(16396)
+09        ADD HL,BC
+EDB8      LDDR
+C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The screen may now be scrolled BACKWARDS by using the NEW ROM statement PRINT AT USR 30000,0; On the OLD ROM the corresponding statement is LET L USR(30000) but remember that on the OLD ROM once the screen is full you can only "PRINT" by POKEing into the display file. The machine code routine will leave a value of zero in BC (see the description of the last instruction, LDDR) so having executed the machine code it will then PRINT AT 0,0; i.e. it will move the NEW ROM print position to the top of the screen. This is precisely the opposite of SCROLL.</p>
+																<p>The first instruction is LD BC,726. This is the number of characters in the screen. There are twenty-two lines and each line contains thirty-three characters (thirty-two plus one new-line character) hence the total number is 22*33=726. The address 16396 (together with 16397) contains the address of the START of the display file (the first character in the display file is a new-line, so the screen itself actually starts one character further on). This address is LDed into HL. Remember that LD HL,(16396) will load TWO bytes into HL, not one. The ADD instruction will then calculate the address of the LAST byte of the screen.</p>
+																<p>In order for LDDR to work, we need this address in DE, not in HL, and so since LD DE,HL is not a valid instruction it needs TWO instructions, LD D,H and LD E,L to accomplish this. We can now use HL for something else.</p>
+																<p>We need the address of what WILL BE the last character of the screen after we've finished scrolling (or antiscrolling if you want to call it that). Since it is the bottom line that will be lost, then this will be the last character of what is currently the TWENTY-FIRST line. So we need the start address plus 21*33, or 693.</p>
+																<p>The next three instructions in the program: LD BC,693; LD HL,(16396); and ADD HL,BC will achieve this, and the result will be left in HL. This is precisely what we need for LDDR to work. LDDR will transfer from the address contained in HL to the address contained in DE, i.e. it will move the last character of the twenty-first line to the last character of the twenty-second line, before HL and DE are both decremented, or decreased by one.</p>
+																<p>How many times do we need to make such a transfer? We have to move twenty-one lines altogether, so we have to make sure that we do not use LDDR until BC contains a value of 21*33, or 693. As it happens, it already does, since we assigned it to 693 earlier on in the program. We may now quite happily use the instruction LDDR to BLOCK LOAD the first twenty-one lines of screen down to their new position occupying the LAST twenty-one lines of screen. Note that the old screen will be completely overwritten by the new screen with the exception of the first (top) line, which will be left unchanged. This is why the BASIC statement PRINT AT 0,0;"thirty-two spaces" is needed after every antiscroll.</p>
+																<p>The following NEW ROM BASIC program is designed to demonstrate the ANTISCROLL feature at work. It isn't a terrifically exciting game, or a pattern making artistic genius, or anything, but it will show you exactly what the machine code we've just been working on will do. You can of course insert the routine into any program - there are some graphics games which would be immensely enhanced by the ability to SCROLL in either direction. This program sets up a striped pattern across the screen, with each stripe composed of a random character chosen from the whole ZX81 set. The pattern on the screen will then wait for you to tell it what to do. Pressing the "up" key will move the pattern upwards, and pressing the "down" key will move the pattern downwards. These are of course the standard cursor control keys I'm referring to, except that you don't need to use SHIFT.</p>
+																<p>The listing is written for both FAST and SLOW modes. In FAST, line 110 should read PAUSE 40000, but in SLOW it should be changed to IF INKEY$="" THEN GOTO 110. Otherwise enter the program as listed.</p>
+																<h4 align="center">UP AND DOWN</h4>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+10 DIM A$(22,32)
+<del>20 FOR I=0 TO 22</del>
+20 FOR I=1 TO 22
+30 LET B$=CHR$ (63*RND+128*(RND<.5))
+40 FOR J=1 TO 5
+50 LET B$=B$+B$
+60 NEXT J
+70 LET A$(I)=B$
+80 PRINT A$(I)
+90 NEXT I
+100 LET A=1
+110 PAUSE 40000
+120 LET B=A+1
+130 IF B=23 THEN LET B=1
+140 LET C=A-1
+150 IF C=0 THEN LET C=22
+160 LET B$=INKEY$
+170 IF B$="6" THEN PRINT AT USR 30000,0;A$(C)
+180 IF B$="7" THEN SCROLL
+190 IF B$="7" THEN PRINT A$(B)
+200 IF B$="6" THEN LET A=C
+210 IF B$="7" THEN LET A=B
+220 GOTO 110
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter04-antiscroll.p">chapter04-antiscroll.p</a>. I have modified this slightly so that RUNning it installs the necessary machine code to 30000 to make it complete and ready to go.]</p>
+																<h4 align="center">EXERCISES</h4>
+																<p>Based on the Antiscroll program in this chapter, write a machine language program to SCROLL forwards, as the keyboard SCROLL does (this exercise is especially useful if you do not have SCROLL on your keyboard). Then see if you can write a machine language program which scrolls forward, but which will ONLY SCROLL THE BOTTOM HALF OF THE SCREEN, so that the top ten lines are unaltered, the eleventh line is lost, and the twelth to twenty first lines are all moved up one line.</p>
+																<p>Write a BASIC program making use of the routine. You will need the BASIC statement PRINT AT 21,0;"thirty-two spaces" every time the machine code routine is used. Try leaving this out just to see what happens.</p>
+																<p>If you can't cope with the challenge of writing such a SCROLL program, then I'll give you a hint or two. You will need to use LDIR instead of LDDR, otherwise all you'll get is a pretty pattern, and you'll need to start block loading at the BEGINNING of the screen, NOT the end. The instruction LD HL,(16396) will always give you the address at which the screen begins. Don't forget that a full line contains thirty-three characters, not thirty-two, since there is always a new-line character there as well.</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter03.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter05.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

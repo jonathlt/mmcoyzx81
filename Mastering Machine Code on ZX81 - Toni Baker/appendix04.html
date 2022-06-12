@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Appendix Four
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('appendix04');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="appendix03.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="appendix05.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">A Conversion Table from Assembly to Hex</h1>
+																<p>[Thunor: Key to symbols used:</p>
+																<ul>
+																	<li>b - A bit e.g. 0 to 7.</li>
+																	<li>c - A condition e.g. Z, NZ, C, NC, P, M, PO, PE.</li>
+																	<li>d - A displacement e.g. 7B.</li>
+																	<li>e - A single byte e.g. F7.</li>
+																	<li>mn - A numerical constant e.g. 9E3D.</li>
+																	<li>n - A numerical constant e.g. 3D.</li>
+																	<li>pq - An absolute address e.g. 4C00.</li>
+																	<li>r - A single register, an address pointed to by (HL), (IX+d) or (IY+d), and in some cases a numerical constant.</li>
+																	<li>s - A register-pair e.g. BC, DE, HL, SP, IX, or IY.</li>
+																</ul>
+																<p>Key end.]</p>
+																<h3 align="center">The Effect of Each Instruction on the Flags</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>INSTRUCTIONS</u>          <u>FLAGS</u>              <u>INSTRUCTIONS</u>          <u>FLAGS</u>
+<u>Opcode</u>      <u>Hexcode</u>   <u>S Z - H - P N C</u>    <u>Opcode</u>      <u>Hexcode</u>   <u>S Z - H - P N C</u>
+ADC A,r     table 1   @ @ - @ - @ 0 @    LD r,r      table 1   - - - - - - - -
+ADC HL,s    table 2   @ @ - @ - @ 0 @    LD s,mn     table 2   - - - - - - - -
+ADD A,r     table 1   @ @ - @ - @ 0 @    LD A,(pq)   3Aqqpp    - - - - - - - -
+ADD HL,s    table 2   - - - @ - - 0 @    LD s,(pq)   table 2   - - - - - - - -
+ADD IX,s    table 2   - - - @ - - 0 @    LD (pq),A   32qqpp    - - - - - - - -
+ADD IY,s    table 2   - - - @ - - 0 @    LD (pq),s   table 2   - - - - - - - -
+AND r       table 1   @ @ - 1 - @ 0 0
+                                         LDI         EDA0      - - - 0 - x 0 -
+BIT b,r     table 1   ? @ - 1 - @ 0 0    LDD         EDA8      - - - 0 - x 0 -
+                                            (P/V becomes 0 if BC becomes 0)
+CALL pq     CDqqpp    - - - - - - - -    LDIR        EDB0      - - - 0 - 0 0 -
+CALL c,pq   table 3   - - - - - - - -    LDDR        EDB8      - - - 0 - 0 0 -
+CCF         3F        - - - x - - 0 @
+  (the H flag becomes the previous       NEG         ED44      @ @ - @ - @ 1 @
+   value of the C flag)                  NOP         00        - - - - - - - -
+CP r        table 1   @ @ - @ - @ 1 @
+CPI         EDA1      @ x - @ - x 1 -    OR r        table 1   @ @ - 0 - @ 0 0
+CPD         EDA9      @ x - @ - x 1 -    OUT (n),A   D3nn      - - - - - - - -
+CPIR        EDB1      @ x - @ - x 1 -    OUT (C),r   table 1   - - - - - - - -
+CPDR        EDB9      @ x - @ - x 1 -    OUTI        EDA3      ? x - ? - ? 1 -
+  (Z becomes 1 if BC becomes zero,       OUTD        EDAB      ? x - ? - ? 1 -
+   P/V becomes 1 if A = (HL-1))            (Z becomes 1 if BC becomes zero)
+CPL         2F        - - - 1 - - 1 -    OTIR        EDB3      ? 1 - ? - ? 1 -
+                                         OTDR        EDBB      ? 1 - ? - ? 1 -
+DAA         27        @ @ - @ - @ - @
+DEC r       table 1   @ @ - @ - @ 1 -    POP AF      F1        x x x x x x x x
+DEC s       table 2   - - - - - - - -        (Flags are determined by the
+DI          F3        - - - - - - - -         byte at the top of the stack)
+DJNZ e      10ee      - - - - - - - -    POP s       table 2   - - - - - - - -
+                                         PUSH AF     F5        - - - - - - - -
+EI          FB        - - - - - - - -    PUSH s      table 2   - - - - - - - -
+EX AF,AF'   08        - - - - - - - -
+EX DE,HL    EB        - - - - - - - -    RES b,r     table 1   - - - - - - - -
+EX (SP),HL  E3        - - - - - - - -    RET         C9        - - - - - - - -
+EX (SP),IX  DDE3      - - - - - - - -    RET c       table 3   - - - - - - - -
+EX (SP),IY  FDE3      - - - - - - - -    RETN        ED45      - - - - - - - -
+EXX         D9        - - - - - - - -    RETI        ED4D      - - - - - - - -
+
+HALT        76        - - - - - - - -    RLCA        07        - - - 0 - - 0 @
+                                         RRCA        0F        - - - 0 - - 0 @
+IM 0        ED46      - - - - - - - -    RLA         17        - - - 0 - - 0 @
+IM 1        ED56      - - - - - - - -    RRA         1F        - - - 0 - - 0 @
+IM 2        ED5E      - - - - - - - -
+INC r       table 1   @ @ - @ - @ 0 -    RLC r       table 1   @ @ - 0 - @ 0 @
+INC s       table 2   - - - - - - - -    RRC r       table 1   @ @ - 0 - @ 0 @
+IN A,(n)    DBnn      - - - - - - - -    RL r        table 1   @ @ - 0 - @ 0 @
+IN r,(C)    table 1   @ @ - @ - @ 0 -    RR r        table 1   @ @ - 0 - @ 0 @
+INI         EDA2      ? x - ? - ? 1 -
+IND         EDAA      ? x - ? - ? 1 -    RRD         ED67      @ @ - 0 - @ 0 -
+   (Z becomes 1 if B becomes zero)       RLD         ED6F      @ @ - 0 - @ 0 -
+INIR        EDB2      ? 1 - ? - ? 1 -
+INDR        EDBA      ? 1 - ? - ? 1 -    RST 00      C7        - - - - - - - -
+JP pq       C3qqpp    - - - - - - - -    RST 08      CF        - - - - - - - -
+JP c,pq     table 3   - - - - - - - -    RST 10      D7        - - - - - - - -
+JP (HL)     E9        - - - - - - - -    RST 18      DF        - - - - - - - -
+JP (IX)     DDE9      - - - - - - - -    RST 20      E7        - - - - - - - -
+JP (IY)     FDE9      - - - - - - - -    RST 28      EF        - - - - - - - -
+JR e        18ee      - - - - - - - -    RST 30      F7        - - - - - - - -
+JR c,e      table 3   - - - - - - - -    RST 38      FF        - - - - - - - -
+
+LD (BC),A   02        - - - - - - - -    SBC A,r     table 1   @ @ - @ - @ 1 @
+LD A,(BC)   0A        - - - - - - - -    SBC HL,s    table 2   @ @ - @ - @ 1 @
+LD (DE),A   12        - - - - - - - -    SCF         37        - - - 0 - - 0 1
+LD A,(DE)   1A        - - - - - - - -    SET b,r     table 1   - - - - - - - -
+                                         SLA r       table 1   @ @ - 0 - @ 0 @
+LD I,A      ED47      - - - - - - - -    SRA r       table 1   @ @ - 0 - @ 0 @
+LD R,A      ED4F      - - - - - - - -    SRL r       table 1   @ @ - 0 - @ 0 @
+LD A,I      ED57      @ @ - 0 - x 0 -    SUB r       table 1   @ @ - @ - @ 1 @
+LD A,R      ED5F      @ @ - 0 - x 0 -
+  (P/V is set to interrupt storage       XOR r       table 1   @ @ - 0 - @ 0 0
+   flag)
+
+LD SP,HL    F9        - - - - - - - -
+LD SP,IX    DDF9      - - - - - - - -
+LD SP,IY    FDF9      - - - - - - - -
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<h3 align="center">Conversion Table 1</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
++----------------------------------------------------------------------------+
+|                                  <u>TABLE ONE</u>                                 |
++-----------+----------------------------------------------------------------+
+|     r     | B    C    D    E    H    L   (HL)  A    (IX+d)   (IY+d)   n    |
++-----------+----------------------------------------------------------------+
+| ADD A,r   | 80   81   82   83   84   85   86   87   DD86dd   FD86dd   C6nn |
+| ADC A,r   | 88   89   8A   8B   8C   8D   8E   8F   DD8Fdd   FD8Fdd   CEnn |
+|           |                                                                |
+| AND r     | A0   A1   A2   A3   A4   A5   A6   A7   DDA6dd   FDA6dd   E6nn |
+|           |                                                                |
+| BIT 0,r   | CB40 CB41 CB42 CB43 CB44 CB45 CB46 CB47 DDCBdd46 FDCBdd46 -    |
+| BIT 1,r   | CB48 CB49 CB4A CB4B CB4C CB4D CB4E CB4F DDCBdd4E FDCBdd4E -    |
+| BIT 2,r   | CB50 CB51 CB52 CB53 CB54 CB55 CB56 CB57 DDCBdd56 FDCBdd56 -    |
+| BIT 3,r   | CB58 CB59 CB5A CB5B CB5C CB5D CB5E CB5F DDCBdd5E FDCBdd5E -    |
+| BIT 4,r   | CB60 CB61 CB62 CB63 CB64 CB65 CB66 CB67 DDCBdd66 FDCBdd66 -    |
+| BIT 5,r   | CB68 CB69 CB6A CB6B CB6C CB6D CB6E CB6F DDCBdd6E FDCBdd6E -    |
+| BIT 6,r   | CB70 CB71 CB72 CB73 CB74 CB75 CB76 CB77 DDCBdd76 FDCBdd76 -    |
+| BIT 7,r   | CB78 CB79 CB7A CB7B CB7C CB7D CB7E CB7F DDCBdd7E FDCBdd7E -    |
+|           |                                                                |
+| CP r      | B8   B9   BA   BB   BC   BD   BE   BF   DDBEdd   FDBEdd   FEnn |
+| DEC r     | 05   0D   15   1D   25   2D   35   3D   DD35dd   FD35dd   -    |
+|           |                                                                |
+| IN r,(C)  | ED40 ED48 ED50 ED58 ED60 ED68 -    ED78 -        -        -    |
+|           |                                                                |
+| INC r     | 04   0C   14   1C   24   2C   34   3C   DD34dd   FD34dd   -    |
+|           |                                                                |
+| LD R,r    | 40   41   42   43   44   45   46   47   DD46dd   FD46dd   06nn |
+| LD C,r    | 48   49   4A   4B   4C   4D   4E   4F   DD4Edd   FD4Edd   0Enn |
+| LD D,r    | 50   51   52   53   54   55   56   57   DD56dd   FD56dd   16nn |
+| LD E,r    | 58   59   5A   5B   5C   5D   5E   5F   DD5Edd   FD5Edd   1Enn |
+| LD H,r    | 60   61   62   63   64   65   66   67   DD66dd   FD66dd   26nn |
+| LD L,r    | 68   69   6A   6B   6C   6D   6E   6F   DD6Edd   FD6Edd   2Enn |
+| LD (HL),r | 70   71   72   73   74   75   -    77   -        -        36nn |
+| LD A,r    | 78   79   7A   7B   7C   7D   7E   7F   DD7Edd   FD7Edd   3Enn |
+| LD        | DD70 DD71 DD72 DD73 DD74 DD75 -    DD77 -        -        DD36 |
+| (IX+d),r  | dd   dd   dd   dd   dd   dd        dd                     ddnn |
+| LD        | FD70 FD71 FD72 FD73 FD74 FD75 -    FD77 -        -        FD36 |
+| (IY+d),r  | dd   dd   dd   dd   dd   dd        dd                     ddnn |
+|           |                                                                |
+| OR,r      | B0   B1   B2   B3   B4   B5   B6   B7   DDB6dd   FDB6dd   F6nn |
+|           |                                                                |
+| OUT (C),r | ED41 ED49 ED51 ED59 ED61 ED69 -    ED79 -        -        -    |
+|           |                                                                |
+| RES 0,r   | CB80 CB81 CB82 CB83 CB84 CB85 CB86 CB87 DDCBdd86 FDCBdd86 -    |
+| RES 1,r   | CB88 CB89 CB8A CB8B CB8C CB8D CB8E CB8F DDCBdd8E FDCBdd8E -    |
+| RES 2,r   | CB90 CB91 CB92 CB93 CB94 CB95 CB96 CB97 DDCBdd96 FDCBdd96 -    |
+| RES 3,r   | CB98 CB99 CB9A CB9B CB9C CB9D CB9E CB9F DDCBdd9E FDCBdd9E -    |
+| RES 4,r   | CBA0 CBA1 CBA2 CBA3 CBA4 CBA5 CBA6 CBA7 DDCBddA6 FDCBddA6 -    |
+| RES 5,r   | CBA8 CBA9 CBAA CBAB CBAC CBAD CBAE CBAF DDCBddAE FDCBddAE -    |
+| RES 6,r   | CBB0 CBB1 CBB2 CBB3 CBB4 CBB5 CBB6 CBB7 DDCBddB6 FDCBddB6 -    |
+| RES 7,r   | CBB8 CBB9 CBBA CBBB CBBC CBBD CBBE CBBF DDCBddBE FDCBddBE -    |
+|           |                                                                |
+| RLC r     | CB00 CB01 CB02 CB03 CB04 CB05 CB06 CB07 DDCBdd06 FDCBdd06 -    |
+| RRC r     | CB08 CB09 CB0A CB0B CB0C CB0D CB0E CB0F DDCBdd0E FDCBdd0E -    |
+| RL r      | CB10 CB11 CB12 CB13 CB14 CB15 CB16 CB17 DDCBdd16 FDCBdd16 -    |
+| RR r      | CB18 CB19 CB1A CB1B CB1C CB1D CB1E CB1F DDCBdd1E FDCBdd1E -    |
+|           |                                                                |
+| SET 0,r   | CBC0 CBC1 CBC2 CBC3 CBC4 CBC5 CBC6 CBC7 DDCBddC6 FDCBddC6 -    |
+| SET 1,r   | CBC8 CBC9 CBCA CBCB CBCC CBCD CBCE CBCF DDCBddCE FDCBddCE -    |
+| SET 2,r   | CBD0 CBD1 CBD2 CBD3 CBD4 CBD5 CBD6 CBD7 DDCBddD6 FDCBddD6 -    |
+| SET 3,r   | CBD8 CBD9 CBDA CBDB CBDC CBDD CBDE CBDF DDCBddDE FDCBddDE -    |
+| SET 4,r   | CBE0 CBE1 CBE2 CBE3 CBE4 CBE5 CBE6 CBE7 DDCBddE6 FDCBddE6 -    |
+| SET 5,r   | CBE8 CBE9 CBEA CBEB CBEC CBED CBEE CBEF DDCBddEE FDCBddEE -    |
+| SET 6,r   | CBF0 CBF1 CBF2 CBF3 CBF4 CBF5 CBF6 CBF7 DDCBddF6 FDCBddF6 -    |
+| SET 7,r   | CBF8 CBF9 CBFA CBFB CBFC CBFD CBFE CBFF DDCBddFE FDCBddFE -    |
+|           |                                                                |
+| SUB A,r   | 90   91   92   93   94   95   96   97   DD96dd   FD96dd   D6nn |
+| SBC A,r   | 98   99   9A   9B   9C   9D   9E   9F   DD9Edd   FD9Edd   DEnn |
+|           |                                                                |
+| SLA r     | CB20 CB21 CB22 CB23 CB24 CB25 CB26 CB27 DDCBdd26 FDCBdd26 -    |
+| SRA r     | CB28 CB29 CB2A CB2B CB2C CB2D CB2E CB2F DDCBdd2E FDCBdd2E -    |
+| SRL r     | CB38 CB39 CB3A CB3B CB3C CB3D CB3E CB3F DDCBdd3E FDCBdd3E -    |
+|           |                                                                |
+| XOR r     | A8   A9   AA   AB   AC   AD   AE   AF   DDAEdd   FDAEdd   EEnn |
++-----------+----------------------------------------------------------------+
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<h3 align="center">Conversion Table 2</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
++------------------------------------------------------------------------+
+|                                <u>TABLE TWO</u>                               |
++-----------+------------------------------------------------------------+
+|     s     | BC        DE        HL        SP        IX        IY       |
++-----------+------------------------------------------------------------+
+| ADC HL,s  | ED4A      ED5A      ED6A      ED7A      -         -        |
+| ADD HL,s  | 09        19        29        39        -         -        |
+| ADD IX,s  | DD09      DD19      -         DD39      DD29      -        |
+| ADD IY,s  | FD09      FD19      -         FD39      -         FD29     |
+|           |                                                            |
+| DEC s     | 0B        1B        2B        3B        DD2B      FD2B     |
+|           |                                                            |
+| INC s     | 03        13        23        33        DD23      FD23     |
+|           |                                                            |
+| LD s,mn   | 01nnmm    11nnmm    21nnmm    31nnmm    DD21nnmm  FD21nnmm |
+| LD s,(pq) | ED4Bqqpp  ED5Bqqpp  2Aqqpp    ED7Bqqpp  DD2Aqqpp  FD2Aqqpp |
+| LD (pq),s | ED43qqpp  ED53qqpp  22qqpp    ED73qqpp  DD22qqpp  FD22qqpp |
+|           |                                                            |
+| POP s     | C1        D1        E1        -         DDE1      FDE1     |
+|           |                                                            |
+| PUSH s    | C5        D5        E5        -         DDE5      FDE5     |
+|           |                                                            |
+| SBC HL,s  | ED42      ED52      ED62      ED72      -         -        |
++-----------+------------------------------------------------------------+
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<h3 align="center">Conversion Table 3</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
++----------------------------------------------------------------------------+
+|                                 <u>TABLE THREE</u>                                |
++-----------+----------------------------------------------------------------+
+|     c     | NZ      Z       NC      C       PO      PE      P       M      |
++-----------+----------------------------------------------------------------+
+| CALL c,pq | C4qqpp  CCqqpp  D4qqpp  DCqqpp  E4qqpp  ECqqpp  F4qqpp  FCqqpp |
+| JP c,pq   | C2qqpp  CAqqpp  D2qqpp  DAqqpp  E2qqpp  EAqqpp  F2qqpp  FAqqpp |
+| JR c,e    | 20ee    28ee    30ee    38ee    -       -       -       -      |
+| RET c     | C0      C8      D0      D8      E0      E8      F0      F8     |
++-----------+----------------------------------------------------------------+
+</pre>
+																		</td>
+																	</tr>
+																</table>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="appendix03.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="appendix05.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

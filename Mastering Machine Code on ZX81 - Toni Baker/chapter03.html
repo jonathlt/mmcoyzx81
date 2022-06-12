@@ -1,0 +1,568 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+
+
+
+
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981."/>
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor"/>
+
+
+<script language="JavaScript" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tbody><tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tbody><tr>
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tbody><tr>
+									<td width="1px" class="bannermainmenubridge"/>
+									<td width="1px" class="bannerlocalmenubridge"/>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"/>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td/>
+									<td/>
+									<td> </td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript"><![CDATA[
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter03');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										]]></script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript"><![CDATA[
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										]]></script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tbody><tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tbody><tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript"><![CDATA[
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	]]></script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+																<h1 align="center">Simple Arithmetic</h1>
+																<h4 align="center">"HEXLD" REVISITED</h4>
+																<p>You remember the program I asked you to save in chapter two? Well now it's time to break it out, wipe the dust from it, and after you've reserved yourself some machine code space as described at the start of the previous chapter, you can LOAD it.</p>
+																<p>Now press RUN and newline.</p>
+																<p>The program is waiting for a string input. What it in fact wants is some kind of HEXADECIMAL input. This means that every time you want to input a machine language instruction you have to know its numerical code, and you have to know it in hex.</p>
+																<p>The code for RET is, as we have already stated, 201. What is this in hexadecimal? Divide it by sixteen and you get twelve remainder nine. Now the hex symbol for twelve is C, the hex symbol for nine is 9. If you look 201 up in the table in chapter two you'll find that it is written C9. Is this a coincidence?</p>
+																<p>Input C9. You have now told the computer that the first instruction of your machine language program is RET.</p>
+																<p>The computer is now waiting for another input. Break out of the program by inputting "S".</p>
+																<p>Your program is now complete. It consists of the single instruction RET. This is usually written</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>to remind you that the hex-code for RET is C9. The machine language instructions are sometimes called OPCODES to distinguish them from their corresponding HEX-CODES, C9 is a hex-code, RET is an opcode. Hex-codes are used by the machine - it will not understand opcodes. Conversely, opcodes are used by humans, because we would find it extremely difficult to work in hex-codes.</p>
+																<p>If you now look at the screen you'll see that the computer has gone back to command mode. It is waiting for an instruction. Suppose we now wish to run the machine code program that we've just typed in. We can do this either as part of a BASIC program, or, as we are going to do, as a direct command. If your routine was loaded to address 30000 then the command is</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>PRINT USR 30000
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>If your routine began at some other address simply use this figure instead of the 30000 in the above command. Note that OLD ROM users will need brackets around the number following the word USR.</p>
+																<p>You will have found that the computer has printed 30000 in the top left hand corner of the screen. Can you see why this is so? It started off with the number 30000 - this is the address you gave it when you typed PRINT USR 30000. The program told it to RET, or return to BASIC, having done nothing at all to this number, so that's exactly what it did - it returned to BASIC and it returned the number 30000 with it.</p>
+																<p>Before we can advance to learning any more instructions, we are going to have to break for a while and explore the concept of REGISTERS. A register is like a variable, in that it has a name - usually a letter of the alphabet - and it can store numbers in much the same way that BASIC variables can. The big difference is that registers can only store numbers in the range 0 to 255. (Or in hex, 00 to FF).</p>
+																<p>There are seven registers which are most commonly used for machine code routines. Their names are A, B, C, D, E, H, L. To give a larger degree of flexibility it is also possible to use the registers in pairs. When this is done you can alternatively store numbers either in the range -32767 to 32767 or in the range 0 to 65535, using the register-pairs, as they are known, BC, DE, and HL.</p>
+																<p>To make this clear, if register H contains the value 2, and register L contains the value 23, the register-pair HL is said to contain the value 2*256+23, which is 535. If H were to contain a value of 128 or more, then HL could instead be thought of as containing a negative value, equal to (H-256)*256 L.</p>
+																<h4 align="center">THE INSTRUCTION LD</h4>
+																<p>Consider the BASIC instruction LET A=42. In machine language we assign variables (registers) using the instruction LD. We could for example write LD A, 42. Note there is no equals symbol as there is in BASIC, instead a comma (,) is used to seperate the A from the number. The effect of this instruction is exactly what you'd expect it to be - the previous value of A is overwritten, and a new value, in this case 42, is assigned in its place.</p>
+																<p>Each different LD instruction has a different code. For example the code for LD A, is 3E. The number 42 is 2A in hex, so the full instruction in hex is 3E2A. Note that this is TWO BYTES in length (every two hex digits is one byte). Compare this with the number of bytes in the BASIC instruction LET A=42.</p>
+																<p>The remaining codes are as follows:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>3E        LD A,
+06        LD B,
+01        LD BC,
+0E        LD C,
+16        LD D,
+11        LD DE,
+1E        LD E,
+26        LD H,
+21        LD HL,
+2E        LD L,
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Using the program "HEXLD", enter the following program, by inputting the symbols in the left hand column. Once the whole program has been entered, break out by inputting "S".</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>2600      LD H,00h
+2E2A      LD L,2Ah
+C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Now that the program is loaded you can run it by typing as a direct command PRINT USR 30000. What happens?</p>
+																<p>Now try entering this program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>0600      LD B,00
+0E2A      LD C,2A
+C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>If you possess an OLD ROM then the first program should return a value of forty-two, and the second program should return a value of 30000. However the NEW ROM will work the other way round, and return 30000 for the first program, and forty-two for the second. The reason is the fact that USR works differently for the two ROMs. For the OLD ROM, USR something means load HL with that something and then run the machine code. On the NEW ROM it means load <u>BC</u> with that something before running the machine code. When BASIC returns the number you are left with is the value HL (OLD ROM) or BC (NEW ROM). The first program leaves BC unchanged (on the NEW ROM it will have been assigned 30000) but will load HL with 42. The OLD ROM will return HL (42) and the NEW ROM will return BC (30000). The second program is the reverse. It will leave HL unchanged. (On the OLD ROM HL will have been assigned 30000) BC will then be loaded with 42. Which ROM will return which number? Which ROM do you have? Try it and see.</p>
+																<p>HL, by the way, stands for High/Low. Because any number in HL is stored in two parts the part that is stored in H is called the HIGH part, and the part that is stored in L is called the LOW part. BC and DE also have high and low parts, with the first letter for the high part, and the second letter for the low part.</p>
+																<p>What is 42 in hexadecimal to FOUR digits? Answer:- 002A. What do you think the following program will do? Try it and find out.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><u>OLD ROM</u>    <u>NEW ROM</u>
+21002A     01002A
+C9         C9
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>You may be surprised to discover that when you type PRINT USR 30000 to run it you get the answer 10752 - NOT 42! Now run this program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><u>OLD ROM</u>    <u>NEW ROM</u>
+212A00     012A00
+C9         C9
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Now you will get 42. Notice the way the 2A and the 00 have been swapped around. Although this is rather strange it is in fact USUAL for the ZX80/81 to think of its numbers as having the low part FIRST, and the high part SECOND. In fact with the exception of line numbers, and in FOR/NEXT loops the ZX80/81 will always store its numbers "the wrong way around." In the instruction LD HL, the first byte is always 21h. The second byte is the new value of <u>L</u>, and the last byte is the new value of <u>H</u>. Not that this is always three bytes long.</p>
+																<p>To summarise: The LD instructions which operate on register pairs, rather than single registers, use values stored "the wrong way round."</p>
+																<h4 align="center">LDing From One Variable To Another</h4>
+																<p>If we were restricted in BASIC to only using LET instructions of the form LET A= a number we would be a bit stuck. We need to be a bit more flexible that that. For instance something like LET A=B would be useful. Well we can certainly manage that in machine code. The codes are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>+-----+-----------------------------+
+| LD  |  A   B   C   D   E   H   L  |
++-----+-----------------------------+
+| A   |  7F  78  79  7A  7B  7C  7D |
+| B   |  47  40  41  42  43  44  45 |
+| C   |  4F  48  49  4A  4B  4C  4D |
+| D   |  57  50  51  52  53  54  55 |
+| E   |  5F  58  59  5A  5B  5C  5D |
+| H   |  67  60  61  62  63  64  65 |
+| L   |  6F  68  69  6A  6B  6C  6D |
++-----+-----------------------------+
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>In the above table you read the left-hand-column registers first, and the top-row registers second, so that the code for LD D,A is 57, and the code for LD A,D is 7A. Notice how each of these is a mere ONE BYTE in length. Compare this with the equivalent BASIC instruction LET A=D, which takes a total of ten bytes in all (eight on the OLD ROM) if you include the line number, the line length, and the end of line character.</p>
+																<p>And now for some arithmetic. Those of you who have been thinking ahead may have been wondering how we can add and subtract registers like we can in BASIC. After all, the single-byte representation of LD A,B for example, doesn't leave a lot of room for manoeuvre.</p>
+																<p>In fact, we use a different instruction altogether to add registers together. The instruction is ADD. You can think of an ADD instruction as being a LET statement with an expression involving "plus" on the right hand side of the equals. A useful example would be</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>                      ADD HL,DE
+which has the effect  LET HL=HL+DE
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>The instruction ADD HL,DE will take the contents of the register-pair DE, and will add this number to the contents of register-pair HL. The result of this calculation will then be stored in register-pair HL. As you can see, if we were working in BASIC and we were dealing in variables instead of register-pairs then we would have performed the operation LET HL=HL+DE.</p>
+																<p>Well almost, but not quite. There is in fact one small difference - the difference is what happens when you get what is called an overflow. You see register pairs can store all of the (hexadecimal)  numbers between 0000 and FFFF. Those from 0000 to 7FFF are the integers 0 to 32767 in decimal, those from 8000 to FFFF can either represent numbers from 32768 to 65535, or numbers in the range -32768 to -1. You can use either form, but when the USR function returns a decimal number to BASIC the OLD ROM will use -32768 to 32767 and the NEW ROM will return a number between 0 and 65535. An OVERFLOW is what happens when you go beyond these ranges. In BASIC any overflow will simply stop the program and give you an error message. What do you suppose will happen in machine code?</p>
+																<p>OLD ROM first then: the BASIC for the OLD ROM deals with the numbers from -32768 to 32767. What is the number 32767 in hexadecimal? Dividing by 256 to split it into two bytes gives 127 remainder 255, so the first byte is 127 (7F) and the second byte is 255 (FF). Now enter the program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><u>OLD ROM ONLY</u>
+110100    LD DE,1
+21FF7F    LD HL,32767
+19        ADD HL,DE
+C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>The program will simply try to add one to the number 32767. Run it (using the direct command PRINT USR(30000)) and the result may astonish you. By the way, did you notice how the 00 and 01, and also the 7F and FF, had been swapped around in the above listing? You must always remember to do this in machine code. Did you notice also that the code for adding the registers (ADD HL,DE) was only one byte long? In fact the byte 19h. All of the ADD codes are one byte in length.</p>
+																<p>If you want to add one to BC for instance then you must do something like this</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>210100    LD HL,1
+09        ADD HL,BC
+44        LD B,H
+4D        LD C,L
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Notice how B and C have to be loaded seperately since there is no such instruction as LD BC,HL. If you have a NEW ROM and you want to see what happens on an overflow load and run this program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><u>NEW ROM ONLY</u>
+210100    LD HL,1
+01FFFF    LD BC,65535
+09        ADD HL,BC
+44        LD B,H
+4D        LD C,L
+C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Another thing you should notice is that only register-pairs may be added to register pairs, and that only single-registers may be added to single-registers. You may NOT add a single-register to a register pair, or vice versa. ADD A,HL is WRONG.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>09        ADD HL,BC
+19        ADD HL,DE
+29        ADD HL,HL
+87        ADD A,A
+80        ADD A,B
+81        ADD A,C
+82        ADD A,D
+83        ADD A,E
+84        ADD A,H
+85        ADD A,L
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>If overflowing register-PAIRS had you thinking, then think about overflowing SINGLE registers, for they can only hold numbers from 0 to 255. What happens when they overflow? Well yes, they simply start again at zero, but the question is can we do anything about this? In fact we can. Whenever we add two numbers, sometimes there is an overflow, or CARRY, and sometimes there isn't. The computer sets aside a NEW register, called F (which we cannot use directly) to store various bits of information. One of these bits of information is called the CARRY BIT.</p>
+																<p>An ADD instruction will always reassign the CARRY BIT. If there is no carry, it will be set to zero. If there is a carry, it will be set to one. We can use the value of the CARRY BIT by using the machine code instruction ADC, which means "ADD with CARRY".</p>
+																<p>It works like this. Suppose the machine comes across the instruction ADC A,B. It will take the contents of register B, and it will add the contents of register A, as in the previous instruction ADD A,B, and then it will add the CARRY BIT to this new number. Having done this it will store the result in register A, overflowing if necessary. The carry bit will always be reassigned to either zero or one, depending on whether or not there is an overflow.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>So       ADD A,B  effectively means  LET A=A+B
+                  followed by        LET CARRY=INT((A+B)/256)
+
+whereas  ADC A,B  effectively means  LET A=A+B+CARRY
+                  followed by        LET CARRY=INT((A+B+CARRY)/256)
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Study the programs that follow. If the value of the A register is irrelevant, then are these programs equivalent (i.e. do they both do the same thing?) or not? Can you understand why?</p>
+																<p>The first program is</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>118533    LD DE,13189
+21C77B    LD HL,31687
+19        ADD HL,DE
+44        LD B,H       &lt;- NEW ROM ONLY
+4D        LD C,L       &lt;- NEW ROM ONLY
+C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>and the second program is</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>1633      LD D,51
+1E85      LD E,133
+267B      LD H,123
+2EC7      LD L,199
+7D        LD A,L
+83        ADD A,E
+6F        LD L,A
+7C        LD A,H
+8A        ADC A,D
+67        LD H,A
+44        LD B,H       &lt;- NEW ROM ONLY
+4D        LD C,L       &lt;- NEW ROM ONLY
+C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>In fact they are exactly the same. You can learn two things from this; firstly that the instruction LD does not in any way affect or alter the value of CARRY, for if it did the two LD instructions between ADD A,E and ADC A,D would really mess things up; secondly that the instruction ADD HL,DE is much shorter, and much neater, than going all round the houses by adding each byte seperately. And never forget to swap the order of the bytes round in LD instructions on pairs - compare the first two lines of program one with the first four lines of program two.</p>
+																<p>Now run both of the above programs just to verify that they are the same. What would happen if the ADC A,D in program two were replaced by ADD A,D?</p>
+																<p>Now that you understand the difference between ADD and ADC we shall go on to cover some other ways of adding. First though, the codes for ADC:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>ED4A      ADC HL,BC
+ED5A      ADC HL,DE
+ED6A      ADC HL,HL
+8F        ADC A,A
+88        ADC A,B
+89        ADC A,C
+8A        ADC A,D
+8B        ADC A,E
+8C        ADC A,H
+8D        ADC A,L
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Notice how the codes for ADC HL, are all TWO bytes long, rather than one. The first byte is ED, and the second byte depends on what you are adding. Do not think of ED as meaning ADC HL, though, since it may have many other possible meanings as well, depending on what follows it.</p>
+																<h4 align="center">ADDING CONSTANTS</h4>
+																<p>We can also use the ADD and ADC instructions to add numerical constants directly to the A register. An example would be ADD A,3 which would, as you'd expect, add three to the current value of A. It would also assign CARRY to one or zero, depending on whether or not this addition caused A to overflow beyond 255.</p>
+																<p>The code for ADD A, is C6, and the code for ADC A, is CE. Note that we cannot add constants to any register other than A.</p>
+																<p>Suppose we wished to add 57 to HL. One way would be as follows:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>113900    LD DE,57d
+19        ADD HL,DE
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>but this method has the disadvantage that it requires the use of DE, which may be needed for other things. Another way of achieving the same thing, but this time only bringing the A register into use, is thus:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>7D        LD A,L
+C639      ADD A,57d
+6F        LD L,A
+7C        LD A,H
+CE00      ADC A,0
+67        LD H,A
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Notice how the instruction ADC A,0 was used to add any carry digit there may have been from adding 57 to L.</p>
+																<h4 align="center">AND FINALLY....</h4>
+																<p>There is one more way that we can add constants to a register, and that is by using the instruction INC.</p>
+																<p>INC A means add one to the value of A. Unlike ADD, INC may be used on <u>ANY</u> register, so statements like INC D (add one to the value of D) or INC DE (add one to the value of register-pair DE) are allowed.</p>
+																<p>If A contained the value 255, then INC A will set A to zero, but WITHOUT setting CARRY equal to one. In fact INC will not alter the value of CARRY at all. If it was one before an INC instruction, it will be one after such an instruction. If it was zero before an INC, it will be zero after an INC.</p>
+																<p>In short:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>INC B  is equivalent to  LET B=B+1
+
+03        INC BC
+13        INC DE
+23        INC HL
+3C        INC A
+04        INC B
+0C        INC C
+14        INC D
+1C        INC E
+24        INC H
+2C        INC L
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Remember, the difference between ADD A,1 and INC A is that ADD A,1 will assign a new value to CARRY, whereas INC A will leave it unaltered. INC, by the way, is short for INCREMENT.</p>
+																<p>The value of CARRY can be altered directly without any of the other registers being affected. There is an instruction <u>SCF</u>, which stands for SET CARRY FLAG, and its job is to assign to CARRY a value of one. The code for this instruction is 37h. Alternatively, it is possible to reset CARRY to zero, although there is no specific instruction to do this. One way would be to say ADD A,0 for example. Adding zero will of course leave the value of A unchanged, but an ADD instruction will always reassign CARRY.</p>
+																<p>CARRY is called a FLAG rather that a register, because it can only store the numbers one and zero. It is not possible to assign a value of two to CARRY, nor any other number in fact, only one and zero.</p>
+																<p>There is one other way to directly change the value of the carry flag, that is by using the instruction <u>CCF</u>, which stands for COMPLEMENT CARRY FLAG. It will change the value of CARRY from one to zero, or from zero to one. In BASIC terms these instructions may be listed thus:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>37        SCF        LET CARRY=1
+C600      ADD A,0    LET CARRY=0
+3F        CCF        LET CARRY=1-CARRY
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<h4 align="center">SUBTRACTION</h4>
+																<p>In machine language, there are codes for subtraction, which are used in exactly the same way as the addition codes. The instruction is SUB, for SUBTRACT, and in exactly the same way as ADD, there is also an instruction SBC, for SUBTRACT WITH CARRY.</p>
+																<p>It works like this. SUB A,B will take the value of register B, and will subtract it from the value of register A. The result of this calculation is stored in register A. The carry flag is reassigned to zero if there is no overflow, or to one if the result overflows to below zero (in which case the value of A will have 256 added to it).</p>
+																<p>SUB A,B may also be written as simply SUB B, because it is only the A register which may have things subtracted from it. Do not get confused by this convention - the two terms mean exactly the same thing.</p>
+																<p>The codes for SUB are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>97        SUB A,A
+90        SUB A,B
+91        SUB A,C
+92        SUB A,D
+93        SUB A,E
+94        SUB A,H
+95        SUB A,L
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>It is also possible to subtract numerical constants from the A register. For example the instruction SUB A,100 will subtract 100 from the number stored in register A. The result is stored in register A, and the carry flag is reassigned to zero if there is no overflow, or to one if there is an overflow. The code for subtracting constants is D6, so that SUB A,100 is D664 (since 100 is written as 64 in hexadecimal)</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>D6        SUB A,
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>You should note the fact that although there are instructions such as ADD HL,BC, there are NO instructions to subtract register-pairs.</p>
+																<p>SUBTRACT WITH CARRY (SBC) on the other hand, WILL work for register pairs, but as with ADD and ADC, only the value of HL may be altered. For single registers it is only the value of A that may be changed.</p>
+																<p>SBC A,C will subtract the value of C from the value of A, and will then subtract the value of CARRY from this result. The final answer will be stored in register A. CARRY will be reassigned as before.</p>
+																<p>The codes for SBC are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>ED42      SBC HL,BC
+ED52      SBC HL,DE
+ED62      SBC HL,HL
+9F        SBC A,A
+98        SBC A,B
+99        SBC A,C
+9A        SBC A,D
+9B        SBC A,E
+9C        SBC A,H
+9D        SBC A,L
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>To SUBTRACT WITH CARRY a numerical constant from the A register the code is DE followed by the number itself in hex. What is the code for SBC A,200? What precisely does this instruction do?</p>
+																<p>DEC is short for DECREMENT. It is, as you may have gathered from its weird sounding name, the opposite of INC (increment). Its purpose is to decrease the value of any register by one without changing the value of the carry flag. So DEC DE has the effect of LET DE=DE-1, remembering of course that if you decrement zero you get 255.</p>
+																<p>Compare these two routines:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>C600      ADD A,0
+D602      SUB A,2
+ED52      SBC HL,DE
+
+and
+
+C600      ADD A,0
+3D        DEC A
+3D        DEC A
+ED52      SBC HL,DE
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Are they the same? And if not, why not? One of these two routines will subtract two from A, and will subtract DE from HL - the other routine is wrong. Which is which?</p>
+																<p>In fact it is the first example which is wrong. The instruction SBC HL,DE will subtract both DE and the carry flag, so the carry flag must first be reset to zero. This is what ADD A,0 is for. But having done that, the first example will alter the carry flag AGAIN with the instruction SUB A,2. The chances are that it will be reset to zero, but if A happens to equal one or zero then the SUB will not only change A to 255 or 254, it will also set the carry flag to ONE. So that the effect of SBC HL,DE would then be to assign HL a value of HL-DE-1, NOT HL-DE. In the second example, the instruction DEC A is used twice. DEC will not change the carry-flag, so it will still be zero when the instruction SBC HL,DE is reached, and the subtraction will then go ahead correctly.</p>
+																<p>Got it? INC and DEC do not alter the value of the carry flag - the other arithmetic instructions do. The other instructions we've covered are RET and LD. Neither of these will alter CARRY at all.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>0B        DEC BC
+1B        DEC DE
+2B        DEC HL
+3D        DEC A 
+05        DEC B
+0D        DEC C
+15        DEC D
+1D        DEC E
+25        DEC H
+2D        DEC L
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>In this chapter we have dealt with how to load machine language programs, and how to run them. The use of the instruction RET and LD were explained, and the arithmetic instructions ADD, ADC, SUB and SBC were introduced along with INC and DEC. The purpose of the carry flag has been covered, and the instructions SCF (Set Carry Flag) and CCF (Complement Carry Flag) have been mentioned.</p>
+																<p>You are <u>not</u> expected to remember any of the hex-codes which the computer uses - not even the experts do that! All of the codes are printed in an appendix in the back of the book. All you have to know are the words we use for them - the OPCODES - and what they do.</p>
+																<p>Before you proceed to chapter four, see if you can tackle some of the following exercises. If you find some of them difficult don't worry about it, just take them slowly, and think clearly.</p>
+																<a name="replace"></a>
+																<p>Enter the following machine language program using HEXLD: You will have to look up the various hex-codes yourself!</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>LD BC,0
+LD HL,0
+ADD HL,BC
+LD B,H       &lt;- NEW ROM ONLY
+LD C,L       &lt;- NEW ROM ONLY
+RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>Now use the direct command PRINT USR 30000 to run it. What did you get? If you got zero well done. If, on the other hand, you got -31004 or 34532 then you did something fundamentally wrong. The instructions LD BC, and LD HL, both need THREE bytes altogether to make them work, not two. What instructions did you really give the computer to make it come up with -31004 or 34532? And how exactly did it arrive at the answer? Now try again until you get zero.</p>
+																<p>Delete HEXLD by typing NEW (or on the OLD ROM by deleting each line individually). The machine code program will STILL BE THERE. Type in the following BASIC program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>10 INPUT A
+20 INPUT B
+30 POKE 30001,A-INT (A/256)*256
+40 POKE 30002,INT (A/256)
+50 POKE 30004,B-INT (B/256)*256
+60 POKE 30005,INT (B/256)
+70 PRINT A,B
+80 PRINT USR 30000
+90 PRINT
+100 GOTO 10
+</pre>
+																		</td>
+																	</tr>
+																</tbody></table>
+																<p>The BASIC program will replace the second, third, fifth, and sixth bytes of the machine code routine by the values you input in lines 10 and 20. Run the program and input some values to see what happens. Try going outside the range -32768 to 32767.</p>
+																<p>Now see if you can write a similar program, including a COMPLETELY NEW machine code routine, which will print a TABLE of values of A and B on the screen, and the result of <u>subtracting</u> A from B in each case. Let A and B both take on all of the values from 1 to 10 inclusive.</p>
+																<p>Write a machine code routine which will produce a one if BC is greater than or equal to DE, and a zero otherwise. How could you test this? (HINT: see previous exercises on this page). Do so.</p>
+																<p>Write a short machine code routine which will set the carry flag equal to one, but without altering any of the registers. Do it WITHOUT using the instructions SCF, CCF, or ADD A,0.</p>
+															</td>
+														</tr>
+													</tbody></table>
+												</td>
+											</tr>
+										</tbody></table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</tbody></table>
+						</td>
+					</tr>	
+					<tr>	
+						<td> </td>
+					</tr>	
+					<tr>	
+					</tr>	
+				</tbody></table>
+			</td>
+		</tr>	
+	</tbody></table>
+
+
+
+
+
+</body></html>

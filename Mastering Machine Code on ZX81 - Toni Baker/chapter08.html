@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 8
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter08');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter07.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter09.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">A Dictionary of Machine Code</h1>
+																<h4 align="center">SPECIAL REGISTERS</h4>
+																<p>The Z80 has two special registers which can be made use of. The first is called IX.</p>
+																<p>It is special because as well as just assigning it, as it can be used just like any other register pair with LD IX,0000 for instance, we can use it to find the contents of an address - using (IX) - just like we can with (HL). IX is different because we can <u>add a constant to the address</u>. Thus LD B,(IX+7B) works! If IX were 0000 then LD B,(IX+7B) will load B with the contents of memory location 007B. In no other way can we assign a single register from an address in one instruction.</p>
+																<p>There is a warning that goes with using IX though. If you are using SLOW then you must not alter the value of IX at all, otherwise you might cause a crash.</p>
+																<p>The other special register is called IY. It is used in exactly the same way as IX, except that the ROM itself gives us an added advantage. When you jump into a machine language routine, IY starts off as 4000 (hex), so that all of the system variables may be accessed directly (the system variables start off at 4000h). For example, LD L,(IY+0C) will load L with the low part of the address at which the display file begins.</p>
+																<p>Changing the value of IY will not cause a crash. It will be reset to 4000 as soon as you return to BASIC. This is done automatically by the ROM.</p>
+																<p>To find the hex value of any instruction involving IX or IY pretend you are using HL instead and look up the code for that. Then <u>precede</u> it by DD for IX, or FD for IY. If the IX or IY is in brackets then it must have a displacement, even if that displacement is 00 (for instance, in LD,B(IY+04) the displacement is 04). This byte should be added to the hex code, and should be the <u>third</u> byte of code, even if this means splitting the original code in two.</p>
+																<p>Thus if the code of LD (HL),44 is 3644, then the code of LD (IX+20),44 is DD362044. Note how the displacement 20 has been inserted into the middle of the original code in order to make it the third byte. We have now reached the stage of using <u>four byte</u> instruction codes. This is the longest a Z80 instruction can possibly be.</p>
+																<h4 align="center">THE FLAGS REGISTER</h4>
+																<p>Another special register is the FLAGS register, sometimes called the STATUS register. Usually it abbreviates itself to just F, and cohabitates with A in the hope that no-one will notice it. Its purpose is to store various bits of information about the results of calculations. Some instructions will alter all of the flags, some will alter only some of them, and some won't actually alter any flags at all. A complete list of what instruction does what is included in an <a href="appendix04.html">appendix [four]</a> at the back of the book.</p>
+																<p>As for the register itself: it is, like any other register, eight bits in length, but each bit has a different purpose (although two of them aren't used). These bits are each used as an individual flag which can store a value of either zero or one. The flags are, from left to right: Sign, Zero, not-used, Half-Carry, not-used, Parity/Overflow, Subtract, and Carry. The two unused flags are both more or less random, but the rest are quite specific. They work like this:</p>
+																<p>[<u><b>S</b></u>] The <b>SIGN</b> flag stores the sign (positive or negative) of the last result. A positive number resets this flag to zero, and a negative number sets it to one. For the purposes of this flag, zero is counted as positive. The value of the S flag is therefore always equal to the <u>leftmost</u> bit of the result. It may be tested using instructions like JP P (jump if positive) or JP M (jump if negative (minus)).</p>
+																<p>[<u><b>Z</b></u>] The <b>ZERO</b> flag checks whether or not the last result was actually zero. If so the flag is set to one, but otherwise it is reset. Watch out for this flag though - it can be very deceiving - many of the register-<u>pair</u> instructions simply do not change it as you'd expect: instructions like DEC or ADD for instance will only change the zero flag if applied to single registers. You are advised to check with the <a href="appendix04.html">appendix</a> if you are unsure.</p>
+																<p>[<u><b>H</b></u>] The <b>HALF-CARRY</b> flag is set if there is a carry from bit 3 into bit 4, or, in the case of register-pairs, from bit 11 into bit 12. It is used internally by the Z80 for such instructions as DAA, but cannot easily be tested by the programmer. It is possible to examine it using the sequence PUSH AF/POP BC/BIT 4,C and then testing the zero flag, but this is rarely done.</p>
+																<p>[<u><b>P</b></u>] The <b>PARITY/OVERFLOW</b> flag does two jobs at once. The PARITY of a result is either odd or even, depending on the number of ones in the result (when written in binary). The parity flag is assigned in exactly the opposite manner to that which you'd expect. If the parity is even, the flag is one (an odd number), and if the parity is odd, the flag is zero (an even number). The following instructions assign this flag according to the parity of the result: AND r, OR r, XOR r, RL r, RLC r, RR r, RRC r, SLA r, SRA r, SRL r, RLD, RRD, DAA, and IN r,(C). An OVERFLOW represents an "accidental" change of sign of the result - a carry from bit 6 into bit 7 effectively. The following instructions assign this flag according to whether or not we have an overflow: ADD A,r, ADC A,r, ADC HL,s, SUB A,r, SBC A,r, SBC HL,s, CP r, NEG, INC r, and DEC r.</p>
+																<p>[<u><b>N</b></u>] The <b>SUBTRACT</b> flag, also called the N flag, simply lets the machine know whether or not the last instruction was an addition, or a subtraction. You can't get hold of this flag unless you make use of PUSH and POP as I've described under HALF-CARRY, but in general you'll know what the last instruction was anyway. This flag is primarily used internally by the Z80 for instructions such as DAA.</p>
+																<p>[<u><b>C</b></u>] The <b>CARRY</b> flag you know about. It detects a carry from bit 7 into (the non-existent) bit 8, or in the case of register-pairs, from bit 15 into what would have been bit 16. It is also assigned by shift and rotate instructions, in which one bit is "lost" from a register and moves into the carry. This is probably the most frequently accessed flag of all.</p>
+																<h4 align="center">ALL THE INSTRUCTIONS</h4>
+																<p>By now we've seen a fair number of Z80 instructions, so you'll be wanting to expand your vocabulary of these. Here now is a detailed list of all of the instructions that are available to you. I shall cover them in alphabetical order so that you may use this chapter as a kind of dictionary of instructions. For precisely the same reason I shall re-cover the ones you've already seen. You should re-read them anyway since it will prove a useful memory aid.</p>
+																<p><u><b>ADC</b></u> Starting with ADC. It comes in two forms: ADC A,r and ADC HL,s. Here we are using r to stand for either A, B, C, D, E, H, L, a numerical constant, or an address pointed to by either (HL), (IX+d) or (IY+d). s stands for one of the register pairs BC, DE, HL, SP, IX, or IY. ADC A,r is a single byte instruction. It calculates the sum A plus r plus the carry flag. The result is stored in A. ADC HL,s is a two byte instruction which evaluates HL plus s plus the carry flag, and stores the result in HL. Can you see why (ignoring the flags) ADC A,A does precisely the same job as RLA? ADC alters all of the flags.</p>
+																<p><u><b>ADD</b></u> Very similar to ADC except that the carry flag is not used in the initial calculation. It is however still altered by the final result. There are one or two important differences between ADD and ADC however. Firstly the set of instructions ADD HL,s (where s means the same as it did in ADC) are <u>one byte</u> instructions rather than two, and secondly it is permissible to use two further sets of instructions ADD IX,s and ADD IY,s. Altering the value of IX however is not advisable if you are using SLOW. IY may be safely altered but will always be reset to 4000 (hex) on return to BASIC.</p>
+																<p><u><b>AND</b></u> Only one form here - AND r. The value of the A register is altered one bit at a time. If such a bit is zero it will be unaltered. If a bit is one it will take on the value of the corresponding bit of r. Thus AND 00 is always zero, and AND FF will leave A unchanged. AND alters all of the flags - specifically the carry flag will always be reset to zero.</p>
+																<p><u><b>BIT</b></u> Now this is a new one. What happens is that from time to time you'll want to know whether an individual bit of some register is one or not, but for some reason or other it becomes impractical to try and rotate or shift it into carry. BIT is specially designed to help you out here. Suppose you wanted to know the value of BIT 5 of B. The instruction is simply BIT 5,B - the result is then either zero or non-zero, which you can explot using JR Z for instance, or RET NZ. BIT does not alter the value of ANY of the registers, nor does it change the value of the carry flag. Its hex codes are listed in a <a href="appendix04.html">table</a> at the end of this book - it is a two-byte instruction. I tend to find it's not used very often, but when it is used it comes in very handy indeed.</p>
+																<p><u><b>CALL</b></u> You've seen this one before - it's rather like GOSUB. Its exact function is as follows: PUSH the return address onto the stack, and JUMP to the call address. The return address is used by the RET instruction so it is vitally important that a subroutine should not alter the stack. You may only push things onto the stack in a subroutine if you POP them off again before you attempt to return. Call may also be used with conditions - for example CALL Z,pq (pq is an absolute address) which means CALL pq if the last calculation was zero, otherwise continue with the next instruction.</p>
+																<p><u><b>CCF</b></u> Complement Carry Flag. If the carry flag was zero then change it to one. If it was one then change it to zero.</p>
+																<p><u><b>CP</b></u> In the form CP r it will calculate the result of subtracting r from A, however the answer [is] NOT stored <u>anywhere</u>, nor is the previous value of either A or r altered. It will on the other hand alter all of the flags, so conditions like jump if zero, or jump if carry, will still work. CP r followed by JR Z will jump if A equals r.</p>
+																<p><u><b>CPD</b></u> Imagine this as CP (HL), followed by DEC HL, followed by DEC BC. The zero flag is altered as if a single CP (HL) instruction had been executed. Another flag altered is the P/V flag, which works as follows: If BC decrements to zero then the P/V flag is also zero. If BC does not decrement to zero then the P/V flag is set to one. Thus JP PO will jump only if BC now equals zero. JP PE will jump only if BC is not equal to zero. The carry flag is not altered at all by this instruction.</p>
+																<p><u><b>CPDR</b></u> Basically this is the same as CPD except that the instruction is executed over and over again - a kind of automatic loop. CPDR stands for Compare with Decrement and Repeat. The loop will end in one of two cases: a) if A equals (HL) - in which case the zero flag will be set, or b) if BC reaches zero - this will affect the P/V flag as in CPD. If neither of these conditions is true the instruction is re-executed.</p>
+																<p><u><b>CPI</b></u> As CPD except that HL is incremented instead of decremented.</p>
+																<p><u><b>CPIR</b></u> As CPDR except that HL is incremented instead of decremented.</p>
+																<p><u><b>CPL</b></u> An abbreviation for complement. The register A is altered bit by bit. If any particular bit starts off as zero it is changed to one and vice versa. In other words if A starts off as 11010101 (binary) the instruction CPL will change it to 00101010 (binary). The flags are not altered, nor are any of the other registers.</p>
+																<p><u><b>DAA</b></u> Suppose you wanted to add 16 (decimal) to 26 (decimal) <u>without</u> converting them to hex. The following seems plausible: LD A,16 then ADD A,26. Unfortunately, because the machine works in hex the final value of A will be 3C, not 42. The instruction DAA (Decimal Adjust Accumulator) will change A from 3C to 42. How it works is rather complicated - it makes a note of what's been carried where and whether you've added or subtracted and so on - but it does always work. For instance the sequence LD A,42 then SUB A,06 will again leave A with 3C, but this time round DAA will change A to 36, since 42 (decimal) minus 6 (decimal) is 36 (decimal). The instruction changes every flag appropriately. </p>
+																<p><u><b>DEC</b></u> This is another one of those instructions that comes in two forms. It can be DEC r (a single register) or DEC s (a register pair). DEC r is very simple to understand - the value of the register r is decreased by one, the carry flag is unaltered, and the zero flag is changed appropriately. DEC s is the one you want to watch for, because the zero flag is NOT ALTERED! Nor are any of the other flags! Thus DEC BC followed by JR NZ,-3 is either an infinite loop or has no effect! You'll have to be very careful to remember this - a lot of my earlier programs crashed because I didn't.</p>
+																<p><u><b>DI</b></u> Not a Welsh name, nor is it short for Diane or Diana. It is in fact an abbreviation (surprise! surprise!). It stands for Disable Interrupts, and although this sounds pretty confusing its use is immensely simple. An interrupt is what you get when you send little bleeps into the pins of the Z80 chip. DISABLING the interrupts means that if such a thing happens in future it is to be ignored. That's about all I can tell you I'm afraid - you'll have to consult the hardware boffs for a more detailed explanation.</p>
+																<p><u><b>DJNZ</b></u> Yet another abbreviation - this time for Decrement B and Jump relative if Not Zero. So if B is 7, DJNZ will reduce it to 6. If B is zero, DJNZ will change it to FF. If B is one however, DJNZ will change it to zero, and will then jump to a new destination. The form of the instruction is DJNZ e, where e is a single byte. If B is not decremented to zero the e is ignored, if it is then e specifies how far to jump. If e is between 00 and 7F then the jump is FORWARDS, if e is between 80 and FF then the jump is BACKWARDS (with FF -1, FE -2, and so on). Start counting from the next instruction, so that DJNZ 00 is just the same as DEC B, except that DJNZ does not alter any of the flags.
+																<p><u><b>EI</b></u> Guess what? Another abbreviation. EI stands for Enable Interrupts, and is the opposite of DI. From now on, if the Z80 receives an interrupt, then execution of the current instruction is completed, and control then jumps to an interrupt routine. For a slightly better explanation look under <u>IM</u>.</p>
+																<p><u><b>EX</b></u> At last - an instruction with a sensible name. EX means exchange. There are five different EX instructions - these are EX AF,AF', EX DE,HL, EX (SP),HL, EX (SP),IX and EX (SP),IY. They don't alter any of the flags. What they do is, as you'd expect, swap the values over - thus EX DE,HL replaces DE by the value HL used to contain, and HL by the value DE used to contain. The last three are rather interesting - the old value of HL (or IX or IY) is pushed onto the stack, but simultaneously the old value at the top of the stack is popped and loaded into HL. The position of the stack pointer is therefore unchanged. AF' (pronounced AF dash) is a register pair <u>distinct</u> from the real AF, and this is the only instruction which uses it. It is used by the SLOW hardware, so don't use EX AF,AF' while you're in SLOW.</p>
+																<p><u><b>EXX</b></u> As well as AF' there are also BC', DE' and HL', which are just a set of six new registers (or three new register pairs) which can only be accessed by this one single instruction. EXX is an exchange instruction. It means exchange BC with BC' (i.e. B with B' and C with C'), DE with DE', and HL with HL' - all in the same go. This is quite safe and does not affect SLOW in the way that AF' does. It is useful for preserving the values of the registers when calling a ROM subroutine which relies upon A but wipes out the other registers, e.g. EXX/CALL ROM-SUBROUTINE/EXX. The previous values of BC, DE, and HL are now unchanged. Some of the programs later on in this book will make use of this technique.</p>
+																<p><u><b>HALT</b></u> Don't be fooled by your own intuition - this isn't the same as STOP. It means do nothing, or wait forever. Once you hit a HALT instruction it will just sit there, effectively executing NOP instructions, over and over again. In fact the only way you can get out of it, once you're stuck there, is by sending the little chip an interrupt signal, so EI followed by HALT is safe since the hardware ensures that interrupts turn up pretty frequently, whereas DI followed by HALT is rather disastrous.</p>
+																<p><u><b>IM</b></u> There are three forms of this instruction. These are IM 0, IM 1, and IM 2. They are there to change the Interrupt Mode (yes, another abbreviation) to either zero, one, or two. What this means is that the next time an interrupt is detected the following will happen: IF THE INTERRUPT MODE IS ZERO: The interrupt device itself must supply an instruction to be executed; IF THE INTERRUPT MODE IS ONE: The instruction RST 38 is executed; IF THE INTERRUPT MODE IS TWO: The interrupt device must supply one byte of data. This is used as the low part of an address. There is a register called I (which we so far haven't used) and the value of this register is used as the high part of an address. The machine then looks up this address and should find a second address stored there. Confusing isn't it? This second address is used as a subroutine call.</p>
+																<p><u><b>IN</b></u> Short for input, but nothing like the INPUT we are used to in BASIC. It is this instruction from which Sinclair builds the LOAD routine and a keyboard scan. It has two forms - the first is IN A,(n) where n is a numerical constant. n refers to an external device - a different n for each different device. One byte of data is read from device n, and loaded into A. IN A,(n) has no effect on the flags. The second form DOES alter the flags - it is IN r,(C). The number held by the C register is used to specify the device. The number input is loaded into register r.</p>
+																<p><u><b>IND</b></u> Input with Decrement. This is a deliberate digression from alphabetical order so that all of the input instructions can go together. IND can be thought of as IN (HL),(C) followed by DEC B followed by DEC HL. The carry flag is not altered, but the zero flag is altered to show whether or not B has decremented to zero.</p>
+																<p><u><b>INDR</b></u> As IND but the instruction re-executes over and over again, stopping only when B reaches zero.</p>
+																<p><u><b>INI</b></u> As IND except that HL is incremented instead of decremented.</p>
+																<p><u><b>INIR</b></u> As INDR except that HL is incremented instead of decremented.</p>
+																<p><u><b>INC</b></u> Don't Panic! At long last we're back to sensible instructions we can all understand. INC r increases the value of register r by one. Every flag except the carry flag is altered. INC s on the other hand (where s is a register-<u>pair</u> rather than a single register) will not change ANY of the flags. It still does the same job of course, increasing the value of register-pair s by one and zooming back round to 0000 if s starts off at FFFF, but don't use a check for zero after an INC s instruction because it simply won't work. INC HL/JR Z means jump if the instruction <u>before</u> INC HL came to zero, NOT if HL has reached zero. INC H/JR Z <u>does</u> work.</p>
+																<p><u><b>JP</b></u> If you can understand GOTO 10 you can understand JP 4300. The destination is an address, not a line number, but the principle is exactly the same. JP is the machine language GOTO. We can also have conditional jumps, for example JP NZ,4300 means jump to 4300 IF NOT ZERO (in other words if the zero flag is not set). There is another form of JP which also has an analogy in BASIC - variable destinations. If you understand GOTO N you'll understand JP (HL). In this form you can't have conditions, JP NC,(HL) for instance is not allowed. Also only three registers may be used as variables - these are HL, IX, and IY. Even so these are very powerful instructions - HL can be the result of a calculation, possibly even generated at random.</p>
+																<p><u><b>JR</b></u> The same as JP but slightly less powerful, and one byte shorter. Only four of the eight conditions can be used - JR Z, JR NZ, JR C, and JR NC. It is impossible to say JR PO. It is also impossible to say JR (HL). JR does not use an absolute address - the R stands for relative. You write the instruction as JR e (or JR Z,e or whatever) where the e is a single byte which specifies how far we must jump. JR 0 has no effect, and JR FE is an infinite loop, since FE represents minus two. The jump is forward if e is between 0 and 7F, and backward if e is between 80 and FF.</p>
+																<p><u><b>LD</b></u> The most used instruction in the whole of machine language. All it does is to transfer data from one place to another. It has many, many forms, the simplest being LD r1,r2, that is to transfer data from one register to another. LD A,(BC) is also legal and is a one byte code, so is LD A,(DE). These are reversible, i.e. LD (BC),A and LD (DE),A are also legal. Remember that the brackets mean the <u>contents</u> of the <u>address</u> BC (or DE). Two special registers R (the memory refresh register as it's called which is used in outputting to the screen) and I (see IM) may be loaded to and from A (but only A) as in LD A,I, LD A,R, and LD R,A. The register pairs may all be loaded with either numerical constants or the contents of absolute addresses - LD s,mn or LD s,(pq). Conversely any address may be loaded with the contents of one of the register pairs - LD (pq),s. Note that register-pairs hold two bytes not one, and these are transferred to and from pq and pq+1. You can do the same with A on its own - LD A,(pq) and LD (pq),A are both allowed, but no other register can do this on its own. Finally the register pair SP - the stack pointer - may be loaded directly with either HL, IX, or IY. In other words there's a lot you can do and a lot you can't do. You can't say LD HL,SP for instance, even though LD SP,HL is allowable. Fortunately, since LD is used so very, very often it is extremely easy to become familiar with.</p>
+																<p><u><b>LDD</b></u> Load with Decrement. Effectively LD (DE),(HL) followed by DEC HL, DEC DE, and DEC BC all in one go. The carry flag and zero flag are unaltered, as is the sign flag, but the P/V flag becomes zero if BC becomes zero, one otherwise, thus JP PO will jump only if BC is zero after the instruction.</p>
+																<p><u><b>LDDR</b></u> As LDD, but the instruction is repeated continually until BC reaches zero.</p>
+																<p><u><b>LDI</b></u> As LDD, except that DE and HL are both incremented instead of decremented.</p>
+																<p><u><b>LDIR</b></u> As LDDR, except that DE and HL are both incremented instead of decremented.</p>
+																<p><u><b>NEG</b></u> NEG alters the accumulator and all of the flags. As you may have gathered from the name it negates A. If A contains 1 then NEG will change it to minus one (FF). If A contains minus six (FA) then NEG will alter it to plus six (06). The same effect may be achieved using CPL followed by INC A - this alternative means of negating a number does not affect the carry flag as NEG does, but NEG is faster.</p>
+																<p><u><b>NOP</b></u> This wonderous little instruction (which incidentally is short for No Operation) has a very simple purpose - its purpose is to waste time, for it does nothing at all! It's almost like a REM statement in fact, except that you can't put messages after it. It has two major uses: 1) as a delay, and 2) to overwrite previous machine coding when debugging. I'd say it was virtually indispensable.</p>
+																<p><u><b>OR</b></u> In the form OR r this instruction is practically the opposite of AND r. Bit by bit, the value of the A register is changed. If a bit is <u>one</u> then it will be unaltered, but if it is zero it will take on the value of the corresponding bit in r. If A contains 00 then OR r is the same as LD A,r (except for the flags). If A contains FF then OR r will not change it. All of the flags are changed as you'd expect them [to be], and the carry flag is reset to zero.</p>
+																<p><u><b>OUT</b></u> As with IN, OUT is nothing like the BASIC understanding of output. The instruction OUT (n),A where n is a one-byte numerical constant, will transfer the contents of A to external device n. Similarly OUT (C),r will transfer the contents of register r to the device pointed to by register C. OUT is used in the ROM to SAVE things. OUT has no effect whatsoever on the flags.</p>
+																<p><u><b>OUTD</b></u> Output with Decrement. The carry flag is unchanged, but the zero flag depends on the final result of B. OUTD is equivalent to OUT (C),(HL) followed by DEC HL followed by DEC B.</p>
+																<p><u><b>OTDR</b></u> A slightly different spelling in no way alters the fact that this is still an Output with Decrement and Repeat instruction - all it does is leads us to digress from alphabetical order in order to maintain consistency. Equivalent to OUTD repeated until B is zero.</p>
+																<p><u><b>OUTI</b></u> As OUTD except that HL is incremented instead of decremented.</p>
+																<p><u><b>OTIR</b></u> As OTDR except that HL is incremented instead of decremented.</p>
+																<p><u><b>POP</b></u> Remove two bytes of data from the top of the stack and load them into a register pair. Any register pair may be used except for SP. In addition the flags register may be combined with A, allowing the instruction POP AF. Specifically, the low part of the register pair is popped first, and then the high part. The machine remembers that the stack is now two bytes shorter by altering the value of SP automatically.</p>
+																<p><u><b>PUSH</b></u> PUSH s is the opposite of POP s. It stores the contents of any register pair (except SP, but including AF) at the top of the stack. It "remembers" that it has done this by altering the value of SP. The high part of s is pushed first, then the low part, so that the low part is at the top. After a PUSH instruction SP will point to the address of this low part.</p>
+																<p><u><b>RES</b></u> With this instruction you can actually alter individual bits of any register. In computing circles "set" means change to one, and "reset" means change to zero, so RES is the instruction that changes the required bit to zero. For instance, to reset bit 3 of D the required instruction is RES 3,D. RES has no effect on any of the flags.</p>
+																<p><u><b>RET</b></u> RET is used to return from a subroutine. It works by popping an address from the top of the stack, and then jumping to that address. It is possible to alter the address to which a subroutine will return by altering the value at the top of the stack. For example POP HL/INC HL/PUSH HL will increase the return address by one. You could for instance store one byte of data immediately after the CALL instruction, then POP HL/LD A,(HL)/INC HL/PUSH HL will store that byte in A while at the same time ensuring that the subroutine will return to the address <u>after</u> that data. Another trick is to push an "artificial" return address onto the stack and then JP (or JR) to a subroutine instead of calling it. Now it will "return" to wherever you want it to go! RETurn may be used with conditions if needed. It does not alter the flags.</p>
+																<p><u><b>RETI</b></u> Used to end an interrupt subroutine (see IM). Its function is the same as RET, but RETI must be used instead of RET because the chip does clever things if you get a second interrupt in the middle of an interrupt subroutine! As soon as an interrupt subroutine is called a DI instruction is automatically executed, but there are such things as <u>non-maskable</u> interrupts, that is almighty super-high-powered interrupts that override even DI, [and] these can cause confusion if you don't use RETI.</p>
+																<p><u><b>RETN</b></u> Used to end a non-maskable interrupt subroutine. Its function is the same as RETI except that the Interrupt Mode (which was altered by the non-maskable interrupt in the first place) is also restored to its previous value.</p>
+																<p><u><b>RLA</b></u> An abbreviation for Rotate Left Accumulator. Each bit of A is moved one position to the left. The leftmost bit is moved into the carry, and the rightmost bit takes on the previous value of the carry. For example, if A contained 10010101 (binary) and the carry contained 0 then after a RLA instruction A will contain 00101010 and the carry will contain one. Only the carry flag is altered by this instruction.</p>
+																<p><u><b>RL</b></u> On the other hand, there is another instruction which may be applied to any register. It is RL r. In fact every now and again the instruction RL A tends to disguise itself as RLA - due possibly to printing errors or bad handwriting. On the face of it they seem to do the same thing - RL means Rotate Left and its function is exactly as described in RLA. The difference however, is in what happens to the flags, for RL will alter ALL of them, RLA will only alter the carry. RL may of course be applied to any register, not just A. Incidently, RL A does <u>precisely</u> the same thing as ADC A,A, down to the last flag - except one - one you can't get at - called the H flag. The only way you can possibly tell the difference is by following it with a DAA instruction. ADC A,A by the way, is twice as fast.</p>
+																<p><u><b>RLCA</b></u> Almost the same as RLA, but not quite. Each bit of A is moved one position to the left. The leftmost bit is moved BOTH into the carry, AND into the rightmost position of A. If, as before, A started off with 10010101 and the carry was zero, then after RLCA it will be 00101011. The carry will also be one. Only the carry flag is changed - the previous value of which is lost forever.</p>
+																<p><u><b>RLC</b></u> RLC r will Rotate Left with Carry the register r in the same way that RLCA does with A. RLC A is a valid instruction, which in not the same as RLCA. RLC B is a valid instruction, but please note there is no such instruction as RLCB. The spacing is very important here. RLC r will alter all of the flags.</p>
+																<p><u><b>RLD</b></u> Not to be confused with RL D, this is a COMPLETELY DIFFERENT instruction which works as follows: Write the value of A and the value of address (HL) in hex. The second hex-digit of (HL) is shifted left so that it becomes the first digit. The first digit overwrites the second digit of A. The second digit of A moves to the second digit of (HL). Thus if A contains 25 (hex) and (HL) contains EB then after an RLD has been carried out A will contain 2E and (HL) will contain B5. RLD, incidentally, stands for Rotate Left Decimal.</p>
+																<p><u><b>RRA</b></u> As RLA except that the bits are moved right instead of left.</p>
+																<p><u><b>RR</b></u> As RL except that the bits are moved right instead of left.</p>
+																<p><u><b>RRCA</b></u> As RLCA except that the bits are moved right instead of left.</p>
+																<p><u><b>RRC</b></u> As RLC except that the bits are moved right instead of left.</p>
+																<p><u><b>RRD</b></u> The contents of (HL) are moved one hex-digit to the right, the rightmost digit moving into the rightmost digit of A, which in turn becomes the left digit of (HL). If A equals 25 and (HL) equals EB then after RHD A will equal 2B and (HL) will equal 5E. Note that RRD twice is the same as RLD once, and vice versa. All of the flags except carry are altered.</p>
+																<p><u><b>RST</b></u> [Restart.] The same as CALL, except that it is only one byte long ALTOGETHER! It is much less powerful though for two reasons: 1) you may not use conditions. RST 0 is legal but RST NZ,0 is not. 2) only one of eight <u>specific</u> addresses may be called. These are 0, 8, 10, 18, 20, 28, 30, or 38. On the OLD ROM, RST 0 is the same as NEW. On the NEW ROM however RST 0 will move RAMTOP to its highest possible location, which the BASIC instruction NEW will not do. RST 0 is the same thing as pulling out the mains lead and then reconnecting it.</p>
+																<p><u><b>SBC</b></u> SBC, like ADC, comes in two forms. The first is SBC A,r which will first of all subtract r from A, and will then subtract the carry digit. Similarly SBC HL,s will subtract both s and the carry flag from HL. SBC A,A is quite useful - if the carry is zero both A and the carry will end up zero - if the carry is one then A will be reassigned FF and the carry will still be one.</p>
+																<p><u><b>SET</b></u> The opposite of RES. SET 4,H will change the value of bit 4 of H to <u>one</u>. Any bit of any register may be set.</p>
+																<p><u><b>SLA</b></u> Shift Left Arithmetic. The form is SLA r. It is similar to RL r except that the rightmost bit is automatically replaced by zero. It alters all of the flags. Note that SLA A does the same thing as ADD A,A except that ADD A,A is faster.</p>
+																<p><u><b>SRA</b></u> Shift Right Arithmetic. Any register may be shifted right using the format SRA r. The rightmost bit falls into the carry, but the leftmost bit <u>remains unaltered</u>. Thus after a SRA instruction bit 6 will always be the same as bit 7. The effect of SRA is to divide both positive and negative numbers by two: FC (minus four) becomes FE (minus two). What happens if the number is odd?</p>
+																<p><u><b>SRL</b></u> Shift Right Logical. As SLA except that the bits are shifted right instead of left, and the leftmost bit becomes zero.</p>
+																<p><u><b>SUB</b></u> Sometimes written as SUB r, sometimes as SUB A,r, both mean the same thing. The value of r is subtracted from the A register. Note that unlike ADD, there is no corresponding instruction SUB HL,s. If you wish to do this you must first of all reset the carry flag (usually by use of AND A) and then use SBC HL,s.</p>
+																<p><u><b>XOR</b></u> XOR r alters all of the flags, resetting the carry to zero, and [affecting] the A register alone. r is not altered. What happens is that A is altered bit by bit, in the same manner as AND and OR. If a bit is zero it takes on the value of the corresponding bit of r. If on the other hand a bit is one then its new value is the <u>complement</u> of the appropriate bit of r. XOR A is very useful since in one byte it zeroes both the accumulator and the carry flag. Incidentally so does SUB A.</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter07.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter09.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

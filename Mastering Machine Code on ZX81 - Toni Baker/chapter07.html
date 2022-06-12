@@ -1,0 +1,453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 7
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter07');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter06.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter08.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">Printing Things to the Screen</h1>
+																<h4 align="center">DRAUGHTS</h4>
+																<a name="hexld2"></a>
+																<p>In order to write a program as extensive as draughts, we'll need a faily powerful BASIC program in order to help us load it. The following is a second version of HEXLD - called HEXLD2 - which has a couple of improvements over its predecessor. One such improvement is the ability to input strings of characters such as "TO BE OR NOT TO BE" which will then be incorporated in the machine code one character at a time. To achieve this you must input ";TO BE OR NOT TO BE;" - that is, the text must be surrounded by semicolons - this is very important.</p>
+																<h4 align="center">HEXLD2</h4>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>
+ 10 PRINT "WRITE TO ";
+ 20 INPUT A$
+ 30 PRINT A$
+ 40 GO SUB 200
+ 50 PRINT
+ 60 LET A$=""
+ 70 IF A$="" THEN INPUT A$
+ 80 IF A$="S" THEN STOP
+ 90 IF CODE(A$)=215 THEN GO TO 300
+100 PRINT CHR$(CODE(A$));CHR$(CODE(TL$(A$)));"two spaces";
+110 POKE X,16*CODE(A$)+CODE(TL$(A$))+36
+120 LET X=X+1
+130 LET A$=TL$(TL$(A$))
+140 GO TO 70
+200 LET X=0
+210 FOR I=1 TO 4
+220 LET X=16*X+CODE(A$)-28
+230 LET A$=TL$(A$)
+240 NEXT I
+250 RETURN
+300 LET A$=TL$(A$)
+310 PRINT ".";CHR$(CODE(A$));"two spaces";
+320 POKE X,CODE(A$)
+330 IF CODE(A$)=226 THEN POKE X,118
+340 LET A$=TL$(A$)
+350 LET X=X+1
+360 IF NOT CODE(A$)=215 THEN GO TO 310
+370 LET A$=TL$(A$)
+380 GO TO 70
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>[Download available for 16K ZX80 -> <a href="dload/chapter07-hexld2.o">chapter07-hexld2.o</a>]</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>NEW ROM</u>
+ 10 PRINT "WRITE TO ";
+ 20 INPUT A$
+ 30 PRINT A$
+ 40 GOSUB 200
+ 50 PRINT
+ 60 LET A$=""
+ 70 IF A$="" THEN INPUT A$
+ 80 IF A$="S" THEN STOP
+ 90 IF CODE A$=25 THEN GOTO 300
+100 PRINT A$( TO 2);"two spaces";
+110 POKE X,16*CODE A$+CODE A$(2)-476
+120 LET X=X+1
+130 LET A$=A$(3 TO )
+140 GOTO 70
+200 LET X=4096*CODE A$+256*CODE A$(2)+16*CODE A$(3)+CODE A$(4)-122332
+210 RETURN
+300 LET A$=A$(2 TO )
+310 PRINT ".";A$(1);"two spaces";
+320 POKE X,CODE A$
+330 IF CODE A$=216 THEN POKE X,118
+340 LET A$=A$(2 TO )
+350 LET X=X+1
+360 IF CODE A$&lt;>25 THEN GOTO 310
+370 LET A$=A$(2 TO )
+380 GOTO 70
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter07-hexld2.p">chapter07-hexld2.p</a>]</p>
+																<p>This program is basically the same as HEXLD except for two features. Firstly you are required to input the starting address (in hexadecimal) at which the machine code is to be loaded, and secondly it will allow you to input strings of data using their character codes, rather than hex - this is what the routine starting at 300 is for. If you input "CD0808C9" it will be interpreted as CALL 0808 followed by RET - this is exactly the same as before - however if you instead input ";LN graphic-A graphic-A TAN ;" it will mean exactly the same thing. If you compare character codes with hexadecimal by looking it up in the manual [(or <a href="appendix05.html">appendix five</a>)] you'll find the hex for LN is CD, hex for graphic-A is 08, and hex for TAN is C9. The semicolon is used to tell the program where the data starts and ends.</p>
+																<h4 align="center">SUBROUTINES WITH DATA</h4>
+																<a name="asteriskfill"></a>
+																<p>Let's look at some uses for this. Perhaps the most useful subroutine we could imagine would be one which prints a string of characters to the screen. There is already a subroutine in the ROM which will print a single character. Try this program. Load it to address 4E00 (if you only have 1K you'll have to find some other suitable address).</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>   <u>NEW ROM</u>
+CDE006              START     CALL PRPOS        <- OLD ROM ONLY
+3E94      3E97                LD A,inverse-*
+CD2007    CD0808              CALL PRINT
+3A2540                        LD A,(S_POSN)     <- OLD ROM ONLY
+3D                            DEC A             <- OLD ROM ONLY
+C8                            RET Z             <- OLD ROM ONLY
+18F1      18F9                JR START
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>You'll discover upon running it that the screen fills up with inverse asterisks, and that it fills up very, very fast (much faster than PRINT "inverse-*"/RUN). The ROM subroutine PRINT will place the character whose code is stored in the A register at the current PRINT position on the screen. In the NEW ROM, locating the print position is automatic, but in the OLD ROM you have to call up a completely different subroutine - PRPOS (Print Position) - first, in order that the second subroutine, PRINT, knows where to place the image on the screen. PRPOS wipes out the value of the A register, but PRINT does not. Note that OLD-ROM-PRINT, and NEW-ROM-PRINT, work by two completely different methods, even though we are using them in precisely the same way, except that for the OLD ROM we have to check for end-of-screen.</p>
+																<p>It is in fact possible to put this entire program into a REM statement. NEW ROM users with only 1K [or more] might like to try clearing the machine with NEW and then typing</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+1 REM Y inverse-* LN graphic-A graphic-A / RAND 
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>(you'll need to type THEN RAND and delete the word THEN to get the word RAND in position). This is precisely the above program, but entered directly from the keyboard instead of loaded via a seperate program. Now the command RAND USR 16514 will almost instantly fill the screen! Shock - Horror - A full screen in 1K!!?</p>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter07-asteriskfill.p">chapter07-asteriskfill.p</a>]</p>
+																<p>What we want though is a subroutine which can print any message, from "YES" to "OH WHAT A BEAUTIFUL MORNING". Suppose such a subroutine exists and it's called SPRINT (String Print). We want to be able to use an instruction something along the lines of CALL SPRINT WITH "OH WHAT A BEAUTIFUL MORNING". Here's how it will work:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+CD????      CALL SPRINT
+2D2A313134  DEFM "HELLO"
+FF          DEFB FF
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Here DEFM means Define Message. It's not actually a machine language instruction, but it is used to specify data within a program. If you lok at the hex equivalent you'll see that 2D is hexadecimal for the character code of H, 2A for E, 31 for L and 34 for O. DEFB is also data - it means Define Byte. We could have put DEFB C9 and it would have meant the byte C9. Here we are using it to specify the end of the data to be used by SPRINT. We must ensure, however, that the machine does not try to execute these bytes, since in machine language terms they don't make a great deal of sense. Let's take a look at how we could go about writing such a subroutine as SPRINT which at the same time ensures that we don't try to execute the data (i.e. the word "HELLO" and the byte FF).</p>
+																<p>You may remember from the last chapter that CALL works by PUSHing the return address onto the stack and then jumping to the required address. RET works similarly - it POPs an address from the stack and then jumps to it. Therefore if the word "HELLO" immediately follows a CALL instruction then the address at the top of the stack will be the address of the first character of data - the "H" - we can obtain this with the single instruction POP HL. If we then increment HL by one and PUSH it back onto the stack then the effect of the next RETURN will be to jump back to the NEXT address in line - the "E". We can test for the end of the data by looking for the byte FF (which is not a printable character). Follow this subroutine through.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>   <u>NEW ROM</u>
+E1        E1        SPRINT    POP HL
+7E        7E                  LD A,(HL)
+23        23                  INC HL
+E5        E5                  PUSH HL
+FEFF      FEFF                CP FF
+C8        C8                  RET Z
+F5                            PUSH AF       <- OLD ROM ONLY
+CDE006                        CALL PRPOS    <- OLD ROM ONLY
+F1                            POP AF        <- OLD ROM ONLY
+CD2007    CD0808              CALL PRINT
+18EF      18F4                JR SPRINT
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The first four lines are designed to look at the character stored at the current return address and then <u>increment</u> the return address. The next two lines will only return from the subroutine if the byte FF has been found. Note that CP FF will compare <u>A</u> with FF, not HL which was the last thing referred to. CP will always compare A with something - in this case the hex value FF. The RET instruction (actually a RET Z or return if zero, but it works in precisely the same way) will, if you examine the listing closely enough, return you to the byte AFTER the FF, not to the FF itself. Finally, if FF has not yet been found, the subroutine PRINT will be called and the single character now in the A register will be printed to the screen. The whole routine will then be repeated over and over again until the end of the message is found.</p>
+																<p>Enter the program HEXLD2 to enable you to load machine code. Add an additional line to it - line one - which should be a REM statement with fifty arbitrary characters after the word REM. OLD ROM users must ensure that this line is never listed. LIST 9999 followed by LIST 2 will ensure this. Now RUN the program. The message WRITE TO will greet you. Input "402B" for the OLD ROM, or "4082" for the NEW ROM. This is the address in HEX, of the first character after the word REM. When prompted type in [the above machine code program appended with] the following:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>   <u>NEW ROM</u>
+CD2B40    CD8240               CALL SPRINT
+;OH WHAT A BEAUTIFUL MORNING;  DEFM "OH WHAT A BEAUTIFUL MORNING"
+FF        FF                   DEFB FF
+C9        C9                   RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>(notice how the two bytes of the [CALL SPRINT] address have been switched around).</p>
+																<p>Now do you see the purpose of the BASIC routine in HEXLD2 which begins at line 300. Imagine how tedious it would have been to have had to type in 342D003C2D263900... and so on instead of ;OH WHAT A BEAUTIFUL MORNING; It has exactly the same effect. Now type in as a direct command RANDOMISE USR(16444) (OLD ROM) or RAND USR 16526 (NEW ROM) and what happens?</p>
+																<p>We shall use this routine to print a draughts board for us. You'll need at least 4K to load this program, but once loaded it will quite happily fit and run in 1K. If you only have 1K altogether it might be an idea to try and borrow some memory from somewhere, and then give it back only once you've got the whole of draughts in - but be warned - the listing is spread very thinly throughout the whole of the book.</p>
+																<p>If you take a look at line 330 of HEXLD2 you'll see that every time you input a double-asterisk (**) it will automatically be changed into a newline. This is a point of convenience. We <u>can</u> input a newline if we want, by just deleting the quote marks at the input prompt and instead typing CHR$(118), but it is far simpler, and far more convenient, to only have to type shift-H. If of course you ever <u>need</u> two asterisks in a row you can always type a single asterisk twice.</p>
+																<a name="draughts"></a>
+																<p>The next machine code program forms the very first part of DRAUGHTS. It is the routine which enables us to print the playing board. For the OLD ROM we shall begin loading this program such that the first address used is 4C04. For the NEW ROM the first address will be 4C09. NEW ROM users should remember (or write down) the sequence of BASIC commands</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+POKE 16389,76    [Sets RAMTOP to 4C00h (19456d)]
+NEW
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="draughtsprintplayingboard"></a>
+																<p>which should be typed in BEFORE HEXLD2 is entered. Now enter the following machine code. WRITE TO 4C04 (OLD) or 4C09 (NEW).</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>   <u>NEW ROM</u>
+E1        E1        SPRINT    POP HL         Increment the return
+7E        7E                  LD A,(HL)      address.
+23        23                  INC HL
+E5        E5                  PUSH HL
+FEFF      FEFF                CP FF          Return if no more text.
+C8        C8                  RET Z
+F5                            PUSH AF        <- OLD ROM ONLY
+CDE006                        CALL PRPOS     <- OLD ROM ONLY
+F1                            POP AF         <- OLD ROM ONLY
+CD2007    CD0808              CALL PRINT     Print one character of
+18EF      18F4                JR SPRINT      the text at a time.
+
+CD044C    CD094C              CALL SPRINT    Print the draughts board.
+
+001D1E1F202122232476          DEFM " 12345678"     Data for the SPRINT
+1D00BC00BC00BC00BC1D76        DEFM "1 <u>W</u> <u>W</u> <u>W</u> <u>W</u>1"    subroutine.
+1EBC00BC00BC00BC001E76        DEFM "2<u>W</u> <u>W</u> <u>W</u> <u>W</u> 2"
+1F00BC00BC00BC00BC1F76        DEFM "3 <u>W</u> <u>W</u> <u>W</u> <u>W</u>3"
+2080008000800080002076        DEFM "4<u> </u> <u> </u> <u> </u> <u> </u> 4"
+2100800080008000802176        DEFM "5 <u> </u> <u> </u> <u> </u> <u> </u>5"
+22A700A700A700A7002276        DEFM "6<u>B</u> <u>B</u> <u>B</u> <u>B</u> 6"
+2300A700A700A700A72376        DEFM "7 <u>B</u> <u>B</u> <u>B</u> <u>B</u>7"
+24A700A700A700A7002476        DEFM "8<u>B</u> <u>B</u> <u>B</u> <u>B</u> 8"
+001D1E1F202122232476          DEFM " 12345678"
+76                            DEFB 76
+76                            DEFB 76
+76                            DEFB 76
+0000000000000000000000000000  DEFM "fourteen-spaces"
+FF                            DEFB FF                 End of data.
+C9                            RET                     Return to BASIC.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The command RAND USR 19477 (the address of the CALL SPRINT instruction) will produce a complete draughts board picture on your screen almost instantly. Try it.</p>
+																<p>There is now one thing left to rectify - that is, we cannot as yet SAVE machine code that is stored high in memory. We shall now learn how to do so. Add the following lines:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>                               <u>NEW ROM</u>
+500 PRINT "4C00 TO ";                 500 PRINT "4C00 TO ";
+510 INPUT A$                          510 INPUT A$
+520 PRINT A$                          520 PRINT A$
+530 GO SUB 200                        530 GOSUB 200
+540 LET Y=(X-19454)/2                 540 LET Y=X-19456
+550 DIM O(Y)                          550 DIM O$(Y)
+560 FOR X=1 TO Y                      560 FOR X=1 TO Y
+570 LET A=PEEK(19455+2*X)             570 LET O$(X)=CHR$ PEEK (19456+X)
+573 IF A>127 THEN LET A=A-256
+576 LET O(X)=PEEK(19454+2*X)+256*A
+580 NEXT X                            580 NEXT X
+590 SAVE                              590 SAVE "inverse-space"
+600 FOR X=1 TO Y                      600 FOR X=1 TO Y
+610 POKE 19454+2*X,O(X)               610 POKE 19456+X,CODE O$(X)
+615 POKE 19455+2*X,O(X)/256
+620 NEXT X                            620 NEXT X
+630 CLEAR                             630 CLEAR
+640 STOP                              640 STOP
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter07-draughts.p">chapter07-draughts.p</a>]</p>
+																<p>Now, to SAVE your machine code type RUN 500. At this stage enter 4CA0. It doesn't actually matter which address you give it, so long as this address is larger than the last address of machine code (so far the last address happens to be 4C96).</p>
+																<p>The program will then SAVE automatically (line 590). Incidently if you're wondering why I've put SAVE "inverse-space" in the NEW ROM version try instead using SAVE "space" and see what happens to the line. When you LOAD the program back, OLD ROM users will need to type GO TO 600 before doing anything else. NEW ROM users won't because the program will continue automatically. Here's how the program works: An array of sufficient size to hold all the bytes to be saved is dimensioned in line 550, after which the machine code is copied into this array and SAVED. The routine at 600 does the reverse - it copies the machine code from the array up to the required address.</p>
+																<h4 align="center">AND....</h4>
+																<p>We leave draughts for the moment in order to introduce a few more machine language instructions which we'll need in order to continue with the program. The first of these is AND. Unfortunately for sanity the word AND doesn't mean quite the same thing as it does in BASIC. We're all used to seeing expressions like IF X=1 AND Y=1 THEN... in machine code however we use the word in a completely different context. For example AND B is a complete machine code instruction. So is AND (HL) or AND F0. In order to see how it works it is necessary to take a brief look at numbers in BINARY.</p>
+																<p>BINARY is yet another form of counting - like decimal or hex. Decimal makes use of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9. Hex uses A, B, C, D, E and F as well. Binary on the [other] hand uses only the digits 0 and 1. Converting from hex to binary is very simple - much simpler than changing from decimal to hex - simply convert each digit one at a time from this table:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+               <u>HEXADECIMAL</u>    <u>BINARY</u>
+<u>HEXADECIMAL</u>    <u>BINARY</u>         <u>HEXADECIMAL</u>    <u>BINARY</u>
+0              0000           8              1000
+1              0001           9              1001
+2              0010           A              1010
+3              0011           B              1011
+4              0100           C              1100
+5              0101           D              1101
+6              0110           E              1110
+7              0111           F              1111
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Therefore C9 (hex) is the same as 11001001 (binary). Can you see how the binary splits up into two halves, 1100 (C) and 1001 (9)? The same is true of all numbers. What is 1E (hex) in binary? What is 01100111 in hex? Now see if you can work out what 123 (decimal) is in binary (hint: convert to hex first).</p>
+																<p>AND assignes a new value to the A register. This new value is determined by a) the previous value of the A register, and b) the value written after the word AND in the instruction. Suppose A contains 5A, and B contains 1F, and the computer then comes across the instruction AND B. Here's how the new value is calculated:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+        A 01011010
+        B 00011111
+New value 00011010
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>As you can see, the digits of the new value are zero if there is a zero in the corresponding position of either or both of the old values, and a one if both the old values contained a one in that position. To make this clear just look at the columns - you'll see that in all cases two zeroes lead to a zero, two ones lead to a one, and a mixture of zeroes and ones lead to a zero. The function is called AND since a one is only obtained if A <u>AND</u> B have a corresponding one. It may appear to you to be rather a useless function, but it is in fact one of the most widely used machine language instructions there is. Some examples of its use are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+AND A     Leaves A unchanged, but resets the carry flag.
+AND 7F    If A contains a printable character, [this] prevents it from
+          being inverse - both of these examples we shall make use of.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<h4 align="center">OR....</h4>
+																<p>OR is pretty similar. The rules are that two zeroes lead to a zero, two ones lead to a one. The difference here is that a mixture of zeroes and ones lead to a one rather than a zero. Instead of AND A then we could have used OR A to reset the carry flag. The function is called OR since a one is obtained if A <u>OR</u> B have a corresponding one. One use for the OR function could be OR 80 which, if A is a printable character, will ensure that it is an inverse character. This also we shall use. There is one other function we need to know - it is called XOR.</p>
+																<h4 align="center">XOR....</h4>
+																<p>XOR is not a character out of Flash Gordon, despite its sound, it is in fact short for Exclusive-OR, which is a variation on ordinary OR. Its difference is that two ones will lead to a zero. Everything else is the same as in ordinary OR, i.e. two zeroes equals zero, a mixture equals one. It follows then that XOR FF will change every single binary digit of A (this is called "complementing") from a zero to a one or vice versa. Also note that XOR A will combine A with itself and hence come up with eight zeroes. It in effect resets both A and the carry flag to zero, having the same effect as SUB A,A. This too is useful.</p>
+																<p>The reason we are interested in these functions is the manner in which we shall represent kings in our draughts game. As you have seen from the initial playing board ordinary pieces are inverse B or inverse W (for Black or White). Kings however shall be ORDINARY B or ORDINARY W. Thus a human's piece can either be 27 hex (the character code of B) or A7 (the character code of inverse B), so to check whether or not we've found one we just put it into the A register, use OR 80, and compare it with A7. This saves us from making two seperate comparisons.</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter06.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter08.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

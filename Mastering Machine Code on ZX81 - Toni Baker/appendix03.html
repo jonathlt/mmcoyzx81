@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Appendix Three
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('appendix03');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="appendix02.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="appendix04.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">A Conversion Table from Hex to Assembly</h1>
+																<p>[Thunor: Key to symbols used:</p>
+																<ul>
+																	<li>d - A displacement e.g. 7B.</li>
+																	<li>e - A single byte e.g. F7.</li>
+																	<li>mn - A numerical constant e.g. 9E3D.</li>
+																	<li>n - A numerical constant e.g. 3D.</li>
+																	<li>pq - An absolute address e.g. 4C00.</li>
+																</ul>
+																<p>Key end.]</p>
+																<a name="ordinary"></a>
+																<h3 align="center">ORDINARY</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+yx
+    0             1             2             3
+--+-----------------------------------------------------
+0 | NOP           LD BC,mn      LD (BC),A     INC BC
+1 | DJNZ e        LD DE,mn      LD (DE),A     INC DE
+2 | JR NZ,e       LD HL,mn      LD (pq),HL    INC HL
+3 | JR NC,e       LD SP,mn      LD (pq),A     INC SP
+4 | LD B,B        LD B,C        LD B,D        LD B,E
+5 | LD D,B        LD D,C        LD D,D        LD D,E
+6 | LD H,B        LD H,C        LD H,D        LD H,E
+7 | LD (HL),B     LD (HL),C     LD (HL),D     LD (HL),E
+8 | ADD A,B       ADD A,C       ADD A,D       ADD A,E
+9 | SUB B         SUB C         SUB D         SUB E
+A | AND B         AND C         AND D         AND E
+B | OR B          OR C          OR D          OR E
+C | RET NZ        POP BC        JP NZ,pq      JP pq
+D | RET NC        POP DE        JP NC,pq      OUT (n),A
+E | RET PO        POP HL        JP PO,pq      EX (SP),HL
+F | RET P         POP AF        JP P,pq       DI
+
+    4             5             6             7
+--+-----------------------------------------------------
+0 | INC B         DEC B         LD B,n        RLCA
+1 | INC D         DEC D         LD D,n        RLA
+2 | INC H         DEC H         LD H,n        DAA
+3 | INC (HL)      DEC (HL)      LD (HL),n     SCF
+4 | LD B,H        LD B,L        LD B,(HL)     LD B,A
+5 | LD D,H        LD D,L        LD D,(HL)     LD D,A
+6 | LD H,H        LD H,L        LD H,(HL)     LD H,A
+7 | LD (HL),H     LD (HL),L     HALT          LD (HL),A
+8 | ADD A,H       ADD A,L       ADD A,(HL)    ADD A,A
+9 | SUB H         SUB L         SUB (HL)      SUB A
+A | AND H         AND L         AND (HL)      AND A
+B | OR H          OR L          OR (HL)       OR A
+C | CALL NZ,pq    PUSH BC       ADD A,n       RST 00
+D | CALL NC,pq    PUSH DE       SUB n         RST 10
+E | CALL PO,pq    PUSH HL       AND n         RST 20
+F | CALL P,pq     PUSH AF       OR n          RST 30
+
+    8             9             A             B
+--+-----------------------------------------------------
+0 | EX AF,AF'     ADD HL,BC     LD A,(BC)     DEC BC
+1 | JR e          ADD HL,DE     LD A,(DE)     DEC DE
+2 | JR Z,e        ADD HL,HL     LD HL,(pq)    DEC HL
+3 | JR C,e        ADD HL,SP     LD A,(pq)     DEC SP
+4 | LD C,B        LD C,C        LD C,D        LD C,E
+5 | LD E,B        LD E,C        LD E,D        LD E,E
+6 | LD L,B        LD L,C        LD L,D        LD L,E
+7 | LD A,B        LD A,C        LD A,D        LD A,E
+8 | ADC A,B       ADC A,C       ADC A,D       ADC A,E
+9 | SBC A,B       SBC A,C       SBC A,D       SBC A,E
+A | XOR B         XOR C         XOR D         XOR E
+B | CP B          CP C          CP D          CP E
+C | RET Z         RET           JP Z,pq       #
+D | RET C         EXX           JP C,pq       IN A,(n)
+E | RET PE        JP (HL)       JP PE,pq      EX DE,HL
+F | RET M         LD SP,HL      JP M,pq       EI
+
+    C             D             E             F
+--+-----------------------------------------------------
+0 | INC C         DEC C         LD C,n        RRCA
+1 | INC E         DEC E         LD E,n        RRA
+2 | INC L         DEC L         LD L,n        CPL
+3 | INC A         DEC A         LD A,n        CCF
+4 | LD C,H        LD C,L        LD C,(HL)     LD C,A
+5 | LD E,H        LD E,L        LD E,(HL)     LD E,A
+6 | LD L,H        LD L,L        LD L,(HL)     LD L,A
+7 | LD A,H        LD A,L        LD A,(HL)     LD A,A
+8 | ADC A,H       ADC A,L       ADC A,(HL)    ADC A,A
+9 | SBC A,H       SBC A,L       SBC A,(HL)    SBC A,A
+A | XOR H         XOR L         XOR (HL)      XOR A
+B | CP H          CP L          CP (HL)       CP A
+C | CALL Z,pq     CALL pq       ADC A,n       RST 08
+D | CALL C,pq     #             SBC A,n       RST 18
+E | CALL PE,pq    #             XOR n         RST 28
+F | CALL M,pq     #             CP n          RST 38
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="aftercb"></a>
+																<h3 align="center">AFTER CB</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+CByx
+    0        1        2        3        4        5        6           7
+--+--------------------------------------------------------------------------
+0 | RLC B    RLC C    RLC D    RLC E    RLC H    RLC L    RLC (HL)    RLC A
+1 | RL B     RL C     RL D     RL E     RL H     RL L     RL (HL)     RL A
+2 | SLA B    SLA C    SLA D    SLA E    SLA H    SLA L    SLA (HL)    SLA A
+3 | -        -        -        -        -        -        -           -
+4 | BIT 0,B  BIT 0,C  BIT 0,D  BIT 0,E  BIT 0,H  BIT 0,L  BIT 0,(HL)  BIT 0,A
+5 | BIT 2,B  BIT 2,C  BIT 2,D  BIT 2,E  BIT 2,H  BIT 2,L  BIT 2,(HL)  BIT 2,A
+6 | BIT 4,B  BIT 4,C  BIT 4,D  BIT 4,E  BIT 4,H  BIT 4,L  BIT 4,(HL)  BIT 4,A
+7 | BIT 6,B  BIT 6,C  BIT 6,D  BIT 6,E  BIT 6,H  BIT 6,L  BIT 6,(HL)  BIT 6,A
+8 | RES 0,B  RES 0,C  RES 0,D  RES 0,E  RES 0,H  RES 0,L  RES 0,(HL)  RES 0,A
+9 | RES 2,B  RES 2,C  RES 2,D  RES 2,E  RES 2,H  RES 2,L  RES 2,(HL)  RES 2,A
+A | RES 4,B  RES 4,C  RES 4,D  RES 4,E  RES 4,H  RES 4,L  RES 4,(HL)  RES 4,A
+B | RES 6,B  RES 6,C  RES 6,D  RES 6,E  RES 6,H  RES 6,L  RES 6,(HL)  RES 6,A
+C | SET 0,B  SET 0,C  SET 0,D  SET 0,E  SET 0,H  SET 0,L  SET 0,(HL)  SET 0,A
+D | SET 2,B  SET 2,C  SET 2,D  SET 2,E  SET 2,H  SET 2,L  SET 2,(HL)  SET 2,A
+E | SET 4,B  SET 4,C  SET 4,D  SET 4,E  SET 4,H  SET 4,L  SET 4,(HL)  SET 4,A
+F | SET 6,B  SET 6,C  SET 6,D  SET 6,E  SET 6,H  SET 6,L  SET 6,(HL)  SET 6,A
+
+    8        9        A        B        C        D        E           F
+--+--------------------------------------------------------------------------
+0 | RRC B    RRC C    RRC D    RRC E    RRC H    RRC L    RRC (HL)    RRC A
+1 | RR B     RR C     RR D     RR E     RR H     RR L     RR (HL)     RR A
+2 | SRA B    SRA C    SRA D    SRA E    SRA H    SRA L    SRA (HL)    SRA A
+3 | SRL B    SRL C    SRL D    SRL E    SRL H    SRL L    SRL (HL)    SRL A
+4 | BIT 1,B  BIT 1,C  BIT 1,D  BIT 1,E  BIT 1,H  BIT 1,L  BIT 1,(HL)  BIT 1,A
+5 | BIT 3,B  BIT 3,C  BIT 3,D  BIT 3,E  BIT 3,H  BIT 3,L  BIT 3,(HL)  BIT 3,A
+6 | BIT 5,B  BIT 5,C  BIT 5,D  BIT 5,E  BIT 5,H  BIT 5,L  BIT 5,(HL)  BIT 5,A
+7 | BIT 7,B  BIT 7,C  BIT 7,D  BIT 7,E  BIT 7,H  BIT 7,L  BIT 7,(HL)  BIT 7,A
+8 | RES 1,B  RES 1,C  RES 1,D  RES 1,E  RES 1,H  RES 1,L  RES 1,(HL)  RES 1,A
+9 | RES 3,B  RES 3,C  RES 3,D  RES 3,E  RES 3,H  RES 3,L  RES 3,(HL)  RES 3,A
+A | RES 5,B  RES 5,C  RES 5,D  RES 5,E  RES 5,H  RES 5,L  RES 5,(HL)  RES 5,A
+B | RES 7,B  RES 7,C  RES 7,D  RES 7,E  RES 7,H  RES 7,L  RES 7,(HL)  RES 7,A
+C | SET 1,B  SET 1,C  SET 1,D  SET 1,E  SET 1,H  SET 1,L  SET 1,(HL)  SET 1,A
+D | SET 3,B  SET 3,C  SET 3,D  SET 3,E  SET 3,H  SET 3,L  SET 3,(HL)  SET 3,A
+E | SET 5,B  SET 5,C  SET 5,D  SET 5,E  SET 5,H  SET 5,L  SET 5,(HL)  SET 5,A
+F | SET 7,B  SET 7,C  SET 7,D  SET 7,E  SET 7,H  SET 7,L  SET 7,(HL)  SET 7,A
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="afterdd"></a>
+																<h3 align="center">AFTER DD</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+DDyx
+    0            1            2            3
+--+---------------------------------------------------
+0 | -            -            -            -
+1 | -            -            -            -
+2 | -            LD IX,mn     LD (pq),IX   INC IX
+3 | -            -            -            -
+4 | -            -            -            -
+5 | -            -            -            -
+6 | -            -            -            -
+7 | LD (IX+d),B  LD (IX+d),C  LD (IX+d),D  LD (IX+d),E
+8 | -            -            -            -
+9 | -            -            -            -
+A | -            -            -            -
+B | -            -            -            -
+C | -            -            -            -
+D | -            -            -            -
+E | -            POP IX       -            EX (SP),IX
+F | -            -            -            -
+
+    4            5            6            7
+--+---------------------------------------------------
+0 | -            -            -            -
+1 | -            -            -            -
+2 | -            -            -            -
+3 | INC (IX+d)   DEC (IX+d)   LD (IX+d),n  -
+4 | -            -            LD B,(IX+d)  -
+5 | -            -            LD D,(IX+d)  -
+6 | -            -            LD H,(IX+d)  -
+7 | LD (IX+d),H  LD (IX+d),L  -            LD (IX+d),A
+8 | -            -            ADD A,(IX+d) -
+9 | -            -            SUB (IX+d)   -
+A | -            -            AND (IX+d)   -
+B | -            -            OR (IX+d)    -
+C | -            -            -            -
+D | -            -            -            -
+E | -            PUSH IX      -            -
+F | -            -            -            -
+
+    8  9          A           B         C  D  E             F
+--+----------------------------------------------------------
+0 | -  ADD IX,BC  -           -         -  -  -             -
+1 | -  ADD IX,DE  -           -         -  -  -             -
+2 | -  ADD IX,IX  LD IX,(pq)  DEC IX    -  -  -             -
+3 | -  ADD IX,SP  -           -         -  -  -             -
+4 | -  -          -           -         -  -  LD C,(IX+d)   -
+5 | -  -          -           -         -  -  LD E,(IX+d)   -
+6 | -  -          -           -         -  -  LD L,(IX+d)   -
+7 | -  -          -           -         -  -  LD A,(IX+d)   -
+8 | -  -          -           -         -  -  ADC A,(IX+d)  -
+9 | -  -          -           -         -  -  SBC (IX+d)    -
+A | -  -          -           -         -  -  XOR (IX+d)    -
+B | -  -          -           -         -  -  CP (IX+d)     -
+C | -  -          -           #         -  -  -             -
+D | -  -          -           -         -  -  -             -
+E | -  JP (IX)    -           EX DE,IX  -  -  -             -
+F | -  LD SP,IX   -           -         -  -  -             -
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="aftered"></a>
+																<h3 align="center">AFTER ED</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+EDyx
+    0         1          2          3           4    5     6     7
+--+--------------------------------------------------------------------
+0 | -         -          -          -           -    -     -     -
+1 | -         -          -          -           -    -     -     -
+2 | -         -          -          -           -    -     -     -
+3 | -         -          -          -           -    -     -     -
+4 | IN B,(C)  OUT (C),B  SBC HL,BC  LD (pq),BC  NEG  RETN  IM 0  LD I,A
+5 | IN D,(C)  OUT (C),D  SBC HL,DE  LD (pq),DE  -    -     IM 1  LD A,I
+6 | IN H,(C)  OUT (C),H  SBC HL,HL  -           -    -     -     RRD
+7 | -         -          SBC HL,SP  LD (pq),SP  -    -     -     -
+8 | -         -          -          -           -    -     -     -
+9 | -         -          -          -           -    -     -     -
+A | LDI       CPI        INI        OUTI        -    -     -     -
+B | LDIR      CPIR       INIR       OTIR        -    -     -     -
+C | -         -          -          -           -    -     -     -
+D | -         -          -          -           -    -     -     -
+E | -         -          -          -           -    -     -     -
+F | -         -          -          -           -    -     -     -
+
+    8         9          A          B           C    D     E     F
+--+--------------------------------------------------------------------
+0 | -         -          -          -           -    -     -     -
+1 | -         -          -          -           -    -     -     -
+2 | -         -          -          -           -    -     -     -
+3 | -         -          -          -           -    -     -     -
+4 | IN C,(C)  OUT (C),C  ADC HL,BC  LD BC,(pq)  -    RETI  -     LD R,A
+5 | IN E,(C)  OUT (C),E  ADC HL,DE  LD DE,(pq)  -    -     IM 2  LD A,R
+6 | IN L,(C)  OUT (C),L  ADC HL,HL  -           -    -     -     RLD
+7 | IN A,(C)  OUT (C),A  ADC HL,SP  LD SP,(pq)  -    -     -     -
+8 | -         -          -          -           -    -     -     -
+9 | -         -          -          -           -    -     -     -
+A | LDD       CPD        IND        OUTD        -    -     -     -
+B | LDDR      CPDR       INDR       OTDR        -    -     -     -
+C | -         -          -          -           -    -     -     -
+D | -         -          -          -           -    -     -     -
+E | -         -          -          -           -    -     -     -
+F | -         -          -          -           -    -     -     -
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="afterfd"></a>
+																<h3 align="center">AFTER FD</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+FDyx
+    0            1             2            3            4
+--+-----------------------------------------------------------------
+0 | -            -             -            -            -
+1 | -            -             -            -            -
+2 | -            LD IY,mn      LD (pq),IY   INC IY       -
+3 | -            -             -            -            INC (IY+d)
+4 | -            -             -            -            -
+5 | -            -             -            -            -
+6 | -            -             -            -            -
+7 | LD (IY+d),B  LD (IY+d),C   LD (IY+d),D  LD (IY+d),E  LD (IY+d),H
+8 | -            -             -            -            -
+9 | -            -             -            -            -
+A | -            -             -            -            -
+B | -            -             -            -            -
+C | -            -             -            -            -
+D | -            -             -            -            -
+E | -            POP IY        -            EX (SP),IY   -
+F | -            -             -            -            -
+
+    5            6             7            8            9
+--+-----------------------------------------------------------------
+0 | -            -             -            -            ADD IY,BC
+1 | -            -             -            -            ADD IY,DE
+2 | -            -             -            -            ADD IY,IY
+3 | DEC (IY+d)   LD (IY+d),n   -            -            ADD IY,SP
+4 | -            LD B,(IY+d)   -            -            -
+5 | -            LD D,(IY+d)   -            -            -
+6 | -            LD H,(IY+d)   -            -            -
+7 | LD (IY+d),L  -             LD (IY+d),A  -            -
+8 | -            ADD A,(IY+d)  -            -            -
+9 | -            SUB (IY+d)    -            -            -
+A | -            AND (IY+d)    -            -            -
+B | -            OR (IY+d)     -            -            -
+C | -            -             -            -            -
+D | -            -             -            -            -
+E | PUSH IY      -             -            -            JP (IY)
+F | -            -             -            -            LD SP,IY
+
+    A           B            C           D           E             F
+--+-----------------------------------------------------------------
+0 | -           -            -           -           -             -
+1 | -           -            -           -           -             -
+2 | LD IY,(pq)  DEC IY       -           -           -             -
+3 | -           -            -           -           -             -
+4 | -           -            -           -           LD C,(IY+d)   -
+5 | -           -            -           -           LD E,(IY+d)   -
+6 | -           -            -           -           LD L,(IY+d)   -
+7 | -           -            -           -           LD A,(IY+d)   -
+8 | -           -            -           -           ADC A,(IY+d)  -
+9 | -           -            -           -           SBC (IY+d)    -
+A | -           -            -           -           XOR (IY+d)    -
+B | -           -            -           -           CP (IY+d)     -
+C | -           #            -           -           -             -
+D | -           -            -           -           -             -
+E | -           EX DE,IY     -           -           -             -
+F | -           -            -           -           -             -
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="afterddcb"></a>
+																<h3 align="center">AFTER DDCB</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+DDCBddyx
+    6             E
+--+---------------------------
+0 | RLC (IX+d)    RRC (IX+d)
+1 | RL (IX+d)     RR (IX+d)
+2 | SLA (IX+d)    SRA (IX+d)
+3 | -             SRL (IX+d)
+4 | BIT 0,(IX+d)  BIT 1,(IX+d)
+5 | BIT 2,(IX+d)  BIT 3,(IX+d)
+6 | BIT 4,(IX+d)  BIT 5,(IX+d)
+7 | BIT 6,(IX+d)  BIT 7,(IX+d)
+8 | RES 0,(IX+d)  RES 1,(IX+d)
+9 | RES 2,(IX+d)  RES 3,(IX+d)
+A | RES 4,(IX+d)  RES 5,(IX+d)
+B | RES 6,(IX+d)  RES 7,(IX+d)
+C | SET 0,(IX+d)  SET 1,(IX+d)
+D | SET 2,(IX+d)  SET 3,(IX+d)
+E | SET 4,(IX+d)  SET 5,(IX+d)
+F | SET 6,(IX+d)  SET 7,(IX+d)
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="afterfdcb"></a>
+																<h3 align="center">AFTER FDCB</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+FDCBddyx
+    6             E
+--+---------------------------
+0 | RLC (IY+d)    RRC (IY+d)
+1 | RL (IY+d)     RR (IY+d)
+2 | SLA (IY+d)    SRA (IY+d)
+3 | -             SRL (IY+d)
+4 | BIT 0,(IY+d)  BIT 1,(IY+d)
+5 | BIT 2,(IY+d)  BIT 3,(IY+d)
+6 | BIT 4,(IY+d)  BIT 5,(IY+d)
+7 | BIT 6,(IY+d)  BIT 7,(IY+d)
+8 | RES 0,(IY+d)  RES 1,(IY+d)
+9 | RES 2,(IY+d)  RES 3,(IY+d)
+A | RES 4,(IY+d)  RES 5,(IY+d)
+B | RES 6,(IY+d)  RES 7,(IY+d)
+C | SET 0,(IY+d)  SET 1,(IY+d)
+D | SET 2,(IY+d)  SET 3,(IY+d)
+E | SET 4,(IY+d)  SET 5,(IY+d)
+F | SET 6,(IY+d)  SET 7,(IY+d)
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<h4 align="center">[ADDENDUM]</h4>
+																<p>[Thunor: Added a missing instruction ED73xxxx LD (pq),SP.]</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="appendix02.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="appendix04.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

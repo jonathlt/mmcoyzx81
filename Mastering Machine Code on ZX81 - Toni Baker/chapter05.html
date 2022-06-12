@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 5
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter05');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter04.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter06.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">More Places to Store Machine Code</h1>
+																<h4 align="center">SOME NEW PLACES TO STORE MACHINE CODE</h4>
+																<a name="hexldremlo"></a>
+																<p>Storing machine code above RAMTOP will protect it from being erased by NEW, or overwritten by a program, but it has the disadvantage that you can never save it. There are several alternative locations in which we can store machine language programs, and we shall explore a few of the possibilities in this chapter.</p>
+																<h4 align="center">USING REM</h4>
+																<p>To store a machine language routine that is fifty bytes long, make the first line of your program</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+1 REM 12345678901234567890123456789012345678901234567890
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>i.e. a REM statement with fifty characters after it. If your routine was sixty bytes long then you'd need sixty characters after the word REM. If it were only three bytes long you would only need three characters after the word REM. It doesn't actually matter what these characters actually are, but counting upwards in ones, as I have done, will ensure that you don't lose count halfway through. You will need to LOAD "HEXLD" before you add this new line one, and then change line 10 to</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+10 LET X=16514  (or 16427 on the OLD ROM)
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter05-hexldremlo.p">chapter05-hexldremlo.p</a>]</p>
+																<p>OLD ROM users should ensure that line one does not appear on the automatic LISTing. You can use the command POKE 16403,10 to remove it. If this has no effect try moving the cursor to line 10 and try again.</p>
+																<p>Now you can enter a machine code program exactly as before, except that to execute it you must say USR 16514 instead of USR 30000. On the OLD ROM you must say USR(16427). <u>BUT</u> you MUST NOT type NEW. Delete HEXLD by entering the line numbers one at a time, and do not delete line one! On the OLD ROM you must not even attempt to list line one or you may cause a crash.</p>
+																<p>Now there are two very important differences between using 16514 and using 30000. Firstly, SAVE will store the machine code as well as the BASIC program - this is something you cannot do in upper memory. Secondly, the command NEW will erase it. It is thus an integral part of the program, and can only be used with that one BASIC program and no other (unless you delete it line by line and then type in a new program line by line). If you have written a machine code routine specifically to accompany some BASIC program then this method is an obvious choice, but it does have one big disadvantage - on the OLD ROM the command LIST will usually cause a system crash.</p>
+																<p>There is another very very good place to store machine code, that is immediately after the program area. This has several advantages:</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>The BASIC surrounding program can be safely listed - even on the OLD ROM.</li>
+																	<li>The MACHINE CODE can be SAVED.</li>
+																	<li>Using RUN, as opposed to GOTO 1, will not wipe it out.</li>
+																</ul>
+																<p>To load a machine code routine that is, say, 20 bytes long, type the following BEFORE you type in any BASIC:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+OLD ROM:  1 REM 45678901234567890
+NEW ROM:  1 REM 678901234567890
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Then as a direct command type:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+OLD ROM:  POKE 16424,-1
+NEW ROM:  POKE 16509,-1
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>You have now reserved a space of twenty bytes in which to store whatever machine code you like. The starting address is a little more complicated though - it is:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+OLD ROM:  PEEK(16392)+256*PEEK(16393)-20
+NEW ROM:  PEEK 16396+256*PEEK 16397-20
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The PEEK expression is the end of the machine code, and the minus twenty is there to find the start. This is an excellent way of storing machine language routines. You begin loading it from address PEEK 16396+256*PEEK 16397-length-of-routine, and you can execute it with the expression USR (PEEK 16396+256*PEEK 16397-length-of-routine). First though, there is one disadvantage to get round. As I've explained things so far, there is no way you can actually load an editing program like HEXLD: If you LOAD <u>before</u> you apply the above technique then HEXLD will disappear along with the REM statement as soon as you POKE 16509. If you try to LOAD <u>after</u> you've reserved a space then the very act of LOADing will overwrite this space.</p>
+																<a name="hexldremhi"></a>
+																<p>Here then is a step by step method of reserving space for machine code in a place that is 1) editable, 2) SAVEable, and 3) UnLISTable.</p>
+																<p><u>STEP ONE</u>. LOAD an editing program such as HEXLD.</p>
+																<p><u>STEP TWO</u>. Add a new line at the END of the program: 9999 REM followed by a number of arbitrary characters. On the OLD ROM you'll need three characters less than the number of bytes in the machine code routine, on the NEW ROM you'll need five bytes less than the machine code. The best way of doing this is to fill the REM statement with digits, and simply start counting from 4 (OLD ROM) or 6 (NEW ROM). Like this - for a fifteen byte routine:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+OLD ROM:  9999 REM 456789012345
+NEW ROM:  9999 REM 6789012345
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Of course it doesn't actually matter if you have too many characters, but it is a waste of space if you reserve [an] area and then don't use it.</p>
+																<p><u>STEP THREE</u>. Add the following lines <u>anywhere</u> in the program. I've put them at 9000, but it doesn't matter. If you use 8000 then just remember to read 8000 every time you see 9000 written on this page.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+OLD ROM:  9000 LET X=PEEK(16392)+256*PEEK(16393)
+NEW ROM:  9000 LET X=PEEK 16396+256*PEEK 16397
+
+OLD ROM:  9010 POKE X-(four more than the number of
+               characters in the REM statement),-1
+NEW ROM:  9010 POKE X-(six more than the number of
+               characters in the REM statement),-1
+
+BOTH:     9020 STOP
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter05-hexldremhi.p">chapter05-hexldremhi.p</a>]</p>
+																<p>If you counted up to fifteen in line 9999 (as above) then 9010 should be POKE X-16,-1. If you counted up to twenty then line 9010 should instead be POKE X-21,-1, and so on. Remember though to start counting at four or six though, as above.</p>
+																<p><u>STEP FOUR</u>. Run the program from line 9000, and then delete lines 9000, 9010, and 9020.</p>
+																<p><u>STEP FIVE</u>. Replace all references to the machine-code-starting-address in your editing program by the expression PEEK 16396+256*PEEK 16397 minus the number you counted up to in the REM statement. OLD ROM users should instead use PEEK(16392)+256*PEEK(16393) minus the number you counted up to in the REM statement.</p>
+																<p>You are now complete. The only thing you must not do is type NEW, since this will erase the machine code. Other than that you are in complete command.</p>
+																<h4 align="center">REM STATEMENTS</h4>
+																<p>For the purpose of storing machine code, OLD and NEW ROM REM statements are completely different. Let's examine them one at a time. First of all for the OLD ROM:</p>
+																<p>There are several important points about OLD ROM REM statements. Most people already know that a "blank" REM statement - that is a statement consisting of the word REM and nothing else - has the effect of ensuring that the next line is not executed. It is therefore the same as GOTO the-line-after-next, and can be used in BASIC programs deliberately with this meaning.</p>
+																<p>The biggest limitation of an OLD ROM REM statement is the fact that you <u>may not</u> store the byte 76 (hex) in the line, except in extremely limited cases, which I shall explain. The reason is that a character 76 is interpreted by the ROM as an <u>end of line</u> marker. The two bytes immediately after such a character will be interpreted as representing the line number of the next BASIC program line, and the following byte will be the first character in that line. Thus if the following data were POKEd into a REM statement in line one the following would happen:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+DATA:      39 76 01 01 F8 E4 D5
+
+RESULT:    1 REM T
+         257 LET < THEN
+           2 next lines of program...
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>If you tried to RUN this program you would get a syntax error in "line 257". Typing RUN 2 would be useless, because the program searches for line numbers from top to bottom, and as soon as it hit the "line number" 257 it would think to itself "ah - there obviously isn't a line 2 in the program - I'll have to RUN it from here instead". The same applies to all GOTOs in the program which have destinations between 2 and 257. You must only allow 76s in your data IF the next two bytes form a "line number" less than the next line number in your program, and IF you <u>never</u> try to execute this "new line".</p>
+																<p>On the other hand - this treatment does offer one or two advantages. For instance, if you made your REM statement too long and you want to shorten it, if your machine code data ends at address A just type</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+POKE A+2,2
+POKE A+1,0
+POKE A,118
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>then simply delete "line 2" by typing in its line number. It doesn't matter if there is already a line numbered 2 in the program - typing the line number alone will only delete the first "line 2" in the program - all your excess REM characters in other words.</p>
+																<p>Conversely, if you find you don't have enough characters after the word REM just type in a line 2 consisting of a second REM statement full of arbitrary characters. In this way as soon as the "real" end of line marker is overwritten, line 2 will become part of line 1, with enough characters for whatever you need.</p>
+																<p>Alas, the NEW ROM does not fit any of these descriptions. NEW ROM REMs are quite, quite different.</p>
+																<p>The first, and most important difference, is that you <u>can</u> put 76s into the REM data and the machine won't notice. <u>BUT</u> if you do so be prepared to be confused by the LISTing - even the ROM gets confused over it - but you don't need to worry because even with supposed new-line markers in mid-line the program will RUN quite smoothly, and will <u>not</u> interpret the remainder of the line as a different line.</p>
+																<p>On the other hand, it's a little more difficult to extend the length of a REM statement. If you want to overrun into line two you'll have to do some clever POKEing first, but I'll explain how to get round that in a minute. The obvious way of making a line longer is simply to use EDIT and add more characters. Unfortunately for us this is usually not a very wise thing to do.</p>
+																<p>If the data in the line <u>does not</u> contain a byte 7E then by all means go ahead and use EDIT - you are quite safe, and nothing will go wrong.</p>
+																<p>If the data in the line <u>does</u> contain a byte 7E then <u>DO NOT</u> use EDIT. In the listing, a byte 7E is invisible, and the five bytes of data that follow immediately after it will also be invisible, but they are still there! If on the other hand you use EDIT, all six of these invisible bytes will simply vanish without a trace.</p>
+																<p>7E is used by Sinclair to mean "This is a (floating point) number". Whenever you use a decimal number in a program listing the ROM will automatically follow this number with a byte 7E, followed by five more bytes which contain the number itself in floating-point-binary-form. Both the byte 7E and the five bytes that follow will be invisible from the listing. This is what causes all the problems in editing REM statements. Now although I agree that this is a very very efficient means of storing floating point numbers in a program, it is also true that Sinclair Research could have used <u>ANY</u> byte for this purpose - they didn't specifically have to use 7E. It is of course the purest of coincidences that 7E happens to be one of the most commonly used machine language instructions of all.</p>
+																<p>The only practical means of adding more characters to a REM statement containing machine code on the NEW ROM is to let the data overrun into line two, but there are problems even there, thanks to our kind friends at Sinclair Research. You see the start of every line of program is preceded by two invisible bytes which store the length of the line, so that even if you overwrite the end-of-line-marker, the ROM will still try to interpret the second line from the same point. To get round this you have to actually POKE these invisible bytes with different values. The following is a small routine which will enable you to increase the length of a REM statement at line one.</p>
+																<p>Step one is to insert a new line 2 [in]to your BASIC program consisting of the word REM followed by a number of arbitrary characters. Then, at ANY point in the program insert the following five lines - (they will shortly be deleted anyway):</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+LET A=16515+PEEK 16511+256*PEEK 16512
+LET A=A+PEEK A+256*PEEK (A+1)-16511
+POKE 16511,A-256*INT (A/256)
+POKE 16512,INT (A/256)
+STOP
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Simply run this routine and line 2 will automatically be a part of line 1. You can delete this routine now - its job has been done. LIST line one - you'll see that line two still looks quite seperate, but try moving the cursor down - you'll find it skips over line two altogether. Try deleting line 2 by typing in its line number - it won't work because now the computer doesn't know that line 2 is there! Whatever the listing may <u>look</u> like, the ROM will now ignore line 2 altogether, taking it to be part of line one. You may now quite happily overwrite the end-of-line-marker at the end of line one with no ill effects.</p>
+																<p>Conversely, the following routine will shorten a REM statement by a <u>minimum</u> of six bytes.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+LET A=the address of the last byte which you wish to preserve
+      in the REM statement of line 1
+LET B=A-16511
+LET C=PEEK 16511+256*PEEK 16512-B-4
+POKE 16511,B-256*INT (B/256)
+POKE 16512,INT (B/256)
+POKE A+1,118
+POKE A+2,0
+POKE A+3,2
+POKE A+4,C-256*INT (C/256)
+POKE A+5,INT (C/256)
+STOP
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Again you simply RUN the routine once, and then delete it. Now LIST the program and you'll find a new line 2 has appeared. Delete this by typing its line number and your REM statement will now be as short as you need it.</p>
+																<h4 align="center">USING THE VARIABLES AREA</h4>
+																<p>Another place where machine code may be stored is in the variables area. To do this you must first of all reserve the space. To store a machine code routine of n bytes (n is the length) OLD ROM users should type DIM O(n/2), and NEW ROM users should type DIM O$(n). You may now write your machine code.</p>
+																<p>On the OLD ROM the starting address will be PEEK(16392)+256*PEEK(16393)+2 provided the array O is the first item in the variables area. This will be the case if the DIM was the first DIM, FOR, INPUT, or LET statement executed since the last time you used RUN or CLEAR. If you DIMensioned O as a direct command you should remember to type CLEAR first. You can say in your program something along the lines of LET A=PEEK(16392)+256*PEEK(16393)+2 right at the very start, and this will not change throughout the program.</p>
+																<p>On the NEW ROM the starting address is PEEK 16400+256*PEEK 16401+6 provided the character array O$ is the first item in the variables area. This will be true if the DIM was the first DIM, FOR, INPUT, or LET statement executed since the last time you used RUN or CLEAR. You can dimension O$ as a direct command, but you must remember to type CLEAR first. There is however one big difference between the OLD and NEW ROMs here. On the NEW ROM the value PEEK 16400+256*PEEK 16401+6 will <u>change</u> during the running of your program if you have less than 3.25K plugged in. If you have more than 3.25K then you don't need to worry, but otherwise you must recalculate the expression every time you wish to access the machine code.</p>
+																<p>One last important point is that having stored machine-code in the variables area, any future use of either RUN or CLEAR will completely wipe it all out, never to be seen again. For this reason I do not advise using it for machine code storage. It WILL SAVE and RE-LOAD, again provided you never type RUN or CLEAR.</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter04.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter06.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

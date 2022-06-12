@@ -1,0 +1,731 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 9
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter09');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter08.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter10.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">A Program to Help You Debug</h1>
+																<a name="hexld3"></a>
+																<h3 align="center">[HEXLD3]</h3>
+																<p>[Thunor: Before going any further, it is important that you read my <a href="#addendum">addendum</a> at the bottom of the page. You will also find links to downloadable versions of HEXLD3 there.]</p>
+																<p>Now we know more or less what machine language is, it's about time we learned a bit more about how to handle it. What we shall do now is to write a new program - HEXLD3 - which will allow us to do five things:</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>Input machine code.</li>
+																	<li>Insert machine code in between previous routines, but without overwriting anything.</li>
+																	<li>Delete machine code, closing up the gap that it occupied.</li>
+																	<li>List machine code.</li>
+																	<li>SAVE machine code.</li>
+																</ul>
+																<p>The important point about this program is that the principle parts of it will themselves be in machine code, although all of the surrounding fabric will be BASIC. To work it all you need to do is enter one of the following:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+  RUN        To List your stored machine code.
+  RUN 100    To Write new machine code.
+  RUN 200    To Insert new machine code.
+  RUN 300    To Delete previous machine code.
+  RUN 400    To Save machine code.
+GO TO 500    To Reload saved machine code (OLD ROM only). 
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>More to the point - you'll need HEXLD2 in order to help you load it. The addresses used in this chapter assume that the machine code is being loaded into a REM statement in line one of a NEW ROM machine. If this is so you'll actually need 255 characters after the word REM. However, you don't have to use the same addresses as me if you don't want to. OLD ROM folk are specifically advised NOT to use a REM statement, since the machine code contains newline characters. To store machine code at different addresses to those I've used simply change the listed addresses to yours.</p>
+																<h4 align="center">[APRINT]</h4>
+																<p>Let's create it one part at a time. First of all a special subroutine for OLD ROM people - designed to AUTOMATICALLY print a character to the screen, in much the same way that the NEW ROM PRINT routine does. The routine will also protect all of the registers. Study this listing:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM ONLY</u>
+E5        APRINT    PUSH HL       Store the value of HL.
+D9                  EXX           Store the remaining registers.
+F5                  PUSH AF       And the A register.
+CDE006              CALL PRPOS    Find print-position.
+F1                  POP AF        Retrieve A.
+CD2007              CALL PRINT    Print character A.
+D9                  EXX           Retrieve BC and DE.
+E1                  POP HL        Retrieve HL.
+C9                  RET           End of subroutine.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Note that HL needs to be stacked, since CALL PRINT changes the value of HL'. The next subrotuine we'll need is a mechanism for printing to the screen the <u>value</u> of the A register in hexadecimal. This subroutine will INCLUDE a subroutine-call to APRINT, at least for OLD ROM people. NEW ROM people in fact already have an automatic print routine which protects all of the registers, since there is one in the ROM itself. It is not quite the same as the PRINT routine, since it also preserves the values of all the registers - this is something that CALL PRINT will not do. CALL PRINT will erase the values of B, C, D, E, H, and L. The address at which APRINT begins in the NEW ROM is 0010, and so CALL 0010 would print a character without changing any registers. This is very useful indeed.</p>
+																<p>One of the Z80 instructions designed to speed things up a bit is RST. It is in effect the same as CALL except that only one of the eight addresses may be called. It just so happens that 0010 is one of these possible addresses. RST is better than CALL for two reasons: 1) it is <u>faster</u> to execute, and 2) it is only one byte in length. The code for RST 10 is D7. D7 then has precisely the same effect as CD1000, that is, to print a character. OLD ROM users should note that although D7 still produces a call to 0010, it will <u>not</u> print a character, since in the OLD ROM there is no PRINT subroutine located at this point. RST is short for <u>RESTART</u>.</p>
+																<a name="hprint"></a>
+																<h4 align="center">[HPRINT]</h4>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+[Write to 4082h (16514d).]
+
+F5        HPRINT    PUSH AF        Store A for later use.
+E6F0                AND F0         This isolates the first digit.
+1F                  RRA            Move the first digit to
+1F                  RRA            its proper position within
+1F                  RRA            the A register.
+1F                  RRA
+C61C                ADD A,1C       Add twenty-eight to the character
+                                   code, making it a hex-digit.
+D7                  RST 10         Print this hex-digit.    <- NEW ROM ONLY 
+CD????              CALL APRINT    Print this hex-digit.    <- OLD ROM ONLY 
+
+F1                  POP AF         Retrieve the original value of A.
+E60F                AND 0F         Isolate the second digit.
+C61C                ADD A,1C       Add twenty-eight.
+
+D7                  RST 10         Print it.                <- NEW ROM ONLY 
+CD????              CALL APRINT    Print it.                <- OLD ROM ONLY 
+
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>By the way, did you understand all those ANDs and RRAs? If you didn't I'll explain exactly what's going on.</p>
+																<p>In binary, F0 is 1111 0000. This means that when you apply AND to F0 and another number, then the first four binary digits of A will be unchanged, and the second four binary digits will all become zero. Do you remember how to change from binary to hex? You have to look at it four bits at a time. The first four representing the first digit, and the second four the second digit. Thus all we have done is to change the second digit to zero.</p>
+																<p>If A were 36 then it would become 30. If it were 99 it would become 90. If it were D5 it would become D0. And so on. This is not what we want. We must shift A four bits to the right.</p>
+																<p>RRA moves A <u>one</u> bit to the right, replacing bit 7 (the leftmost bit) by the value of the carry. In this case the carry is zero, since we have just done an AND instruction. The new value of the carry will be the previous value of bit 0 (the rightmost bit). This will also be zero since there are now <u>four</u> zeroes at the right of A.</p>
+																<p>RRA then, repeated four times, will change A from 30 to 03, from 90 to 09, and from D0 to 0D. All that remains now is to add 28 (decimal) to this number and print it. We print it using the instruction RST 10.</p>
+																<p>Back to our new program. The BASIC part of the List routine will look like this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+10 PRINT "keyword-LIST"
+20 GOSUB 600
+30 RAND USR 16539
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>To obtain the keyword LIST in line 10, either type THEN LIST (NEW ROM only) and delete the word THEN, or type the whole line as 10 LIST quote back<del>space</del> back<del>space</del> PRINT quote newline.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+600 LET A=16533
+610 PRINT "ADDRESS space";    [That's ADDRESS followed by a space.]
+620 INPUT A$
+630 PRINT A$
+
+640 POKE A+1,16*CODE A$+CODE A$(2)-476            <- NEW ROM ONLY
+650 POKE A,16*CODE A$(3)+CODE A$(4)-476           <- NEW ROM ONLY
+
+640 POKE A+1,16*CODE(A$)+CODE(TL$(A$))-476        <- OLD ROM ONLY
+650 POKE A,16*CODE(TL$(TL$(A$)))+CODE(TL$(TL$(    <- OLD ROM ONLY
+    TL$(A$))))-476
+
+660 CLEAR
+670 RETURN
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>What about this USR routine at 16539 then? What will that do? And what about this business of POKEing 16533 and 16534? What's that all about? Well using my address, 16539 is the start of a routine called HLIST, which we haven't yet written. It is designed to actually LIST a machine code program in hexadecimal (hence H-List). The address 16533 is the number I've used to hold a "variable" called ADDRESS. That is to say, it is a place at which we can store a two-byte number. Any address may be used for this purpose provided that BASIC will not change that two-byte number.</p>
+																<p>This program demands four such "variables", or two-byte memory locations. They will be called BEGIN, ADDRESS, ADD2, and LIMIT. They will be used by the program as follows:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+BEGIN      The address at which the subject-program begins.
+ADDRESS    The address we are currently looking at.
+ADD2       The address beyond which we must not progress.
+LIMIT      The address at which the subject-program ends.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>I ought to explain here what is meant by "subject-program". The program we are writing is a replacement for HEXLD2. As such it is to be called HEXLD3. This is the "object-program" - the one we are writing now. But the purpose of HEXLD3 is to enable us to be able to create and examine machine code programs. The program that HEXLD3 will be used to examine is called the "subject-program". These distinctions are clearly necessary in order to avoid confusion between the two different concepts. It is of course possible to use HEXLD3 to examine itself, in which case it becomes both the object and the subject, but for the time being keep these two ideas seperate in your mind. </p>
+																<p>The addresses which I've used to store the "variables" BEGIN, ADDRESS, ADD2, and LIMIT are as follows:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>Decimal</u>  <u>Hex</u>     <u>Explanation</u>
+16514    4082    The start of the subroutine HPRINT.
+16531    4093    The variable BEGIN.
+16533    4095    The variable ADDRESS.
+16535    4097    The variable ADD2.
+16537    4099    The variable LIMIT.
+16539    409B    The start of the USR routine HLIST.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Lines 640 and 650 POKE into the variable ADDRESS - giving the address at which our listing (input in hex as A$) is to begin. This idea of using part of the RAM in machine-code-area to store numbers is a very useful one. You can use it in many different programs. The numbers will be safe there even after the program ends and you are in command mode. You can type RUN or CLEAR and they won't be wiped out. They will even SAVE and reLOAD.</p>
+																<h4 align="center">[HLIST]</h4>
+																<p>Now for the subroutine HLIST (short for Hexadecimal List). It is a very very simple routine indeed, and should be no trouble for you to follow.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+[Write to 409Bh (16539d).]
+
+2A9940    HLIST     LD HL,(LIMIT)      Ensure that we don't progress beyond
+229740              LD (ADD2),HL       the end of the subject-program.
+54                  LD D,H
+5D                  LD E,L
+2A9540              LD HL,(ADDRESS)    Compare the current address with the
+0616                LD B,16            final address.    <- OLD ROM ONLY
+A7        NXTAD     AND A
+ED52                SBC HL,DE
+19                  ADD HL,DE
+301F                JR NC,DONE                           <- NEW ROM ONLY
+3027                JR NC,DONE                           <- OLD ROM ONLY
+7C                  LD A,H             Print the high-part of the current
+CD8240              CALL HPRINT        address in hex.
+7D                  LD A,L             Print the low-part of the current
+CD8240              CALL HPRINT        address in hex.
+AF                  XOR A              Reset A to zero.
+D7                  RST 10             Print a space.    <- NEW ROM ONLY
+CD????              CALL APRINT        Print a space.    <- OLD ROM ONLY 
+7E                  LD A,(HL)          Print the contents of the current
+CD8240              CALL HPRINT        address in hex.
+CB76                BIT 6,(HL)         If this character is unprintable then
+2004                JR NZ,NOPRINT      do not print it.  <- NEW ROM ONLY
+2008                JR NZ,NOPRINT      do not print it.  <- OLD ROM ONLY
+AF                  XOR A              Reset A to zero.
+D7                  RST 10             Print a space.    <- NEW ROM ONLY
+CD????              CALL APRINT        Print a space.    <- OLD ROM ONLY 
+7E                  LD A,(HL)          Load A with this character
+D7                  RST 10             and PRINT it.     <- NEW ROM ONLY
+CD????              CALL APRINT        and PRINT it.     <- OLD ROM ONLY 
+3E76      NOPRINT   LD A,76            Load A with a newline character.
+D7                  RST 10             Print newline.    <- NEW ROM ONLY
+CD????              CALL APRINT        Print newline.    <- OLD ROM ONLY 
+23                  INC HL             Look at the <u>next</u> address.
+229540              LD (ADDRESS),HL    Store the current address.
+18DB                JR NXTAD                             <- NEW ROM ONLY
+10D3                DJNZ NXTAD                           <- OLD ROM ONLY
+CF        DONE      RST 08             See below.
+00                  DEFB 00
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The above program will run as listed on a NEW ROM machine. OLD ROM users should replace every RST 10 instruction by CALL APRINT as before, and are reminded that the JR byte-count must be changed accordingly at <del>two</del> [three] points in the program.</p>
+																<p>There are several things we can note about this program. Firstly, two new instructions have been used - BIT 6,(HL) and RST 08. Here's what they do.</p>
+																<p>BIT 6,(HL) tests the value of bit 6 of the address (HL). The result will either be 1 (if bit 6 is 1) or 0 (if bit 6 is 0). This result is not stored in any of the registers, but we can still check it with the next line JR NZ,NOPRINT, which says jump to NOPRINT if the last result (that is bit 6 of (HL)) is not zero.</p>
+																<p>Why do we need to do this? Take a look at the <a href="appendix05.html">character set</a>. In particular look at their character codes in hex. Notice that all of the <u>expandable</u> characters lie between C0 and FF (except for RND, INKEY$, and PI on the NEW ROM - these are treated slightly differently by the ROM) and that all of the characters between 40 and 7F are not printable at all (again, except for RND, INKEY$, and PI on the NEW ROM. The machine has to make a special check for these. You could argue that the NEW ROM cursor 7F was printable, but of course it looks different depending on what mode the machine is in). In fact all of the printable characters are either between 00 and 3F, or between 80 and BF, and conversely every character between 00 and 3F, or 80 and BF, is printable. What have all these in common? The fact that <u>BIT 6</u> of the character code is zero. In binary thse codes run between 0000 0000 and 0011 1111, and then from 1000 0000 to 1011 1111. So <del>all we have to do</del> to find out whether or not a character in the set is printable, all we have to do is to look at BIT 6. The above program won't attempt to print them unless BIT 6 is zero. This is because the RST 10 routine won't expand the expandable characters, nor will it replace the others by question marks. It <u>will</u> crash though!</p>
+																<p>The other new instruction is RST 08. This will cause an immediate return to BASIC, stopping the program with an error code. The byte immediately after the RST 08 instruction tells it which error code to use. An error code 1 needs the data 00, since this byte has to be <u>one less</u> than the report code. If we wanted to be really flash we could have used 1C and got an error code of T!</p>
+																<p>Now follow the program through carefully and see what it does. Note the way we check whether or not the address ADD2 has been reached (it is stored in DE) - especially the use of AND A to reset the carry flag.</p>
+																<a name="hlisttest"></a>
+																<p>You can check that this program works by POKEing the address at which HPRINT starts into both BEGIN and ADDRESS, and by POKEing the address at which HPRINT ends into LIMIT. Then, if you type RAND USR HLIST (this is the location 16539 using my addresses) you should end up with a more or less instant listing of the subroutine HPRINT.</p>
+																<p>[Thunor: The easy way to do this is with HEXLD2 -- since you are already using this to enter the machine code subroutines above --  and writing to 4093h, entering "8240824093409340", "S" to stop, and then RAND USR 16539. Because the ADDRESS variable is modified by the machine code, you'll have to do the same again if you want to repeat the listing.]</p>
+																<p><del>Now if you simply type RUN and enter 4082 the program will instantly list out the start of this program. In other words we are using it to examine itself. Typing CONT or CONTINUE repeatedly will continue the listing until the end of the program is reached, when you will get a report code of 9.</del></p>
+																<h4 align="center">[WRITE]</h4>
+																<p>Now for the second part of our program, HEXLD3. The BASIC part is to look like this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+100 PRINT "WRITE"
+110 GOSUB 600
+120 INPUT A$
+130 PRINT A$;"two spaces";
+140 RAND USR 16589
+150 GOTO 120
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>This part calculates the length of the string A$, which because of the CLEAR statement in subroutine 600 is the first (and only) item in the variable store.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM ONLY</u>
+2A0840    WRITE     LD HL,(VARS)
+E5                  PUSH HL
+06FF                LD B,FF
+23        ANOTHER   INC HL
+7E                  LD A,(HL)
+04                  INC B
+3D                  DEC A
+<del>28FA                JR Z,ANOTHER</del>
+20FA                JR NZ,ANOTHER
+E1                  POP HL
+CB28                SRA B
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>This routine leaves the length of the string divided by two (since it needs two characters to specify one byte of machine code) in the B register and leaves HL pointing to the byte immediately before the start of the contents of the string. Notice how LD A,(HL)/INC B/DEC A/JR Z is used to check for a character 1 (a quote mark, or end of string character) as well as counting the number of characters so far (in B). Can you also see how SRA B will divide B by two?</p>
+																<p>Strings are stored differently in the NEW ROM. This actually makes things easier, not harder! Look at the corresponding NEW ROM routine which does the same job.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+[Write to 40CDh (16589d).]
+
+<u>NEW ROM ONLY</u>
+2A1040    WRITE     LD HL,(VARS)
+23                  INC HL
+46                  LD B,(HL)
+23                  INC HL
+CB28                SRA B
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>This works because the NEW ROM works by storing the length of a string immediately before the string itself. It takes two bytes for this, but notice that in both of our versions we are only using one byte for the length, so don't input more than 255 characters in one go.</p>
+																<p>Here's the rest of the [WRITE] routine:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+28F4                JR Z,DONE          <- NEW ROM ONLY
+28ED                JR Z,DONE          <- OLD ROM ONLY
+ED5B9540            LD DE,(ADDRESS)
+23        NEXTBYTE  INC HL
+7E                  LD A,(HL)
+87                  ADD A,A
+87                  ADD A,A
+87                  ADD A,A
+87                  ADD A,A
+23                  INC HL
+86                  ADD A,(HL)
+C624                ADD A,24
+12                  LD (DE),A
+13                  INC DE
+ED539540            LD (ADDRESS),DE
+E5                  PUSH HL
+2A9940              LD HL,(LIMIT)
+ED52                SBC HL,DE
+E1                  POP HL
+3004                JR NC,CHECK
+ED539940            LD (LIMIT),DE
+10E1      CHECK     DJNZ NEXTBYTE
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>You can learn several things from this routine. Firstly, notice that if you input the empty string the program will jump back to the RST 08 instruction in the previous section. This is so that you can end the program without actually having to break out.</p>
+																<p>Now look at the first few lines from CHECK onwards. What they do is this - if the end of the program (the program that WRITE is editing) is greater than the current address, do nothing, otherwise make a note of the fact that the program has got longer by altering our variable LIMIT.</p>
+																<h4 align="center">[DELETING HEXLD2]</h4>
+																<p>You now have two segments of machine code which, if you've typed them in properly, will work first go. Now delete the WHOLE of HEXLD2 (except of course line 1) but be very careful not to attempt to list line one. The first line now contains more characters, when the keywords in the REM are expanded, than will fit on the screen. In this circumstance the ROM will go into an infinite loop if it tries to list it - this is a design fault - the ROM should not be capable of making infinite loops. You won't be able to break out if it happens. To avoid it, type POKE 16403,10 (OLD ROM) or POKE 16419,10 (NEW ROM). Then type in lines 10 to 30, then delete the rest of the program one line at a time, lowest line number first. Now type in the rest of the program and SAVE it before you do anything else.</p>
+																<p>For NEW ROM users, it should be made clear that the REM statement will, when keywords are expanded, be longer than will fit on the screen, thus although the command LIST is acceptable (the result of which is that part of line one is listed and an error 4 message displayed), if you LIST 10, to ensure that line 10 is always at the top of the screen (sometimes this doesn't work - if not type POKE 16419,10 which always works) be warned never to delete line 10. If you do the ROM will go into an infinite loop trying to reshuffle the lines so that it can list them. In SLOW this can be quite amusing to watch, but it is always irritating because the only way you can get out of it is by pulling the plug.</p>
+																<p>[Now if you simply type RUN and enter 4082 the program will instantly list out the start of this program. In other words we are using it to examine itself. Typing CONT or CONTINUE repeatedly will continue the listing until the end of the program is reached, when you will get a report code of <del>9</del> [1].]</p>
+																<p>Now to complete the transition from HEXLD2 to HEXLD3 let's rewrite the section that will SAVE things in upper memory. The BASIC:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM</u>                        <u>NEW ROM</u>
+400 DIM O(USR(ARRAY))          400 DIM O$(USR ARRAY)
+410 RANDOMISE USR(STORE)       410 RAND USR STORE
+420 SAVE                       420 SAVE "HEXLD3"
+500 RANDOMISE USR(RETRIEVE)    500 RAND USR RETRIEVE
+<del>510 CLEAR</del>                      510 CLEAR
+520 STOP                       520 STOP
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>[Thunor: OLD ROM users note that the above BASIC line 500 won't work as RETRIEVE won't reside in a line 1 REM statement, it'll be in the O array. See my BASIC lines <a href="appendix01.html#hexld3oldrom500to504patch">500 to 504 patch in appendix one</a>.]</p>
+																<p>As you can see there are three different parts of machine code. The first, in line 400, alters nothing, but returns a numerical value to BASIC, which is then used by BASIC to reserve the correct amount of space using a DIM statement. Let's look at that part first:</p>
+																<p>Using my addresses, ARRAY is 16635, STORE is 16651, and RETRIEVE is 16669.</p>
+																<h4 align="center">[ARRAY]</h4>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+[Write to 40FBh (16635d).]
+
+2A9940    ARRAY     LD HL,(LIMIT)
+ED5B9340            LD DE,(BEGIN)
+A7                  AND A
+ED52                SBC HL,DE
+229740              LD (ADD2),HL
+
+44                  LD B,H    <- NEW ROM ONLY
+4D                  LD C,L    <- NEW ROM ONLY
+
+CB2C                SRA H     <- OLD ROM ONLY
+CB1D                RR L      <- OLD ROM ONLY
+
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The first part is obvious. The beginning address is subtracted from the end address. Again we see AND A being used to zero the carry flag so that SBC gives the right answer. Now, for OLD ROM users, this number is divided by two, because arrays use two bytes per element. For NEW ROM users we move the answer into the BC register because this is what will return to BASIC. Now for the machine code that accompanies line 410. Use RUN 100 to load it in the first place.</p>
+																<p>You may be wondering why ADD2 was loaded with the number of bytes in the code to be SAVEd. Well ADD2 is just a convenient place to store it, since it will be needed in line 410.</p>
+																<h4 align="center">[STORE AND RETRIEVE]</h4>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+[Write to 410Bh (16651d).]
+
+2A1040    STORE     LD HL,(VARS)     <- NEW ROM ONLY
+2A0840    STORE     LD HL,(VARS)     <- OLD ROM ONLY
+110600              LD DE,0006
+19                  ADD HL,DE
+EB                  EX DE,HL
+2A9340              LD HL,(BEGIN)
+ED4B9740            LD BC,(ADD2)
+EDB0                LDIR
+C9                  RET
+2A1040    RETRIEVE  LD HL,(VARS)     <- NEW ROM ONLY
+2A0840    RETRIEVE  LD HL,(VARS)     <- OLD ROM ONLY
+110600              LD DE,0006
+19                  ADD HL,DE
+ED5B9340            LD DE,(BEGIN)
+ED4B9740            LD BC,(ADD2)
+EDB0                LDIR
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>In case you're beginning to lose track, here's a quick round up of all the addresses we've used so far:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>Decimal</u>  <u>Hex</u>     <u>Routine/Variable</u>
+16514    4082    HPRINT
+16531    4093    BEGIN
+16533    4095    ADDRESS
+16535    4097    ADD2
+16537    4099    LIMIT
+16539    409B    HLIST
+16589    40CD    WRITE
+16635    40FB    ARRAY
+16651    410B    STORE
+16669    411D    RETRIEVE
+16687    412F    next spare byte
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Briefly, STORE moves machine-code from upper memory and stores [it] in an array. RETRIEVE moves it back from the array to its previous position. Both of the routines start off by working out the address of the first free byte in the array. The array is the first item in the variable store, but because the OLD and NEW ROMs think differently, we have to add <u>two</u> to this location in the OLD ROM, and <u>six</u> on the NEW ROM. Can you spot the different ways in which this is done?</p>
+																<p>This is also the first time we've used the instruction LDIR. What it does is to automatically move a block of elements from address (HL) to address (DE), assuming that the number of elements contained in this block is BC. This is of course precisely what we want to do. LDIR does alter the value of each of the register pairs BC, DE, and HL, but that doesn't concern us since the next thing we do is RET.</p>
+																<p>LDIR is very, very useful indeed, but you must remember which way round it goes. It loads <u>from</u> (HL) <u>into</u> (DE). Have you ever pressed 'record' instead of 'play' when trying to load programs from tape? Well that's exactly what will happen to your machine code if you get DE and HL the wrong way round for LDIR - it will just be wiped out - and there's no going back.</p>
+																<p>As long as you can see exactly what's happening you're OK. If you can't then get a piece of paper and write down the values of each register at each stage. Work through until you're convinced you know exactly what's happening all the way through.</p>
+																<h4 align="center">[INSERT]</h4>
+																<p>We now have a BASIC program called HEXLD3 which contains a fair number of machine code subroutines. As it stands it will both LIST and WRITE machine code, and can also be used to SAVE any machine code or data which is stored in spare RAM space high in memory. This is all that HEXLD2 did. You have now the ability to enter your own machine code programs very easily, but what you can't yet do is edit them if you make a mistake. That is what the next section is for - it is called INSERT, and will insert whatever you input <u>between</u> the surrounding code, without overwriting it. The BASIC part of the routine is this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+200 PRINT "INSERT"
+210 GOSUB 600
+220 INPUT A$
+230 PRINT A$;"two spaces";
+240 RAND USR 16687
+250 GOTO 220
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>And the machine code which goes with it (which NEW ROM users should write to address 16687) is as follows:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+                                    [Write to 412Fh (16687d).]
+
+<u>OLD ROM</u>                             <u>NEW ROM</u>
+2A0840    INSERT    LD HL,(VARS)    2A1040    INSERT    LD HL,(VARS)
+E5                  PUSH HL         23                  INC HL
+01FFFF              LD BC,FFFF      4E                  LD C,(HL)
+23        MORE      INC HL          23                  INC HL
+7E                  LD A,(HL)       46                  LD B,(HL)
+03                  INC BC
+3D                  DEC A
+<del>28FA                JR Z,MORE</del>
+20FA                JR NZ,MORE
+E1                  POP HL
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+[<u>Both ROMs Continued</u>]
+CB28      COPYUP    SRA B
+CB19                RR C
+2002                JR NZ,NOTEMPTY
+CF                  RST 08
+08                  DEFB 08
+C5        NOTEMPTY  PUSH BC
+2A9940              LD HL,(LIMIT)
+ED5B9540            LD DE,(ADDRESS)
+A7                  AND A
+ED52                SBC HL,DE
+23                  INC HL
+44                  LD B,H
+4D                  LD C,L
+E1                  POP HL
+ED5B9940            LD DE,(LIMIT)
+19                  ADD HL,DE
+229940              LD (LIMIT),HL
+EB                  EX DE,HL
+EDB8                LDDR
+CDCD40              CALL WRITE
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Now exactly how this works is quite complicated, so think carefully. The part between INSERT and COPYUP finds the length of the string A$. As you can see it required a completely different method for each ROM. See WRITE on this, since it is very similar here.</p>
+																<p>Between COPYUP and NOTEMPTY the length of the string is divided by two, and if it is zero returns to BASIC with error code 9. This is the job of the RST 08/DEFB 08 sequence. From then on we are concerned with moving part of the program being edited. Look at the diagram below.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+       ------+--------------+--------------+----------------
+BEFORE:      |              |              |
+        -----+--------------+--------------+----------
+             |              |              |
+           begin         address         limit
+
+       ------+--------------+----------+--------------+-----
+AFTER:       |              |\/new/\/\/|              |
+        -----+--------------+----------+--------------+-----
+             |                         |              |
+           begin                    address         limit
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>As you can see, we need to load a complete block of elements from one point to another, but unlike before the new and old positions overlap. This is a slight problem, and we have to be very careful how we load it. If we were to simply assign HL to ADDRESS(before) and DE with ADDRESS(after), and then use LDIR as before (having assigned BC to the number of elements in the block first) then since LDIR moves things one byte at a time the first few elements would end up in the middle of the block, only to be copied up for a second time. The program would be completely corrupted.</p>
+																<p>We can get round this flaw by sneaking up on the problem sideways while it's not looking. What we do is we block load it from the other end! This means loading HL with LIMIT(before) and DE with LIMIT(after) and <del>use</del> [using] LDDR instead of LDIR.</p>
+																<p>Having found the length of the new section, this length is pushed onto the stack. BC is then loaded with the length of the block to be moved. See how this is worked out. Then HL and DE are correctly assigned, making use of the fact that the length of the new section is at the top of the stack, and the new limit is stored in our "variable" LIMIT.</p>
+																<p>After the block load is successfully carried out we call the WRITE subroutine to fill the shaded area in the diagram with the contents of the input string. This will work because the above program does not change the value of the variable ADDRESS. WRITE will simply overwrite the shaded region, moving the current address pointer to its new position. We then return to BASIC for the next input.</p>
+																<p>To test the program, use WRITE to write "9D9E9FA0A1A2A3A4A5" to the point just beyond where our program currently ends. This will list as <img src="images/inverse-123456789.png" style="vertical-align: middle;" alt="inverse-123456789">. Now use INSERT. Give it the address of the inverse five, and input "00"/"201E"/"00". Here / means newline. When you list it you'll find four new characters have been inserted. Notice that the routine allows you to input as many characters as you like in one go, and that it allows you to press newline as many times as you like. Newline on its own (i.e. inputting the empty string) will break out of the program.</p>
+																<h4 align="center">[DELETE]</h4>
+																<p>The final section to add to our program is DELETE. This will look (in BASIC) like this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+300 PRINT "DELETE"
+310 GOSUB 600
+320 LET A=16535
+330 GOSUB 610
+<del>340 RUN USR 16732</del>
+340 RAND USR 16732
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The first four lines load the initial and final addresses into the variables ADDRESS and ADD2. Line five calls the machine language routine that will do the task for us.</p>
+																<p>Here's what the machine code has to do. Look at the diagram below. Here the shaded region must be removed.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+       ------+--------------+----------+--------------+-----
+BEFORE:      |              |//////////|              |
+        -----+--------------+----------+--------------+-----
+             |              |          |              |
+           begin         address      add2          limit
+
+       ------+--------------+--------------+----------------
+AFTER:       |              |              |
+        -----+--------------+--------------+----------
+             |              |              |
+           begin         address         limit
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>This is quite simple - we just use LDIR quite straightforwardly. You might think there would be some effort involved in calculating the new limit, but not so. LDIR alters the value of HL and DE for us in quite an advantageous way - as we shall see.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+[Write to 415Ch (16732d).]
+
+2A9940    DELETE    LD HL,(LIMIT)
+ED5B9740            LD DE,(ADD2)
+D5                  PUSH DE
+A7                  AND A
+ED52                SBC HL,DE
+44                  LD B,H
+4D                  LD C,L
+E1                  POP HL
+23                  INC HL
+ED5B9540            LD DE,(ADDRESS)
+EDB0                LDIR
+1B                  DEC DE
+ED539940            LD (LIMIT),DE
+CF                  RST 08
+08                  DEFB 08
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>As LDIR moves from one end of the blocks being shifted to the other, HL and DE move with it, so HL ends up to the right of the original block, and DE ends up to the right of the copy. Thus a simple DEC DE after the LDIR will set it to exactly the right place for our new limit. Load this routine to address 410D (OLD ROM) / <del>415A</del> [415C] (NEW ROM), using INSERT. You should now have one or two spare characters after the end of the program. Use DELETE to wipe them out - this will of course test whether or not you have typed in DELETE correctly.</p>
+																<p>Now SAVE this program permanently. This is the final version. All you have to do in order to use it in future is to type RUN 100 and enter the address of the variable BEGIN (403C or 4093). Then input the address to which the program you are about to write will begin, then simply newline on its own. RUN 100 a second time to actually begin inputting a program.</p>
+																<a name="addendum"></a>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter09-hexld3.p">chapter09-hexld3.p</a>]</p>
+																<p>[Download available for 16K ZX80 -> <a href="dload/chapter09-hexld3.o">chapter09-hexld3.o</a>]</p>
+																<h4 align="center">[ADDENDUM]</h4>
+																<p>[Thunor: Having worked through this chapter and written HEXLD3 for both ROMs, I can help to clear up some confusions.</p>
+																<ul>
+																	<li>Don't type in the BASIC parts until you've reached the section Deleting HEXLD3 as they conflict with HEXLD2s.</li>
+																	<li>Many of the OLD ROM differences were not supplied, and so I've included them and adjusted their relative jumps, so if the author says that you should do these things then you shouldn't because I've already done them.</li>
+																	<li>The author says for the OLD ROM you can't use a line 1 REM statement to store HEXLD3 which is absolutely correct, but she doesn't suggest where you should be writing to, and assumes that you are writing there anyway in listings as she expects you to go through HEXLD3 and change all the addresses when you've decided what they will be.</li>
+																	<li>To decide where to write the OLD ROM machine code, <a href="chapter11.html#hexld3oldrombeginsaddress">a little peek at chapter 11</a> states that the variable BEGIN is located at 4A3Ch and that it should contain a value of 4A00h, therefore APRINT must be written to 4A1Ah.</li>
+																	<li>There is an issue with the RETRIEVE machine code subroutine, and also the way it is executed from BASIC for users wishing to write HEXLD3 for the OLD ROM, and for future NEW ROM HEXLD3 users. Because it was written for the NEW ROM it references absolute addresses BEGIN and ADD2 within the line 1 REM statement which is where HEXLD3's machine code (and RETRIEVE itself) is stored, but if HEXLD3's machine code isn't stored within a line 1 REM statement -- such as with the OLD ROM version -- then this isn't going to work. If HEXLD3 is stored in the O array and restored to memory after loading, then BEGIN and ADD2 should be read from the O array and RETRIEVE itself should be executed from inside the O array. Therefore if you are intending to work through this chapter and write HEXLD3 for the OLD ROM then when you get to write BASIC line 500 you should replace it with my <a href="appendix01.html#hexld3oldrom500to504patch">500 to 504 patch from appendix one</a>. NEW ROM users needn't worry whilst HEXLD's machine code is stored in the line 1 REM statement, but in chapter 11 NEW ROM users will be required to relocate the machine code to high memory and delete line 1, and although the author offers a BASIC modification to executing RETRIEVE from within the O$ array, she doesn't appear to realise that the RETRIEVE machine code itself will still be attempting to read BEGIN and ADD2 from memory addresses outside of the O array. The NEW ROM's equivalent solution to this problem is shown <a href="chapter11.html#hexld3500to504patch">towards the beginning of chapter 11</a>.</li>
+																	<li>A third of the way through this chapter, the author gives you the opportunity to check that the program works by using it to list itself. I have <a href="#hlisttest">added a note</a> suggesting using HEXLD2 for this -- the program you are writing HEXLD3 with -- and I recommend you attempt this test because it initialises the BEGIN, ADDRESS, ADD2 and LIMIT variables with values that are required for HEXLD3 to function. If you skip this test and get to the part where you start deleting HEXLD2, then you will inevitably be forced to initialise these variables (memory locations) with BASIC POKEs as HEXLD3 won't work at all until at least BEGIN and LIMIT are set-up.</li>
+																	<li>There are detailed program listings and instructions for both ROMs in <a href="appendix01.html">appendix one</a>.</li>
+																</ul>
+																<p>Additional content end.]</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter08.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter10.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="en">
+  <head>
+    <meta content="62ee9b3a-0fb2-440c-80a5-1ac401bae1d7" name="dtb:uid"/>
+    <meta content="2" name="dtb:depth"/>
+    <meta content="calibre (3.39.1)" name="dtb:generator"/>
+    <meta content="0" name="dtb:totalPageCount"/>
+    <meta content="0" name="dtb:maxPageNumber"/>
+  </head>
+  <docTitle>
+    <text>Mastering Machine Code on ZX81</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="num_1" playOrder="1">
+      <navLabel>
+        <text>Start</text>
+      </navLabel>
+      <content src="start.xhtml"/>
+    </navPoint>
+    <navPoint id="num_2" playOrder="2">
+      <navLabel>
+        <text>Chapter 1 - An Introduction</text>
+      </navLabel>
+      <content src="chapter01.html"/>
+    </navPoint>
+    <navPoint id="num_3" playOrder="3">
+      <navLabel>
+        <text>Chapter 2 - Introduction to Hexadecimal and Machine Code</text>
+      </navLabel>
+      <content src="chapter02.html"/>
+    </navPoint>
+    <navPoint playOrder="3">
+      <navLabel>
+        <text>Chapter 3 - Simple Arithmetic</text>
+      </navLabel>
+      <content src="chapter03.html"/>
+    </navPoint>
+  </navMap>
+</ncx>

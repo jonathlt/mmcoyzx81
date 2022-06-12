@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Appendix Two
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('appendix02');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="appendix01.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="appendix03.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">The System Variables</h1>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>OLD ROM SYSTEM VARIABLES</u>    <u>NEW ROM SYSTEM VARIABLES</u>
+<u>Decimal</u> <u>Hex</u>   <u>Name</u>          <u>Decimal</u> <u>Hex</u>   <u>Name</u>
+16384   4000  ERR_NR        16384   4000  ERR_NR
+16385   4001  FLAGS         16385   4001  FLAGS
+16386   4002  PPC           16386   4002  ERR_SP
+16388   4004  E_ADDR        16388   4004  RAMTOP
+16390   4006  E_PPC         16390   4006  MODE
+16392   4008  VARS          16391   4007  PPC
+16394   400A  E_LINE        16393   4009  VERSN
+16396   400C  D_FILE        16394   400A  E_PPC
+16398   400E  DF_EA         16396   400C  D_FILE
+16400   4010  DF_END        16398   400E  DF_CC
+16402   4012  DF_SZ         16400   4010  VARS
+16403   4013  S_TOP         16402   4012  DEST
+16405   4015  X_PTR         16404   4014  E_LINE
+16407   4017  OLDPPC        16406   4016  CH_ADD
+16409   4019  FLAGX         16408   4018  X_PTR
+16410   401A  T_ADDR        16410   401A  STKBOT
+16412   401C  SEED          16412   401C  STKEND
+16414   401E  FRAMES        16414   401E  BERG
+16416   4020  V_ADDR        16415   401F  MEM
+16418   4022  ACC           16417   4021  SPARE1
+16420   4024  S_POSN        16418   4022  DF_SZ
+16422   4026  CH_ADD        16419   4023  S_TOP
+                            16421   4025  LAST_K
+                            16423   4027  DB_ST
+                            16424   4028  MARGIN
+                            16425   4029  NXTLIN
+                            16427   402B  OLDPPC
+                            16429   402D  FLAGX
+                            16430   402E  STRLEN
+                            16432   4030  T_ADDR
+                            16434   4032  SEED
+                            16436   4034  FRAMES
+                            16438   4036  COORDS
+                            16440   4038  PR_CC
+                            16441   4039  S_POSN
+                            16443   403B  CDFLAG
+                            16444   403C  PRBUFF
+                            16477   405D  MEMBOT
+                            16507   407B  SPARE2
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
++-------+-----+-----+----+--------------------------------------------------+
+|SYSTEM |OLD  |NEW  |NO. |                                                  |
+|VARIA- |ROM  |ROM  |OF  |                                                  |
+|BLES   |ADDR.|ADDR.|BYT.|PURPOSE                                           |
++-------+-----+-----+----+--------------------------------------------------+
+|ACC    |4022 |-    |2   |Value of last expression                          |
+|BERG   |-    |401E |1   |Used by floating point calculator                 |
+|CDFLAG |-    |403B |1   |Flags relating to FAST/SLOW mode                  |
+|CH_ADD |4026 |4016 |2   |Address of the next character to interpret        |
+|COORDS |-    |4036 |2   |Coordinates of last point PLOTed                  |
+|D_FILE |400C |400C |2   |Address of start of display file                  |
+|DB_ST  |-    |4027 |1   |Debounce status of keyboard                       |
+|DEST   |-    |4012 |2   |Address of variable being assigned                |
+|DF_CC  |-    |400E |2   |Address of print position within display file     |
+|DF_EA  |400E |-    |2   |Address of start of lower part of screen          |
+|DF_END |4010 |-    |2   |Address of end of display file                    |
+|DF_SZ  |4012 |4022 |2   |Number of lines in lower part of screen           |
+|E_ADDR |4004 |-    |2   |Address of cursor in edit line                    |
+|E_LINE |400A |4014 |2   |Address of start of edit line                     |
+|E_PPC  |4006 |400A |2   |Line number of line with cursor                   |
+|ERR_NR |4000 |4000 |1   |Current report code minus one                     |
+|ERR_SP |-    |4002 |2   |Address of top of GOSUB stack                     |
+|FLAGS  |4001 |4001 |1   |Various flags                                     |
+|FLAGX  |4019 |402D |1   |Various flags                                     |
+|FRAMES |401E |4034 |2   |Updated once for every TV frame displayed         |
+|LAST_K |-    |4025 |2   |Keyboard scan taken after the last TV frame       |
+|MARGIN |-    |4028 |1   |Number of blank lines above or below picture      |
+|MEM    |-    |401F |2   |Address of start of calculator's memory area      |
+|MEMBOT |-    |405D |1E  |Area which may be used for calculator memory      |
+|MODE   |-    |4006 |1   |Current cursor mode                               |
+|NXTLIN |-    |4029 |2   |Address of next program line to be executed       |
+|OLDPPC |4017 |402B |2   |Line number to which CONT/CONTINUE jumps          |
+|PPC    |4002 |4007 |2   |Line number of line being executed                |
+|PR_CC  |-    |4038 |1   |Address of LPRINT position (high part assumed 40) |
+|PRBUFF |-    |403C |21h |Buffer to store LPRINT output                     |
+|RAMTOP |-    |4004 |2   |Address of reserved area (not wiped out by NEW)   |
+|S_POSN |4024 |4039 |2   |Coordinates of print position                     |
+|S_TOP  |4013 |4023 |2   |Line number of line at top of screen              |
+|SEED   |401C |4032 |2   |Seed for random number generator                  |
+|SPARE1 |-    |4021 |1   |One spare byte                                    |
+|SPARE2 |-    |407B |2   |Two spare bytes                                   |
+|STKBOT |-    |401A |2   |Address of calculator stack                       |
+|STKEND |-    |401C |2   |Address of end of calculator stack                |
+|STRLEN |-    |402E |2   |Information concerning assigning of strings       |
+|T_ADDR |401A |4030 |2   |Address of next item in syntax table              |
+|V_ADDR |4020 |-    |2   |Address of variable name to be assigned           |
+|VARS   |4008 |4010 |2   |Address of start of variables area                |
+|VERSN  |-    |4009 |1   |First system variable to be SAVEd                 |
+|X_PTR  |4015 |4018 |2   |Address of char. preceding syntax error marker    |
++-------+-----+-----+----+--------------------------------------------------+
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<a name="memoryorganisation"></a>
+																<h1 align="center">Memory Organisation</h1>
+																<p>[Thunor: Note that the book simply includes a list of addresses, and so I have decided to implement a diagram that presents the addresses in a more informative way.]</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+                 <u>OLD ROM</u>                <u>NEW ROM</u>
+
+Top of memory  --+------------------+   +------------------+-- Top of memory
+                 |                  |   | Reserved area    |
+                 |                  |   +------------------+-- (RAMTOP)
+                 |                  |   | GOSUB stack      |
+                 |                  |   +------------------+-- (ERR_SP)
+                 |                  |   | Machine stack    |
+                 |                  |   +------------------+-- SP
+                 | Machine stack    |   | Spare memory     |
+SP             --+------------------+   +------------------+-- (STKEND)
+                 | Spare memory     | ^ | Calculator stack |
+(DF_END)       --+------------------+ | +------------------+-- (STKBOT)
+                 | Screen           | | | Edit line        |
+(D_FILE)       --+------------------+   +------------------+-- (E_LINE)
+                 | Edit line        |   | User variables   |
+(E_LINE)       --+------------------+   +------------------+-- (VARS)
+                 | User variables   |   | Screen           |
+(VARS)         --+------------------+   +------------------+-- (D_FILE)
+                 | User program     |   | User program     |
+4028h (16424d) --+------------------+   +------------------+-- 407Dh (16509d)
+                 | System variables |   | System variables |
+4000h (16384d) --+------------------+   +------------------+-- 4000h (16384d)
+</pre>
+																		</td>
+																	</tr>
+																</table>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="appendix01.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="appendix03.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

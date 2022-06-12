@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Appendix One
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('appendix01');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter17.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="appendix02.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">A Listing of the Program HEXLD3</h1>
+																<p>[Thunor: Note that the book simply includes a Sinclair printer printout showing an address, a byte and a character, and so I have decided to concatenate the listing from <a href="chapter09.html">chapter 9</a>.]</p>
+																<h3 align="center">HEXLD3 - NEW ROM</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>Program Organisation</u>
+The HEXLD3 machine code is stored independently
+within a line 1 REM statement of 255 bytes in size.
+
+The user writes his/her machine code programs to
+somewhere else and uses RUN 400 to copy it in and
+subsequently out of an array to save it.
+
+<u>Decimal</u>  <u>Hex</u>     <u>Routine/Variable</u>
+16514    4082    HPRINT
+16531    4093    BEGIN
+16533    4095    ADDRESS
+16535    4097    ADD2
+16537    4099    LIMIT
+16539    409B    HLIST
+16589    40CD    WRITE
+16635    40FB    ARRAY
+16651    410B    STORE
+16669    411D    RETRIEVE
+16687    412F    INSERT
+16732    415C    DELETE
+
+<u>Program Listing</u>
+4082: F5        HPRINT    PUSH AF
+4083: E6F0                AND F0
+4085: 1F                  RRA
+4086: 1F                  RRA
+4087: 1F                  RRA
+4088: 1F                  RRA
+4089: C61C                ADD A,1C
+408B: D7                  RST 10
+408C: F1                  POP AF
+408D: E60F                AND 0F
+408F: C61C                ADD A,1C
+4091: D7                  RST 10
+4092: C9                  RET
+17 bytes.
+
+4093: 0000      BEGIN     DEFB 00 00
+4095: 0000      ADDRESS   DEFB 00 00
+4097: 0000      ADD2      DEFB 00 00
+4099: 0000      LIMIT     DEFB 00 00
+8 bytes.
+
+409B: 2A9940    HLIST     LD HL,(LIMIT)
+409E: 229740              LD (ADD2),HL
+40A1: 54                  LD D,H
+40A2: 5D                  LD E,L
+40A3: 2A9540              LD HL,(ADDRESS)
+40A6: A7        NXTAD     AND A
+40A7: ED52                SBC HL,DE
+40A9: 19                  ADD HL,DE
+40AA: 301F                JR NC,DONE
+40AC: 7C                  LD A,H
+40AD: CD8240              CALL HPRINT
+40B0: 7D                  LD A,L
+40B1: CD8240              CALL HPRINT
+40B4: AF                  XOR A
+40B5: D7                  RST 10
+40B6: 7E                  LD A,(HL)
+40B7: CD8240              CALL HPRINT
+40BA: CB76                BIT 6,(HL)
+40BC: 2004                JR NZ,NOPRINT
+40BE: AF                  XOR A
+40BF: D7                  RST 10
+40C0: 7E                  LD A,(HL)
+40C1: D7                  RST 10
+40C2: 3E76      NOPRINT   LD A,76
+40C4: D7                  RST 10
+40C5: 23                  INC HL
+40C6: 229540              LD (ADDRESS),HL
+40C9: 18DB                JR NXTAD
+40CB: CF        DONE      RST 08
+40CC: 00                  DEFB 00
+50 bytes.
+
+40CD: 2A1040    WRITE     LD HL,(VARS)
+40D0: 23                  INC HL
+40D1: 46                  LD B, (HL)
+40D2: 23                  INC HL
+40D3: CB28                SRA B
+40D5: 28F4                JR Z,DONE
+40D7: ED5B9540            LD DE,(ADDRESS)
+40DB: 23        NEXTBYTE  INC HL
+40DC: 7E                  LD A,(HL)
+40DD: 87                  ADD A,A
+40DE: 87                  ADD A,A
+40DF: 87                  ADD A,A
+40E0: 87                  ADD A,A
+40E1: 23                  INC HL
+40E2: 86                  ADD A,(HL)
+40E3: C624                ADD A,24
+40E5: 12                  LD (DE),A
+40E6: 13                  INC DE
+40E7: ED539540            LD (ADDRESS),DE
+40EB: E5                  PUSH HL
+40EC: 2A9940              LD HL,(LIMIT)
+40EF: ED52                SBC HL,DE
+40F1: E1                  POP HL
+40F2: 3004                JR NC,CHECK
+40F4: ED539940            LD (LIMIT),DE
+40F8: 10E1      CHECK     DJNZ NEXTBYTE
+40FA: C9                  RET
+46 bytes.
+
+40FB: 2A9940    ARRAY     LD HL,(LIMIT)
+40FE: ED5B9340            LD DE,(BEGIN)
+4102: A7                  AND A
+4103: ED52                SBC HL,DE
+4105: 229740              LD (ADD2),HL
+4108: 44                  LD B,H
+4109: 4D                  LD C,L
+410A: C9                  RET
+16 bytes.
+
+410B: 2A1040    STORE     LD HL,(VARS)
+410E: 110600              LD DE,0006
+4111: 19                  ADD HL,DE
+4112: EB                  EX DE,HL
+4113: 2A9340              LD HL,(BEGIN)
+4116: ED4B9740            LD BC,(ADD2)
+411A: EDB0                LDIR
+411C: C9                  RET
+18 bytes.
+
+411D: 2A1040    RETRIEVE  LD HL,(VARS)
+4120: 110600              LD DE,0006
+4123: 19                  ADD HL,DE
+4124: ED5B9340            LD DE,(BEGIN)
+4128: ED4B9740            LD BC,(ADD2)
+412C: EDB0                LDIR
+412E: C9                  RET
+18 bytes.
+
+412F: 2A1040    INSERT    LD HL,(VARS)
+4132: 23                  INC HL
+4133: 4E                  LD C,(HL)
+4134: 23                  INC HL
+4135: 46                  LD B,(HL)
+4136: CB28      COPYUP    SRA B
+4138: CB19                RR C
+413A: 2002                JR NZ,NOTEMPTY
+413C: CF                  RST 08
+413D: 08                  DEFB 08
+413E: C5        NOTEMPTY  PUSH BC
+413F: 2A9940              LD HL,(LIMIT)
+4142: ED5B9540            LD DE,(ADDRESS)
+4146: A7                  AND A
+4147: ED52                SBC HL,DE
+4149: 23                  INC HL
+414A: 44                  LD B,H
+414B: 4D                  LD C,L
+414C: E1                  POP HL
+414D: ED5B9940            LD DE,(LIMIT)
+4151: 19                  ADD HL,DE
+4152: 229940              LD (LIMIT),HL
+4155: EB                  EX DE,HL
+4156: EDB8                LDDR
+4158: CDCD40              CALL WRITE
+415B: C9                  RET
+45 bytes.
+
+415C: 2A9940    DELETE    LD HL,(LIMIT)
+415F: ED5B9740            LD DE,(ADD2)
+4163: D5                  PUSH DE
+4164: A7                  AND A
+4165: ED52                SBC HL,DE
+4167: 44                  LD B,H
+4168: 4D                  LD C,L
+4169: E1                  POP HL
+416A: 23                  INC HL
+416B: ED5B9540            LD DE,(ADDRESS)
+416F: EDB0                LDIR
+4171: 1B                  DEC DE
+4172: ED539940            LD (LIMIT),DE
+4176: CF                  RST 08
+4177: 08                  DEFB 08
+28 bytes.
+
+Total 246 bytes.
+
+<u>The BASIC Part</u>
+  1 REM 255-arbitrary-characters-to-store-HEXLD3
+ 10 PRINT "LIST"
+ 20 GOSUB 600
+ 30 RAND USR 16539
+
+100 PRINT "WRITE"
+110 GOSUB 600
+120 INPUT A$
+130 PRINT A$;"  ";
+140 RAND USR 16589
+150 GOTO 120
+
+200 PRINT "INSERT"
+210 GOSUB 600
+220 INPUT A$
+230 PRINT A$;"  ";
+240 RAND USR 16687
+250 GOTO 220
+
+300 PRINT "DELETE"
+305 PRINT "START ";    [Thunor: I added this; it's optional]
+310 GOSUB 600
+320 LET A=16535
+325 PRINT "END ";      [Thunor: I added this; it's optional]
+330 GOSUB 610
+340 RAND USR 16732
+
+400 DIM O$(USR 16635)
+410 RAND USR 16651
+420 SAVE "HEXLD3"
+500 RAND USR 16669
+510 CLEAR
+520 STOP
+
+600 LET A=16533
+610 PRINT "ADDRESS ";
+620 INPUT A$
+630 PRINT A$
+640 POKE A+1,16*CODE A$+CODE A$(2)-476
+650 POKE A,16*CODE A$(3)+CODE A$(4)-476
+660 CLEAR
+670 RETURN
+<a name="hexld3newromoperatinginstructions"></a>
+<u>Operating Instructions</u>
+Don't forget that if you intend to write in high memory then
+you need to set RAMTOP and execute NEW before loading HEXLD3.
+
+To initialise HEXLD3 for a new program:
+1. Type RUN 100 and enter the address of the variable BEGIN (4093h).
+2. Input the start address of the program you are about to write in
+   reverse order i.e. 4C00 would be "004C".
+3. Type newline on its own to quit writing.
+4. Type RUN 100 to begin inputting a program.
+5. Type RUN 400 to save your machine code program.
+
+Thereafter:
+RUN        To List your machine code program.
+           Use CONT to continue listing up until LIMIT.
+RUN 100    To Write new machine code.
+           Type newline on its own to quit.
+RUN 200    To Insert new machine code.
+           Type newline on its own to quit.
+RUN 300    To Delete previous machine code.
+           Enter the start and end addresses to delete.
+RUN 400    To Save your machine code program.
+           Your machine code is automatically restored on load.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter09-hexld3.p">chapter09-hexld3.p</a>]</p>
+																<a name="hexld3oldrom"></a>
+																<h3 align="center">[HEXLD3 - OLD ROM]</h3>
+																<p>[Thunor: Adapted from the NEW ROM version by myself as the author didn't supply a complete OLD ROM version. This version is Draughts ready, meaning that the machine code relocation that NEW ROM users will be asked to do in <a href="chapter11.html">chapter 11</a> is unnecessary (the machine code is already located where Draughts requires it to be), the modification to BASIC line 500 to execute RETRIEVE from inside the O array has already been applied (BASIC line 504), and the issue with RETRIEVE not referencing BEGIN and ADD2 from within the O array has been fixed in BASIC lines 500 to 503.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>Program Organisation</u>
+The HEXLD3 machine code is initially written to
+4A1A and then stored within an array on save. When
+HEXLD3 is reloaded it is copied from the array
+back to its original memory location by executing
+GO TO 500. Note that the value stored in BEGIN is
+4A00 and so there are 26 unused bytes before 4A1A.
+
+The user's own code appends the HEXLD3 machine code.
+So when the user executes RUN 400 to copy his work
+to an array for saving, he also saves HEXLD3.
+Subsequently restoring the code after reloading the
+program with GO TO 500 will restore HEXLD3 to 4A1A.
+
+<u>Decimal</u>  <u>Hex</u>     <u>Routine/Variable</u>
+18970    4A1A    APRINT
+18983    4A27    HPRINT
+19004    4A3C    BEGIN
+19006    4A3E    ADDRESS
+19008    4A40    ADD2
+19010    4A42    LIMIT
+19012    4A44    HLIST
+19072    4A80    WRITE
+19125    4AB5    ARRAY
+19143    4AC7    STORE
+19161    4AD9    RETRIEVE
+19179    4AEB    INSERT
+19231    4B1F    DELETE
+
+<u>Program Listing</u>
+4A1A: E5        APRINT    PUSH HL
+4A1B: D9                  EXX
+4A1C: F5                  PUSH AF
+4A1D: CDE006              CALL PRPOS
+4A20: F1                  POP AF
+4A21: CD2007              CALL PRINT
+4A24: D9                  EXX
+4A25: E1                  POP HL
+4A26: C9                  RET
+13 bytes.
+
+4A27: F5        HPRINT    PUSH AF
+4A28: E6F0                AND F0
+4A2A: 1F                  RRA
+4A2B: 1F                  RRA
+4A2C: 1F                  RRA
+4A2D: 1F                  RRA
+4A2E: C61C                ADD A,1C
+4A30: CD1A4A              CALL APRINT
+4A33: F1                  POP AF
+4A34: E60F                AND 0F
+4A36: C61C                ADD A,1C
+4A38: CD1A4A              CALL APRINT
+4A3B: C9                  RET
+21 bytes.
+
+4A3C: 0000      BEGIN     DEFB 00 00
+4A3E: 0000      ADDRESS   DEFB 00 00
+4A40: 0000      ADD2      DEFB 00 00
+4A42: 0000      LIMIT     DEFB 00 00
+8 bytes.
+
+4A44: 2A424A    HLIST     LD HL,(LIMIT)
+4A47: 22404A              LD (ADD2),HL
+4A4A: 54                  LD D,H
+4A4B: 5D                  LD E,L
+4A4C: 2A3E4A              LD HL,(ADDRESS)
+4A4F: 0616                LD B,16
+4A51: A7        NXTAD     AND A
+4A52: ED52                SBC HL,DE
+4A54: 19                  ADD HL,DE
+4A55: 3027                JR NC,DONE
+4A57: 7C                  LD A,H
+4A58: CD274A              CALL HPRINT
+4A5B: 7D                  LD A,L
+4A5C: CD274A              CALL HPRINT
+4A5F: AF                  XOR A
+4A60: CD1A4A              CALL APRINT
+4A63: 7E                  LD A,(HL)
+4A64: CD274A              CALL HPRINT
+4A67: CB76                BIT 6,(HL)
+4A69: 2008                JR NZ,NOPRINT
+4A6B: AF                  XOR A
+4A6C: CD1A4A              CALL APRINT
+4A6F: 7E                  LD A,(HL)
+4A70: CD1A4A              CALL APRINT
+4A73: 3E76      NOPRINT   LD A,76
+4A75: CD1A4A              CALL APRINT
+4A78: 23                  INC HL
+4A79: 223E4A              LD (ADDRESS),HL
+4A7C: 10D3                DJNZ NXTAD
+4A7E: CF        DONE      RST 08
+4A7F: 00                  DEFB 00
+60 bytes.
+
+4A80: 2A0840    WRITE     LD HL,(VARS)
+4A83: E5                  PUSH HL
+4A84: 06FF                LD B,FF
+4A86: 23        ANOTHER   INC HL
+4A87: 7E                  LD A,(HL)
+4A88: 04                  INC B
+4A89: 3D                  DEC A
+4A8A: 20FA                JR NZ,ANOTHER
+4A8C: E1                  POP HL
+4A8D: CB28                SRA B
+4A8F: 28ED                JR Z,DONE
+4A91: ED5B3E4A            LD DE,(ADDRESS)
+4A95: 23        NEXTBYTE  INC HL
+4A96: 7E                  LD A,(HL)
+4A97: 87                  ADD A,A
+4A98: 87                  ADD A,A
+4A99: 87                  ADD A,A
+4A9A: 87                  ADD A,A
+4A9B: 23                  INC HL
+4A9C: 86                  ADD A,(HL)
+4A9D: C624                ADD A,24
+4A9F: 12                  LD (DE),A
+4AA0: 13                  INC DE
+4AA1: ED533E4A            LD (ADDRESS),DE
+4AA5: E5                  PUSH HL
+4AA6: 2A424A              LD HL,(LIMIT)
+4AA9: ED52                SBC HL,DE
+4AAB: E1                  POP HL
+4AAC: 3004                JR NC,CHECK
+4AAE: ED53424A            LD (LIMIT),DE
+4AB2: 10E1      CHECK     DJNZ NEXTBYTE
+4AB4: C9                  RET
+53 bytes.
+
+4AB5: 2A424A    ARRAY     LD HL,(LIMIT)
+4AB8: ED5B3C4A            LD DE,(BEGIN)
+4ABC: A7                  AND A
+4ABD: ED52                SBC HL,DE
+4ABF: 22404A              LD (ADD2),HL
+4AC2: CB2C                SRA H
+4AC4: CB1D                RR L
+4AC6: C9                  RET
+18 bytes.
+
+4AC7: 2A0840    STORE     LD HL,(VARS)
+4ACA: 110600              LD DE,0006
+4ACD: 19                  ADD HL,DE
+4ACE: EB                  EX DE,HL
+4ACF: 2A3C4A              LD HL,(BEGIN)
+4AD2: ED4B404A            LD BC,(ADD2)
+4AD6: EDB0                LDIR
+4AD8: C9                  RET
+18 bytes.
+
+4AD9: 2A0840    RETRIEVE  LD HL,(VARS)
+4ADC: 110600              LD DE,0006
+4ADF: 19                  ADD HL,DE
+4AE0: ED5B3C4A            LD DE,(BEGIN)
+4AE4: ED4B404A            LD BC,(ADD2)
+4AE8: EDB0                LDIR
+4AEA: C9                  RET
+18 bytes.
+
+4AEB: 2A0840    INSERT    LD HL,(VARS)
+4AEE: E5                  PUSH HL
+4AEF: 01FFFF              LD BC,FFFF
+4AF2: 23        MORE      INC HL
+4AF3: 7E                  LD A,(HL)
+4AF4: 03                  INC BC
+4AF5: 3D                  DEC A
+4AF6: 20FA                JR NZ,MORE
+4AF8: E1                  POP HL
+4AF9: CB28      COPYUP    SRA B
+4AFB: CB19                RR C
+4AFD: 2002                JR NZ,NOTEMPTY
+4AFF: CF                  RST 08
+4B00: 08                  DEFB 08
+4B01: C5        NOTEMPTY  PUSH BC
+4B02: 2A424A              LD HL,(LIMIT)
+4B05: ED5B3E4A            LD DE,(ADDRESS)
+4B09: A7                  AND A
+4B0A: ED52                SBC HL,DE
+4B0C: 23                  INC HL
+4B0D: 44                  LD B,H
+4B0E: 4D                  LD C,L
+4B0F: E1                  POP HL
+4B10: ED5B424A            LD DE,(LIMIT)
+4B14: 19                  ADD HL,DE
+4B15: 22424A              LD (LIMIT),HL
+4B18: EB                  EX DE,HL
+4B19: EDB8                LDDR
+4B1B: CD804A              CALL WRITE
+4B1E: C9                  RET
+52 bytes.
+
+4B1F: 2A424A    DELETE    LD HL,(LIMIT)
+4B22: ED5B404A            LD DE,(ADD2)
+4B26: D5                  PUSH DE
+4B27: A7                  AND A
+4B28: ED52                SBC HL,DE
+4B2A: 44                  LD B,H
+4B2B: 4D                  LD C,L
+4B2C: E1                  POP HL
+4B2D: 23                  INC HL
+4B2E: ED5B3E4A            LD DE,(ADDRESS)
+4B32: EDB0                LDIR
+4B34: 1B                  DEC DE
+4B35: ED53424A            LD (LIMIT),DE
+4B39: CF                  RST 08
+4B3A: 08                  DEFB 08
+28 bytes.
+
+Total 289 bytes.
+
+<u>The BASIC Part</u>
+ 10 PRINT "LIST"
+ 20 GO SUB 600
+ 30 RANDOMISE USR(19012)
+
+100 PRINT "WRITE"
+110 GO SUB 600
+120 INPUT A$
+130 PRINT A$;"  ";
+140 RANDOMISE USR(19072)
+150 GO TO 120
+
+200 PRINT "INSERT"
+210 GO SUB 600
+220 INPUT A$
+230 PRINT A$;"  ";
+240 RANDOMISE USR(19179)
+250 GO TO 220
+
+300 PRINT "DELETE"
+305 PRINT "START ";
+310 GO SUB 600
+320 LET A=19008
+325 PRINT "END ";
+330 GO SUB 610
+340 RANDOMISE USR(19231)
+
+400 DIM O(USR(19125))
+410 RANDOMISE USR(19143)
+420 SAVE
+<a name="hexld3oldrom500to504patch"></a>
+500 POKE 19004,PEEK(PEEK(16392)+PEEK(16393)*256+6+26+34)
+501 POKE 19005,PEEK(PEEK(16392)+PEEK(16393)*256+6+26+35)
+502 POKE 19008,PEEK(PEEK(16392)+PEEK(16393)*256+6+26+38)
+503 POKE 19009,PEEK(PEEK(16392)+PEEK(16393)*256+6+26+39)
+504 RANDOMISE USR(PEEK(16392)+PEEK(16393)*256+6+26+191)
+520 STOP
+
+600 LET A=19006
+610 PRINT "ADDRESS ";
+620 INPUT A$
+630 PRINT A$
+640 POKE A+1,16*CODE(A$)+CODE(TL$(A$))-476
+650 POKE A,16*CODE(TL$(TL$(A$)))+CODE(TL$(TL$(TL$(A$))))-476
+660 CLEAR
+670 RETURN
+<a name="hexld3oldromoperatinginstructions"></a>
+<u>Operating Instructions</u>
+1. Type GO TO 500 to restore HEXLD3's machine code
+   and your machine code to its correct memory location.
+2. Type RUN 100 to begin inputting a program.
+3. Type newline on its own to quit writing.
+4. Type RUN 400 to save your machine code program.
+
+Thereafter:
+RUN        To List your machine code program.
+           Use CONT to continue listing up until LIMIT.
+RUN 100    To Write new machine code.
+           Type newline on its own to quit.
+RUN 200    To Insert new machine code.
+           Type newline on its own to quit.
+RUN 300    To Delete previous machine code.
+           Enter the start and end addresses to delete.
+RUN 400    To Save your machine code program.
+GO TO 500  To Restore the machine code after loading.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Additional content end.]</p>
+																<p>[Download available for 16K ZX80 -> <a href="dload/chapter09-hexld3.o">chapter09-hexld3.o</a>]</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter17.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="appendix02.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

@@ -1,0 +1,622 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Appendix Six
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('appendix06');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="appendix05.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="farewell.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">A Listing of the Program Draughts</h1>
+																<h3 align="center">DRAUGHTS - NEW ROM</h3>
+																<p>Added by myself (Thunor) from assembling the many machine code routines distributed across chapters 7, 11, 13 and 15. If you haven't read these chapters then I should point out that <u>draughts is not a complete program</u>, although you can move your pieces and the computer will respond up until a certain point.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>Program Organisation</u>
+This should be written with HEXLD3D (<a href="dload/chapter11-hexld3d.p">chapter11-hexld3d.p</a>)
+which has its machine code located between 4A82 and 4B77
+(RAMTOP should be set to 4A00).
+
+<u>Program Listing</u>
+4C09: E1        SPRINT    POP HL
+4C0A: 7E                  LD A,(HL)
+4C0B: 23                  INC HL
+4C0C: E5                  PUSH HL
+4C0D: FEFF                CP FF
+4C0F: C8                  RET Z
+4C10: CD0808              CALL PRINT
+4C13: 18F4                JR SPRINT
+4C15: CD094C              CALL SPRINT
+4C18: 001D1E1F202122232476          DEFM " 12345678"
+4C22: 1D00BC00BC00BC00BC1D76        DEFM "1 W W W W1"
+4C2D: 1EBC00BC00BC00BC001E76        DEFM "2W W W W 2"
+4C38: 1F00BC00BC00BC00BC1F76        DEFM "3 W W W W3"
+4C43: 2080008000800080002076        DEFM "4        4"
+4C4E: 2100800080008000802176        DEFM "5        5"
+4C59: 22A700A700A700A7002276        DEFM "6B B B B 6"
+4C64: 2300A700A700A700A72376        DEFM "7 B B B B7"
+4C6F: 24A700A700A700A7002476        DEFM "8B B B B 8"
+4C7A: 001D1E1F202122232476          DEFM " 12345678"
+4C84: 76                            DEFB 76
+4C85: 76                            DEFB 76
+4C86: 76                            DEFB 76
+4C87: 0000000000000000000000000000  DEFM "fourteen-spaces"
+4C95: FF                            DEFB FF
+4C96: C9                  RET
+142 bytes.
+
+4C97: FAFB0605  TABLE     DEFB FA FB 06 05
+4 bytes.
+
+4C9B: 2E31312A  IMOVE     DEFM "ILLE"
+4C9F: 2C263100            DEFM "GAL "
+4CA3: 32343B2A            DEFM "MOVE"
+4CA7: E1        ERROR     POP HL
+4CA8: 7E                  LD A,(HL)
+4CA9: 2A0C40              LD HL,(D_FILE)
+4CAC: 117000              LD DE,0700
+4CAF: 19                  ADD HL,DE
+4CB0: EB                  EX DE,HL
+4CB1: 219B4C              LD HL,IMOVE
+4CB4: 010C00              LD BC,000C
+4CB7: EDB0                LDIR
+4CB9: 13                  INC DE
+4CBA: 12                  LD (DE),A
+4CBB: C9                  RET
+33 bytes.
+
+4CBC: 213C40    GAMEOVER  LD HL,WKBOARD
+4CBF: 062A                LD B,2A
+4CC1: 7E        POSSIBLY  LD A,(HL)
+4CC2: F680                OR 80
+4CC4: B9                  CP C
+4CC5: C8                  RET Z
+4CC6: 23                  INC HL
+4CC7: 10F8                DJNZ POSSIBLY
+4CC9: 219740    STOPPROG  LD HL,STOPLINE
+4CCC: 222940              LD (NXTLIN),HL
+19 bytes.
+
+4CCF: 2A0C40    INVERT    LD HL,(D_FILE)
+4CD2: 066C                LD B,6C
+4CD4: 23        COVER     INC HL
+4CD5: 7E                  LD A,(HL)
+4CD6: FE25                CP 25
+4CD8: 3006                JR NC,NOINV
+4CDA: A7                  AND A
+4CDB: 2803                JR Z,NOINV
+4CDD: F680                OR 80
+4CDF: 77                  LD (HL),A
+4CE0: 10F2      NOINV     DJNZ COVER
+4CE2: E1                  POP HL
+4CE3: C9                  RET
+21 bytes.
+
+4CE4: 2A0C40    BOARDCOPY LD HL,(D_FILE)
+4CE7: 110D00              LD DE,000D
+4CEA: 19                  ADD HL,DE
+4CEB: 113C40              LD DE,WKBOARD
+4CEE: 062A                LD B,2A
+4CF0: EDA0      NSCOPY    LDI
+4CF2: 23                  INC HL
+4CF3: 10FB                DJNZ,NSCOPY
+17 bytes.
+
+4CF5: 217D40    NEXTLINE  LD HL,FIRSTLINE
+4CF8: 222940              LD (NXTLIN),HL
+4CFB: 2A0C40    CLWIND    LD HL,(D_FILE)
+4CFE: 117000              LD DE,0070
+4D01: 19                  ADD HL,DE
+4D02: 060E                LD B,0E
+4D04: 3600      WIPEOUT   LD (HL),00
+4D06: 23                  INC HL
+4D07: 10FB                DJNZ WIPEOUT
+20 bytes.
+
+4D09: 2A1040    MOVE      LD HL,(VARS)
+4D0C: 23                  INC HL
+4D0D: 7E                  LD A,(HL)
+4D0E: 3D                  DEC A
+4D0F: 3D                  DEC A
+4D10: 3D                  DEC A
+4D11: 2001                JR NZ,NOTZERO
+4D13: 2F                  CPL
+4D14: 5F        NOTZERO   LD E,A
+12 bytes.
+
+4D15: 23                  INC HL
+4D16: 23                  INC HL
+4D17: 7E                  LD A,(HL)
+4D18: 47                  LD B,A
+4D19: 87                  ADD A,A
+4D1A: 4F                  LD C,A
+4D1B: 87                  ADD A,A
+4D1C: 87                  ADD A,A
+4D1D: 23                  INC HL
+4D1E: E5                  PUSH HL
+4D1F: 80                  ADD A,B
+4D20: 81                  ADD A,C
+4D21: 86                  ADD A,(HL)
+4D22: 1F                  RRA
+4D23: 3805                JR C,NOERROR1
+16 bytes.
+
+4D25: E1        ERROR1    POP HL
+4D26: CDA74C              CALL ERROR
+4D29: 1D                  DEFM "1"
+5 bytes.
+
+4D2A: C60E      NOERROR1  ADD A,0E
+4D2C: 6F                  LD L,A
+4D2D: 2640                LD H,WKBOARD-high
+4D2F: 4E                  LD C,(HL)
+4D30: 0680                LD B,80
+4D32: 70                  LD (HL),B
+4D33: E3        LOOP      EX (SP),HL
+4D34: 23                  INC HL
+4D35: 227B40              LD (POINTER),HL
+4D38: 7E                  LD A,(HL)
+4D39: C671                ADD A,71
+4D3B: 6F                  LD L,A
+4D3C: 264C                LD H,TABLE-high
+4D3E: 56                  LD D,(HL)
+4D3F: E1                  POP HL
+4D40: 78                  LD A,B
+4D41: A2                  AND D
+4D42: 2F                  CPL
+4D43: A1                  AND C
+4D44: FE27                CP 27
+4D46: 20DE                JR NZ,ERROR1
+30 bytes.
+
+4D48: 7D                  LD A,L
+4D49: 82                  ADD A,D
+4D4A: 6F                  LD L,A
+4D4B: 7E                  LD A,(HL)
+4D4C: B8                  CP B
+4D4D: 2008                JR NZ,NEXT
+4D4F: 7B                  LD A,E
+4D50: 3C                  INC A
+4D51: 2815                JR Z,CONTINUE
+4D53: CDA74C              CALL ERROR
+4D56: 1E                  DEFM "2"
+4D57: B0        NEXT      OR B
+4D58: FEBC                CP BC
+4D5A: 2804                JR Z,NOERROR3
+4D5C: CDA74C    ERROR3    CALL ERROR
+4D5F: 1F                  DEFM "3"
+4D60: 70        NOERROR3  LD (HL),B
+4D61: 7D                  LD A,L 
+4D62: 82                  ADD A,D
+4D63: 6F                  LD L,A
+4D64: 7E        CONTENT   LD A,(HL)
+4D65: B8                  CP B
+4D66: 20F4                JR NZ,ERROR3
+32 bytes.
+
+4D68: 7D        CONTINUE  LD A,L 
+4D69: FE40                CP 40
+4D6B: 300C                JR NC,NOKING
+4D6D: 7B                  LD A,E
+4D6E: 3C                  INC A
+4D6F: FE02                CP 02
+4D71: 3804                JR C,NOERROR4
+4D73: CDA74C              CALL ERROR
+4D76: 20                  DEFM "4"
+4D77: 0E27      NOERROR4  LD C,27
+4D79: 71        NOKING    LD (HL),C
+4D7A: E5                  PUSH HL
+19 bytes.
+
+4D7B: 2A7B40              LD HL,(POINTER)
+4D7E: 1D                  DEC E
+4D7F: 7B                  LD A,E
+4D80: E3                  EX (SP),HL
+4D81: 17                  RLA
+4D82: 30AE                JR NC,LOOP
+4D84: E1                  POP HL
+4D85: 0EBC                LD C,BC
+4D87: CDBC4C              CALL GAMEOVER
+15 bytes.
+
+4D8A: ED737B40  BOARDSCAN LD (LBASE),SP
+4D8E: 010000              LD BC,0000
+4D91: C5                  PUSH BC
+4D92: 213C40              LD HL,WKBOARD
+4D95: 7E        NXTCHK    LD A,(HL)
+4D96: F680                OR 80
+4D98: FEBC                CP BC
+4D9A: 227740              LD (SQCHK),HL
+4D9D: CA434E              JP Z,EVALUATE
+4DA0: 2A7740    KPCHKNG   LD HL,(SQCHK)
+4DA3: 2C                  INC L
+4DA4: 7D                  LD A,L
+4DA5: FE66                CP 66
+4DA7: 20EC                JR NZ,NXTCHK
+31 bytes.
+
+4DA9: 3A3440    CHOOSE    LD A,(FRAMES)low
+4DAC: 90        REPEAT    SUB B
+4DAD: 30FD                JR NC,REPEAT
+4DAF: 80                  ADD A,B
+4DB0: C1                  POP BC
+4DB1: 41                  LD B,C
+4DB2: 2808                JR Z,FIRSTOFF
+4DB4: 33        NSQOFF    INC SP
+4DB5: 33        NEXTOFF   INC SP
+4DB6: 10FD                DJNZ NEXTOFF
+4DB8: 41                  LD B,C
+4DB9: 3D                  DEC A
+4DBA: 20F8                JR NZ,NSQOFF
+19 bytes.
+
+4DBC: E1        FIRSTOFF  POP HL
+4DBD: 2640                LD H,WKBOARD-high
+4DBF: 41                  LD B,C
+4DC0: 3B        NEXTSTEP  DEC SP
+4DC1: D1                  POP DE
+4DC2: 4E                  LD C,(HL)
+4DC3: 3680                LD (HL),80
+4DC5: 7D                  LD A,L
+4DC6: 83                  ADD A,E
+4DC7: 6F                  LD L,A
+4DC8: 7E                  LD A,(HL)
+4DC9: FE80                CP 80
+4DCB: 2805                JR Z,SQUARE
+4DCD: 3680                LD (HL),80
+4DCF: 7D                  LD A,L
+4DD0: 83                  ADD A,E
+4DD1: 6F                  LD L,A
+4DD2: 71        SQUARE    LD (HL),C
+4DD3: 10EB                DJNZ NEXTSTEP
+25 bytes.
+
+4DD5: ED7B7B40            LD SP,(LBASE)
+4DD9: 0EA7                LD C,A7
+4DDB: CDBC4C              CALL GAMEOVER
+4DDE: 2A0C40    BDPRINT   LD HL,(D_FILE)
+4DE1: 110D00              LD DE,000D
+4DE4: 19                  ADD HL,DE
+4DE5: EB                  EX DE,HL
+4DE6: 213C40              LD HL,WKBOARD
+4DE9: 062A                LD B,2A
+4DEB: EDA0      LDI       LDI
+4DED: 13                  INC DE
+4DEE: 10FB                DJNZ LDI
+4DF0: C9                  RET
+28 bytes.
+
+4DF1: C5        SQUAREVAL PUSH BC
+4DF2: D5                  PUSH DE
+4DF3: E5                  PUSH HL
+4DF4: 0600                LD B,00
+4DF6: 11974C    STARTOFF  LD DE,TABLE
+4DF9: 1A        NOWT      LD A,(DE)
+4DFA: 4F                  LD C,A
+4DFB: D62E                SUB 2E
+4DFD: 282A                JR Z,EXIT
+4DFF: 1C                  INC E
+4E00: E1                  POP HL
+4E01: E5                  PUSH HL
+4E02: 2640                LD H,40
+4E04: 7D                  LD A,L         
+4E05: 81                  ADD A,C
+4E06: CB40                BIT 0,B
+4E08: 2001                JR NZ,LA
+4E0A: 81                  ADD A,C
+4E0B: 6F        LA        LD L,A
+4E0C: 3E7F                LD A,7F
+4E0E: B1                  OR C
+4E0F: A6                  AND (HL)
+4E10: FE27                CP 27
+4E12: 20E5                JR NZ,NOWT
+4E14: 7D                  LD A,L
+4E15: 91                  SUB C
+4E16: 6F                  LD L,A
+4E17: 7E                  LD A,(HL)
+4E18: 37                  SCF
+4E19: 17                  RLA
+4E1A: CB40                BIT 0,B
+4E1C: 2006                JR NZ,LB
+4E1E: FE79                CP 79
+4E20: 20D7                JR NZ,NOWT
+4E22: 7E                  LD A,(HL)
+4E23: 17                  RLA
+4E24: 3F        LB        CCF
+4E25: 3E81                LD A,81
+4E27: 17                  RLA
+4E28: 17                  RLA
+4E29: CB40      EXIT      BIT 0,B
+4E2B: 2006                JR NZ,LC
+4E2D: 04                  INC B
+4E2E: 67                  LD H,A
+4E2F: E3                  EX (SP),HL
+4E30: E5                  PUSH HL
+4E31: 18C3                JR STARTOFF
+4E33: 57        LC        LD D,A
+4E34: 7D                  LD A,L
+4E35: 91                  SUB C
+4E36: 6F                  LD L,A
+4E37: 7E                  LD A,(HL)
+4E38: FE80                CP 80
+4E3A: 28BD                JR Z,NOWT
+4E3C: 7A                  LA A,D
+4E3D: E1                  POP HL
+4E3E: D1                  POP DE
+4E3F: 92                  SUB D
+4E40: D1                  POP DE
+4E41: C1                  POP BC
+4E42: C9                  RET
+82 bytes.
+
+4E43: CDF14D    EVALUATE  CALL SQUAREVAL 
+4E46: C680                ADD 80
+4E48: 322140              LD (INITIAL),A
+4E4B: 11974C              LD DE,TABLE
+4E4E: 4D                  LD C,L
+4E4F: 69        NXTMRND   LD L,C
+4E50: 2640                LD H,40
+4E52: 1A        NXTDIR    LD A,(DE)
+4E53: 1C                  INC E
+4E54: CB7E                BIT 7,(HL)
+4E56: 2804                JR Z,ANYDIR
+4E58: CB7F                BIT 7,A
+4E5A: 20F6                JR NZ,NXTDIR
+4E5C: FE2E      ANYDIR    CP 2E
+4E5E: CAA04D              JP Z,KPCHKNG
+4E61: C5                  PUSH BC
+4E62: 47                  LD B,A
+4E63: B1                  ADD A,C
+4E64: 6F                  LD L,A
+4E65: 7E                  LD A,(HL)
+4E66: 60                  LD H,B
+4E67: C1                  POP BC
+4E68: FE80                CP 80
+4E6A: 2033      TEST      JR NZ,WHAT
+4E6C: ED537940            LD (SCANSQR),DE
+4E70: CDF14D              CALL SQUAREVAL
+48 bytes.
+
+4E73: 57        NEWPRI    LD D,A
+4E74: 3A2140              LD A,(INITIAL)
+4E77: 92                  SUB D
+4E78: 57                  LD D,A
+4E79: 1E01                LD E,01
+4E7B: 69                  LD L,C
+9 bytes.
+
+4E7C: E3                  EX (SP),HL
+4E7D: A7                  AND A
+4E7E: ED52                SBC HL,DE
+4E80: 280D                JR Z,EQUAL
+4E82: 19                  ADD HL,DE
+4E83: E3                  EX (SP),HL
+4E84: 3013                JR NC,FORGETIT
+4E86: ED7B7B40            LD SP,(LBASE)
+4E8A: 0600                LD B,00
+4E8C: D5                  PUSH DE
+4E8D: 1802                JR NEWITEM
+4E8F: 19        EQUAL     ADD HL,DE
+4E90: E3                  EX (SP),HL
+4E91: 04        NEWITEM   INC B
+4E92: E5                  PUSH HL
+23 bytes.
+
+4E93: 33                  INC SP
+4E94: 33                  INC SP
+4E95: E3                  EX (SP),HL
+4E96: 3B                  DEC SP
+4E97: 3B                  DEC SP
+4E98: E3                  EX (SP),HL
+4E99: ED5B7940  FORGETIT  LD DE,(SCANSQR)
+4E9D: 18B0                JR NXTMRND
+12 bytes.
+
+4E9F: ED537940  WHAT      LD (SCANSQR),DE
+4EA3: 57                  LD D,A
+4EA4: E67F                AND 7F
+4EA6: FE27                CP 27
+4EA8: 2806                JR Z,FOUND
+4EAA: ED5B7940            LD DE,(SCANSQR)
+4EAE: 189F                JR NXTMRND
+4EB0: 3E81      FOUND     LD A,81
+4EB2: CB12                RL D
+4EB4: 3F                  CCF
+4EB5: 17                  RLA
+4EB6: 17                  RLA
+4EB7: 57                  LD D,A
+4EB8: 5C                  LD E,H
+4EB9: 7D                  LD A,L
+4EBA: 84                  ADD A,H
+4EBB: 6F                  LD L,A
+4EBC: 2640                LD H,WKBOARD-low
+4EBE: 7E                  LD A,(HL)
+4EBF: 63                  LD H,E
+4EC0: FE80                CP 80
+4EC2: 2807                JR Z,JUMP
+4EC4: ED537940            LD DE,(SCANSQR)
+4EC8: C34F4E              JP NXTMRND
+4ECB: CDF14D    JUMP      CALL SQUAREVAL
+4ECE: 92                  SUB D
+4ECF: 18A2                JR NEWPRI
+50 bytes.
+
+Total 712 bytes.
+
+<u>The BASIC Part</u>
+1 INPUT A$
+2 RAND USR 19684
+3 STOP
+4 RAND USR 19477
+5 RUN
+
+The above lines are in addition to the BASIC lines of
+HEXLD3D which you still need to restore the machine
+code to its correct destination.
+<a name="draughtsnewromoperatinginstructions"></a>
+<u>Operating Instructions</u>
+Type RUN 4 to run draughts.
+
+You play as black at the bottom of the board.
+
+You can move one of your pieces by typing the row and
+column of its current location followed by a letter
+signifying a direction. The letters are:
+
+A   B
+ \ /
+  X
+ / \
+D   C
+
+So "61B" will move your top-leftmost piece north-east.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Download available for 16K ZX81 -> <a href="dload/chapter15-draughts3.p">chapter15-draughts3.p</a></p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="appendix05.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="farewell.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

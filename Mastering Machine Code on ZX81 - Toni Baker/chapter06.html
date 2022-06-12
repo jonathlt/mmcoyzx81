@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 6
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter06');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter05.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter07.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">Stacking and Jumping</h1>
+																<h4 align="center">THE STACK</h4>
+																<p>There is an area of RAM that is set aside for storing various pieces of information to help the machine know what it's doing. It works like this:</p>
+																<p>The word "stack" is something that the computer people have got straight out of a dictionary. It means exactly what it sounds like! I magine a stack of cardboard boxes. Each box is really a memory location, so each has an address, but if you want to know what's in any particular cardboard box then the only one you can easily look at is the top one. If you tried to pull one of the boxes from somewhere in the middle then all the boxes above it would fall down. Conversely, to add a new box to the stack, the only place you can easily put it is at the top.</p>
+																<p>The memory locations in the stack are just like that. You can put things on top of it, but ONLY at the top, and you can take things FROM THE TOP. There are two special words that go with the stack - one word which means "stacking a new number onto the top", and a second word that means "removing a number from the top". The first word is PUSH, and the second word is POP, so if you PUSH the number five onto the stack, and then you PUSH the number one-thousand, and then you PUSH say 16426, the first number you can POP is 16426, because this number is at the top since it was put there last. The next number to be POPped will be 1000, and then five.</p>
+																<p>The stack is stored very very high in the address [range], so that there is less chance of programs "colliding" with the stack as either one or the other is built up. In the OLD ROM the bottom of the stack is at the very top of memory - 17407 for 1K, 20479 for 4K, and 32767 for 16K. In the NEW ROM the whole stack moves around - the bottom of the stack is at an address stored in one of the system variables - ERR_SP - to be found at 16386 and 16387. The stack is actually very perculiar, because it's UPSIDE DOWN. The BOTTOM of the stack is at the TOP of available memory, and the TOP of the stack is BELOW it! It turns out to be more efficient this way. It's not actually a deliberate plot to confuse the whole human race so that the world may be taken over by ZX computers, even if it does at times seem like it. So remember - the stack, or the MACHINE STACK as it's sometimes called, is like a stack of cardboard boxes piled up on a shop floor, except that in a daring feat of defiance of Newton's laws this stack instead decides to reside on the ceiling and build up downwards. The top - the only part you can easily get at - is lower down than the bottom!</p>
+																<p>The stack is so important to the computer that a special REGISTER is set aside just to store the position of the TOP of the stack (the part with the lowest address - the part we can get to). That register is called SP, which stands for STACK POINTER. It is actually a register-PAIR, because it can store two seperate bytes, but unlike the other register-pairs BC, DE, and HL, we CANNOT treat the two halves independently - they just won't seperate.</p>
+																<p>Here's how the instructions PUSH and POP work. Suppose HL contained a value 12345. This means that H contains a value of INT(12345/256), or 48, and L contains a value of 12345-256*INT(12345/256), or 57. Now the instruction PUSH HL would store the number 12345 at the top of the stack. It would do it by first of all stacking the HIGH part, and then stacking the LOW part. It would also alter the value of SP accordingly since two more bytes have been added to the stack, and the position of the top will therefore have moved (down) by two addresses.</p>
+																<p>It is unfortunately not possible to PUSH single registers onto the stack, you may only PUSH register-pairs, so BC may be PUSHed but B on its own may not. It is worth noting that the instruction PUSH BC will not in any way alter the value of BC, it will simply copy it without changing it. This of course goes for all PUSH instructions.</p>
+																<p>PUSH can be thought of in BASIC as a sequence of three statements:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+PUSH HL    POKE SP-1,H
+           POKE SP-2,L
+           LET SP=SP-2
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>POP of course works the other way round. POP HL will first of all remove L from the stack, and will then remove H. SP will be changed, since the top of the stack will have moved.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+POP HL    LET L=PEEK(SP)
+          LET H=PEEK(SP+1)
+          LET SP=SP+2
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Verify by using the BASIC equivalents given, that PUSH HL followed by POP DE is the same thing as LD D,H followed by LD E,L.</p>
+																<h4 align="center">PUSH</h4>
+																<p>Here are the codes for the instruction PUSH. One of them will require a small degree of explanation.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+F5        PUSH AF
+C5        PUSH BC
+D5        PUSH DE
+E5        PUSH HL
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The register-pair AF, which cannot normally be used in this way, is made up of smaller single registers A and F, in the same way that BC is composed of B and C. A is the register which we've been using throughout the book so far, but F is something completely different. The F stands for FLAGS, and is so called because it stores the value of all the FLAGS used (a FLAG is a memory [location] that can only store zero or one). One of these FLAGS we've already seen - the CARRY flag. The F register has the capability to store eight flags altogether, but in fact only six of them are used. We shall see what these are, and how to use them, later on.</p>
+																<h4 align="center">POP</h4>
+																<p>The codes for the POP instruction are very similar to the codes for PUSH. They are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+F1        POP AF
+C1        POP BC
+D1        POP DE
+E1        POP HL
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>One of the major uses of PUSH AF and POP AF is simply to put the value of A onto the stack. The fact that F has been stacked with it is irrelevant. PUSH AF will conveniently store the value of A until it's needed again, at which point its value may be recovered by the use of POP AF. This can be useful if you have to use the A register to perform calculations of some kind that couldn't be performed by any other register, but when the value of A will still be needed later on in the program.</p>
+																<p>For example, to add twenty-five to the value of B without altering the value of any other register:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+F5        PUSH AF
+78        LD A,B
+C619      ADD A,25d
+47        LD B,A
+F1        POP AF
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Why will only B and no other registers be altered (not even the CARRY flag!)? See if you can work out precisely what the above routine is doing, before you read on.</p>
+																<h4 align="center">ALTERING SP</h4>
+																<p>We can actually use SP in much the same way that we use DE and BC. We can add and subtract it, and we can load it. The hex codes are</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+F9        LD SP,HL
+31        LD SP,mn
+ED7B      LD SP,(pq)
+ED73      LD (pq),SP
+39        ADD HL,SP
+ED7A      ADC HL,SP
+ED72      SBC HL,SP
+33        INC SP
+3B        DEC SP
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>This is very powerful, and very useful. Suppose you wanted to exchange the values of D and E without altering anything else. The following routine will do just that</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+D5        PUSH DE
+D5        PUSH DE
+33        INC SP
+D1        POP DE
+33        INC SP
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The final instruction INC SP was necessary in order to restore the Stack Pointer to its original value. If this is not done you may cause a pretty nasty crash.</p>
+																<p>SP is not the only very specialised register in use. There is another two byte register called PC, or PROGRAM COUNTER. Its job is to remember whereabouts we are in the program. Every time it has to execute an instruction it will take a look at what PC says. If it says 30004 then it will execute the instruction at location 30004, and then it will increment the value of PC by the number of bytes in that instruction, so that NEXT time round it will be looking at the next instruction in sequence. For example, if 30004 contained the instruction LD A,B then this would be carried out and PC would be increased to 30005. If the instruction at 30005 was LD A,2 then once this was carried out PC would be increased by TWO, since LD A,2 is a TWO-BYTE instruction. PC would then be reading 30007 where the next instruction begins.</p>
+																<p>If you alter the value of PC then the effect is like a BASIC GOTO. The only difference is that machine code does not use line numbers. The machine language instruction that does this job is JP, which of course is short for JUMP. JP 30000 means GOTO address 30000 and continue executing this machine code program from there. Of course all this instruction REALLY does is to load the number 30000 into register PC (but without incrementing it at the end of the instruction), so that it thinks 30000 is the next address in the program. It is far more useful for us human beings to think of it as kind of GOTO though, because that's what we're used to.</p>
+																<p>Be careful with JP though. If you create an infinite loop in machine code then TOUGH! You're stuck with it, and what's more you can never break out unless you actually switch the machine off at the mains. Some other computers will let you break out of machine code, but the ZX81 will not, neither will the ZX80. An example of an infinite loop would be</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+77        30000     LD (HL),A
+23        30001     INC HL
+C33075    30002     JP 30000
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>I've written the actual addresses in the middle column. Usually this isn't done, and important lines are marked with LABELS, or words which tell us which lines do what. These LABELS do not appear in the hex, and we only in fact write them for our own convenience. If for instance we decided to call the first line START then our pretty bad program could be written</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+77        START     LD (HL),A
+23                  INC HL
+C33075              JP START
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>There is another instruction similar to JP, called JR or JUMP RELATIVE. It means jump forward a given number of bytes. In many ways it is better than JP because it is only two bytes long instead of three, and because a whole routine may be RELOCATED without changing JP destinations all over the place. JR 0 has no effect whatsoever, and the next instruction will be executed in sequence, however JR 1 will cause the next instruction (assuming it to be a single byte instruction) to be skipped. To skip over a two byte instruction, or two single-byte instructions, you will need to use JR 2.</p>
+																<p>It is also possible to jump backwards using JR, since there is a convention that any hex number greater than 7F will be treated as a negative number, obtained by subtracting 256 from the number it would normally represent. To make life easier I have included a second table of hexadecimal numbers, only this time using the negative sign convention.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
++----------------------------------------------------------------------+
+|      0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F   |
+|   +------------------------------------------------------------------+
+| 8 | -128-127-126-125-124-123-122-121-120-119-118-117-116-115-114-113 |
+| 9 | -112-111-110-109-108-107-106-105-104-103-102-101-100-99 -98 -97  |
+| A | -96 -95 -94 -93 -92 -91 -90 -89 -88 -87 -86 -85 -84 -83 -82 -81  |
+| B | -80 -79 -78 -77 -76 -75 -74 -73 -72 -71 -70 -69 -68 -67 -66 -65  |
+| C | -64 -63 -62 -61 -60 -59 -58 -57 -56 -55 -54 -53 -52 -51 -50 -49  |
+| D | -48 -47 -46 -45 -44 -43 -42 -41 -40 -39 -38 -37 -36 -35 -34 -33  |
+| E | -32 -31 -30 -29 -28 -27 -26 -25 -24 -23 -22 -21 -20 -19 -18 -17  |
+| F | -16 -15 -14 -13 -12 -11 -10 -9  -8  -7  -6  -5  -4  -3  -2  -1   |
++---+------------------------------------------------------------------+
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Here the number -5 is represented in hex by FB, and so it is therefore possible to use the instruction JR -5, but note that because of this convention we are unable to say JR 129 for instance, because 129 in hex is 81, which would here be taken to mean -127, and would be a jump backwards. The range we are limited to is therefore from -128 to 127.</p>
+																<p>JR 0, as we have said, does absolutely nothing. It will continue with the next instruction. It is important to remember that all relative jumps are counted from the NEXT instruction. JR 0 means execute the NEXT PLUS ZERO instruction, JR 1 means execute the NEXT PLUS ONE instruction. Consequently if we were to say JR -2 then you must count backwards for two bytes, starting at zero with the NEXT instruction. You will find that two bytes leads you to exactly the instruction we have just executed - the instruction JR -2. JR -2 is therefore an infinite loop, and is not a recommended instruction to use in a program.</p>
+																<p>The rather silly (infinite loop) program a couple of pages back can now be rewritten in one less byte using JR instead of JP.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+77        START     LD (HL),A
+23                  INC HL
+18FC                JR -4        or JR START
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>You have probably now realised that JP and JR are more or less useless on their own, in the same way that the BASIC statement GOTO would be useless if it weren't for IF/THEN statements and GOTO N. We need some kind of a CONDITIONAL jump, so that we can say IF some condition is true THEN jump to a new address pq, otherwise we are virtually certain to produce an infinite loop. Although machine language doesn't have quite the same kind of flexibility as an IF/THEN statement, there are four conditions we can check for using JR, and eight conditions we can check for using JP. These are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+18        JR e       JUMP RELATIVE by e bytes.
+28        JR Z e     IF the last result calculated was zero
+                     then JUMP RELATIVE by e bytes.
+20        JR NZ e    IF the last result calculated was non-zero
+                     then JUMP RELATIVE by e bytes.
+38        JR C e     IF CARRY=1 THEN JUMP RELATIVE by e bytes.
+30        JR NC e    IF CARRY=0 THEN JUMP RELATIVE by e bytes.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>and for JP:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+C3        JP pq       JUMP to address pq.
+CA        JP Z pq     IF the last result calculated was zero
+                      THEN JUMP to pq.
+C2        JP NZ pq    IF the last result calculated was non-zero
+                      THEN JUMP to pq.
+DA        JP C pq     IF CARRY=1 THEN JUMP to pq.
+D2        JP NC pq    IF CARRY=0 THEN JUMP to pq.
+EA        JP PE pq    see below.
+E2        JP PO pq    see below.
+FA        JP M pq     IF the last result calculated was negative
+                      (minus) THEN JUMP to pq.
+F2        JP P pq     IF the last result calculated was positive
+                      (plus) THEN JUMP to pq.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Now although this is a far cry from IF A$ [=] "HELLO" THEN PRINT "GOODBYE" as you're used to, you'll soon see that even this horrendous task may be evaluated in machine code. First though I think I ought to explain about the instructions JP PE and JP PO. The P actually stands for PARITY, and the E and O mean Even and Odd. What we are doing is testing one of the flags - a flag called P/V. It's not all that difficult to understand - it works like this.</p>
+																<p>P/V stands for Parity/Overflow. V stands for Overflow because O is too confusing - it could mean zero or it could mean Odd (as in JP PO), so in their wisdom, and expertise in spelling, the computer bods decided to call it V. The P/V flag is a rather overworked little beast because it does two jobs at once. The first job is to check the PARITY of the last result calculated. This means you simply count the number of 1s (or 0s) in the binary form of the last result (the binary form is always written to eight digits even if this means adding several leading zeroes). If the number of 1s is ODD then the parity is ODD. If the number of 1s is EVEN then the parity is EVEN.</p>
+																<p>The second job this flag has to do is check for an overflow. If we regard numbers from 00 to 7F as positive, and from 80 to FF as negative (as described in the section on JR) then an overflow happens if the "sign" is changed accidentally. For example 41 (positive) plus 41 (positive) equals 82 (which is negative). This is an <u>overflow</u>, but note this is NOT a CARRY. JP PE in this case means JUMP if there has been an overflow, and JP PO means JUMP if there has not been an overflow.</p>
+																<p>The various tests, if combined with other instructions properly, can really check for any situation conceivable. In fact thre's only one other kind of instruction you need in order to make JP and JR as powerful as IF/THEN/GOTO - that instruction is CP, or COMPARE.</p>
+																<p>CP will compare the register A with any other register, or with any constant number. It will do this by working out what would happen if that register or number were to be subtracted from A. It will not alter the value of any of the registers, but it will alter all of the FLAGS. The conditional JP and JR instructions work by checking the value of the flags. Apart from the carry flag, some of the other flags are the sign flag, which stores a one if the last calculation was negative, and a zero if the last calculation was positive; the zero flag, which stores a one if the result of the last calculation was zero, and a zero otherwise; and the parity flag, which stores a one for parity-even, and a zero for parity-odd. Although this may sound complicated you don't actually [have to] remember any of it, as long as you know how to use CP.</p>
+																<p>IF A=B THEN GOTO pq is quite easy to represent in machine code. It is CP B followed by JR Z,e. CP B will compare B with A (CP always compares with A, so that CP A is meaningless) which it does by working out A-B. The result isn't stored in any of the registers, so A and B both remain unchanged. The next instruction JR Z,e will only jump if the result A-B is zero - in other words if A equals B.</p>
+																<p>IF A&lt;B THEN GOTO pq may be achieved in machine code in two ways. The first instruction is CP B which will compare B with A by performing A-B. Now if A is less than B then A-B will be negative, and so you could well use JP M pq, but you could also do it in another way which will allow you to use JR instead of JP, since if A is positive, and A-B is negative, then there will be a carry, and so you may use the instruction JR C e. Of course this will not work if A was "negative" (i.e. in the range 80-FF) to start with unless subtracting B caused another overflow by going through 00. This could not happen unless B was in the range 80-FF as well.</p>
+																<h4 align="center">CALLING...</h4>
+																<p>Even in machine code we can have subroutines. GOSUB the routine starting at address pq is CALL pq. RETURN is RET. This particular instruction should look very familiar, since it is the very same RET that we've been using to get back to BASIC at the end of the routine. This is because every USR routine is really a SUBROUTINE, even though we consider it as a program in its own right. Unfortunately there's no such thing as a CALL RELATIVE instruction, as there is with JUMP, so CALL must always be a three byte instruction. In exactly the same way as with JP we can impose IF/THEN conditions, which work in precisely the same way and are written with the same letters to define the conditions. These are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>CALL</u>                    <u>RET</u>
+CD        CALL pq       C9        RET
+CC        CALL Z pq     C8        RET Z
+C4        CALL NZ pq    C0        RET NZ
+DC        CALL C pq     D8        RET C
+D4        CALL NC       D0        RET NC
+EC        CALL PE       E8        RET PE
+E4        CALL PO       E0        RET PO
+FC        CALL M        F8        RET M
+F4        CALL P        F0        RET P
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>As you may or may not have guessed, instructions like RET Z (return if zero) can also be used to end a machine code routine, i.e. IF RESULT 0 THEN RETurn to BASIC.</p>
+																<p>It is very important however that the value of SP is not altered during a subroutine, since the instructions CALL and RET both use the stack. CALL works by PUSHing what would have been the next address to be executed onto the stack, and RET works by POPping the first item on the stack. Thereafter both of these instructions act exactly like JP. Therefore it is possible to alter the RET address, should you need to, by POPping the first item on the stack (the previous RET address) and then PUSHing a new address. For example, to change the RET address to 20000 you could use the sequence</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+E1        POP HL
+21204E    LD HL,20000
+E5        PUSH HL
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>Another useful trick is to store the value of the stack pointer somewhere at the start of a subroutine, and then retrieve it at the end. On the NEW ROM a good place to store this value is the address 16507 because neither this nor 16508 are used at all by the ROM - it is the two "spare" bytes between the system variables and the program. On the OLD ROM you don't have this spare space, but you can overwrite some of the other system variables, for example the frame counter at address 16414. The advantage of doing this is that you can PUSH and POP to your heart's content and still be sure of a safe RETurn.</p>
+																<p>At the start of a subroutine:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+ED737B40  LD (16507),SP
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>and at the end of a subroutine:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+ED7B7B40  LD SP,(16507)
+C9        RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<h4 align="center">EXERCISES</h4>
+																<p>To make sure you have understood using the stack, and conditional jumps, write a program which will PUSH every number between one and fifty onto the stack (using PUSH AF) and then somehow manage to successfully return to BASIC. HINT: CP 32 (compare with 32 hex (50 decimal)) is quite a useful instruction here.</p>
+																<p>You'll need to know the various codes for CP. These are as follows:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+BF        CP A
+B8        CP B
+B9        CP C
+BA        CP D
+BB        CP E
+BC        CP H
+BD        CP L
+BE        CP (HL)
+FEnn      CP n
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>In the next chapter we'll begin loading a program which is designed to play a game of draughts. Now don't worry if this sounds rather complicated - I did say we'd <u>begin</u> loading it. I'm afraid you won't get the whole program until you've nearly completed the whole book, so keep a cassette handy reserved just for this program, and you can reSAVE it at each new stage. You'll need at least 4K for this.</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter05.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter07.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+

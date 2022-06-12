@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+   
+<html>
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981.">
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor">
+
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="99%">&nbsp;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 12
+									</td>
+									<td width="1%">
+										<img src="images/logo.gif" alt="logo" width="48px" height="48px">
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>	
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>	
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&nbsp;</td>
+								</tr>	
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter12');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter11.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter13.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">A Touch of Culture</h1>
+																<h3 align="center">MUSIC</h3>
+																<p>Music from your TV speaker? Is it possible? More to the point - is it possible on a ZX? The answer is yes!</p>
+																<p>As you know, your machine is designed to work without sound. It does make a kind of horrible buzzing noise, but hardly anything you'd want to make music out of. The manual itself tells us to turn the volume right down so as to cut the noise out completely.</p>
+																<p>The little computer, on the other hand, has a mind of its own. Completely ignoring its own design specifications it thinks to itself "Anything a bigger computer can do, I can do better", and as a result of this rebellion you'll find that REAL MUSICAL NOTES can be produced with just a tiny speck of machine code.</p>
+																<p>Those of you who have tried the music routines in Interface are undoubtedly thinking to yourselves "Huh! I've heard this so called 'music' - it's rubbish!" Well I assure you this is not the same thing. The reason? Well one big advantage machine code does have over BASIC is precision - and this program is in machine code, not BASIC. The music is musical. You can even tune it if you have a tuning fork handy.</p>
+																<a name="cathys"></a>
+																<p>This is called CATHY'S PROGRAM, dedicated to someone who believes computers should be artful, not just attack you with space invaders. The machine code is best stored in a REM statement. The addresses given in the listing assume you have a NEW ROM machine. If you have an OLD ROM machine all you have to change is the addresses (although you will have to supply two of the subroutines yourself [(KSCAN and FINDCHR)] - see <a href="chapter10.html#hexld3kscan">chapter ten</a>).</p>
+																<h3 align="center">Cathy's Program</h3>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+9B897369   NOTES    C  D  E  F        This data represents
+00937E005E          -  C* D* -  F*    the various notes that
+003B312824          -  C  D  E  F     are available from the
+0000362C00          -  -  C* D* -     keyboard.
+00000F161E          -  -  A* G* F*
+000A0C121A          -  C  B  A  G
+000000414C          -  -  -  A* G*
+00383C4653          -  C  B  A  G
+78         PAUSE    LD A,B            Subroutine causing a
+3D         HOLD     DEC A             delay of a precise
+20FD                JR NZ,HOLD        length.
+C9                  RET
+CDBB02     START    CALL KSCAN        Wait until    <- CALL HERE
+44                  LD B,H            a key is pressed.
+4D                  LD C,L
+51                  LD D,C
+14                  INC D
+28F7                JR NZ,START
+CDBD07              CALL FINDCHR      Find which key is being
+110440              LD DE,NOTES-7E    pressed.
+19                  ADD HL,DE
+46                  LD B,(HL)         Select note.
+AF                  XOR A
+B8                  CP B              Check that this note is
+28EB                JR Z,START        not a "pause".
+DBFF                IN A,(FF)         Play this note.
+CDA940              CALL PAUSE
+D3FF                OUT (FF),A
+CDA940              CALL PAUSE
+18E0                JR START          Go round loop again.
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>If you store the whole machine code routine in a single REM statement in line one [(of size 77 characters)], then you only need one more line of BASIC to make the program complete. This is line 2 RUN USR 16558, which calls the machine code from the address labelled START. Delete any extra lines you may have, and SAVE the program a couple of times <u>before</u> you RUN it.</p>
+																<p>You now have two octaves at your disposal - the keyboard below shows where the notes are. A fair number of tunes may be played quite successfully.</p>
+																<p><u>Always</u> run the program in the FAST mode - it's not that the speed makes the notes sound differently - it's simply that the program doesn't work AT ALL when in SLOW.</p>
+																<p>[Download available for 16K ZX81 -> <a href="dload/chapter12-cathys.p">chapter12-cathys.p</a>. I've moved BASIC line 2 to 3, added 2 FAST and 4 STOP.]</p>
+																<p>[Download available for 16K ZX80 -> <a href="dload/chapter12-cathys.o">chapter12-cathys.o</a>. Addresses used: 4A1A to 4B3A is occupied by HEXLD3D, NOTES is 4B3B, PAUSE is 4B62, START is 4B67, KSCAN is 4BA5 and FINDCHR is 4BC6.]</p>
+																<p>The notes as listed in the program are roughly right, but exactly how they sound will depend mainly on your television set (incidentally you may have to alter the tuning slightly to get the best sound quality), so in case you need to "re-tune" the notes, here's how you do it:</p>
+																<p>The data at the start of the program (labelled NOTES) contains one byte for each note. A zero indicates there is no note on that key. The data is in the following order:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
++----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+
+|    | |    | | C* | | D* | |    | | F* | | G* | | A* | |    | |    |
++----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+
+
+   +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+
+   |    | | C  | | D  | | E  | | F  | | G  | | A  | | B  | | C  | |    |
+   +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+
+
+      +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+
+      |    | | C* | | D* | |    | | F* | | G* | | A* | |    | |    |
+      +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+
+
+  +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+
+  |    | | C  | | D  | | E  | | F  | | G  | | A  | | B  | | C  | |    |
+  +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+ +----+
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+<u>data</u>              <u>key</u>              <u>note</u>
+9B 89 73 69       Z  X  C  V       C  D  E  F        lower octave
+00 93 7E 00 5E    A  S  D  F  G    -  C* D* -  F*    lower octave
+00 3B 31 28 24    Q  W  E  R  T    -  C  D  E  F     upper octave
+00 00 36 2C 00    1  2  3  4  5    -  -  C* D* -     upper octave
+00 00 0F 16 1E    0  9  8  7  6    -  -  A* G* F*    upper octave
+00 0A 0C 12 1A    P  O  I  U  Y    -  C  B  A  G     upper octave
+00 00 00 41 4C    nl L  K  J  H    -  -  -  A* G*    lower octave
+00 38 3C 46 53    sp .  M  N  B    -  C  B  A  G     lower octave
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>To alter the frequency of any note just change the byte of data that represents it. To make a note higher you must decrease the number, and to make it lower you must increase the number.</p>
+																<h4 align="center">THE PROGRAM'S DISADVANTAGES</h4>
+																<p>The biggest disadvantage is the lack of a RET instruction anywhere in the program, which means that once you enter the program you can never leave. You can cure this by adding a few lines somewhere near the START label. As an exercise, see if you can adjust the program so that it returns to BASIC whenever the key SHIFT-ZERO (rubout) is pressed (HINT: HL equals FCEF when it returns from KSCAN).</p>
+																<p>The second disadvantage is that if you press SHIFT while playing notes some very random things seem to happen. See if you can make the shift key inactive (except for breaking out as described above) by adding a SET 0,H instruction somewhere in the program.</p>
+																<p>ZX music is a fascinating subject, and it is possible to store in data a list of notes to be played, and how long each note is to be played - a tune in other words. I'll leave that one to you though, because the only real way to learn is by experimenting. We'll leave the subject of music altogether now and turn to something slightly different: pictures....</p>
+																<h3 align="center">PICTURES</h3>
+																<p>This is yet another program which relies on the artistic ability of the human operator. It is strictly for NEW ROM users ONLY, but it is intended to be run in the <u>FAST</u> mode. You will require at least four-K for this.</p>
+																<p>The program stores in memory three or more different pictures, and cycles through them one at a time, displaying each on the screen for as long as you want. A "picture" can be anything whatsoever - you can compose it out of graphics symbols, letters, spaces, inverse asterisks - whatever.</p>
+																<p>The first thing you do it to reserve some memory in which to store these pictures. If you have 4K type POKE 16388,182/POKE 16389,70/NEW for three pictures, or POKE 16388,206/POKE 16389,73/NEW for two pictures. If you have 16K you can find enough room for about <u>twenty</u> pictures. To work out how far down you have to move RAMTOP with 16K just start off with 32768 and subtract 793 for each picture.</p>
+																<p>Now you're ready: Write the following machine code to a REM statement in line one:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+2A0C40    STORE     LD HL,(D_FILE)
+11B646              LD DE,PICTURE1
+011903              LD BC,0319
+EDB0                LDIR
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>The address labelled PICTURE1 refers to those people using 4K. For those same people PICTURE2 would be 49CE and PICTURE3 would be 4CE7. If only two pictures will be used you should omit PICTURE1, not PICTURE3. If you have 16K you have more or less limitless freedom. In the interests of simplicity you could use addresses 5000, 5400, 5800, 5C00, and so on.</p>
+																<p>Now type POKE 16389,77 followed by CLS if you are using 4K, or if you are using 16K but earlier POKEd 16389 with a number less than 77.</p>
+																<p>Now write a BASIC program (without deleting line one) which prints a picture. The last line of this program should be RAND USR 16514. 4K users may find themselves running out of space. If this is so you'll just have to give up and make do with two pictures instead of three.</p>
+																<p>A useful fact to know is that if you make the first line of your program (first apart from the REM that is) POKE 16418,0 then you can print to all twenty-four lines of the screen. Even PRINT AT 23,0; works!</p>
+																<p>Now delete all the PRINT lines. DO NOT TYPE NEW. Change the address in the machine code to that of a different picture, and write a new BASIC program printing a different picture, again ending in RAND USR 16514. Do this until every picture you wish to cycle through has been stored.</p>
+																<p>Now move RAMTOP back to the address described in paragraph three. Type NEW. Now you are ready....</p>
+																<p>For the first time in the book we are going to make use of the PAUSE facility. The instruction CALL PAUSE will display the TV picture indefinitely, or until a key is pressed. To PAUSE for a specific number of TV frames it is necessary to LD (FRAMES) with the required number first. Enter this machine language program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+0602      PICTURES  LD B,number of pictures
+21B646              LD HL,address of first picture
+C5        NEXTPIC   PUSH BC
+ED5B0C40            LD DE,(D_FILE)
+011903              LD BC,0319
+EDB0                LDIR
+E5                  PUSH HL
+210001              LD HL,length of pause
+223440              LD (FRAMES),HL
+CD2902              CALL PAUSE
+E1                  POP HL
+C1                  POP BC
+10E8                DJNZ NEXTPIC
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>This is the complete program. See how it works - the first picture is copied into the display file using LDIR, and the PAUSE subroutine is called from the ROM. Then when the PAUSE is over the next picture is copied onto the screen, and so on. The value of HL is not changed between each picture, since they are stored in memory immediately after each other. If they are not (for instance if you are using easy to remember addresses) you'll need to alter the program slightly. HL should point to the start of a new picture each time round the loop.</p>
+																<p>The BASIC program to go with this is</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+10 RAND USR pictures
+20 RUN
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>In this way you can break out of the program at the end of the sequence. Alternatively you could replace the last RET instruction by JR PICTURES, which would eliminate the need for a second BASIC instruction. You can of course always break out during a PAUSE.</p>
+																<a name="life"></a>
+																<h3 align="center">LIFE</h3>
+																<p>In the last program in this chapter we turn the tables slightly. We humans have been artistic for long enough - now it's time to let the computers take their turn....</p>
+																<p>This program is called LIFE - it is supposed to represent the birth/growth/death cycle of a colony of cells living on a square grid. It produces rather fascinating results. Before your very eyes you see a constantly evolving pattern - starting off totally random - which finishes sometimes with the ultimate death of the cell colony, sometimes with a fixed and unmoving cell structure which has reached equilibrium, and sometimes with a continuous cycle of patterns, called dynamic equilibrium. It really is amazing to watch.</p>
+																<p>LIFE was invented in 1970 by a man called John Conway of Cambridge University, and it's rather surprising that the Tate Gallery hasn't yet got a copy of it. Although it is in fact about the growth of cells which follow hard and fast mathematical rules it in reality becomes a rather effective pattern generating algorithm.</p>
+																<p>The principle of LIFE is very simple. A grid - usually square - is dotted with approximately one quarter of its available squares filled with cells. These positions are usually chosen entirely at random. This configuration of the grid is called GENERATION ZERO.</p>
+																<p>Successive generations are then worked out by a fairly simple to understand principle. Each square on the grid has eight neighbouring squares. These squares either contain another cell or they are empty. Every cell with two neighbouring cells; or with three neighbouring cells, will survive to the next generation, but no other cells will survive. A new cell is born in every empty space which has precisely three neighbouring cells, but no other cells are born. With these fairly simple rules it is rather surprising that the game should produce the rather impressive results that it does.</p>
+																<p>In this version of LIFE our grid is sixteen by sixteen, because of course sixteen is a fairly easy number to work with in hexadecimal. Further, our grid is rather strangely constructed in a curved space continuum, meaning that every square on the left hand edge is connected to the corresponding square on the right hand edge, and vice versa, also every square on the top edge is connected to the corresponding square on the bottom edge and vice versa.</p>
+																<p>The program is best run in SLOW, although of course it will run in FAST if you add a PAUSE or INPUT statement.</p>
+																<p>NEW ROM people are advised to store the machine code in a REM statement. OLD ROM people are advised to store the machine code <u>anywhere but</u> a REM statement, since it contains character 76h. The machine code contains exactly one hundred and thirty nine bytes.</p>
+																<p>The surrounding BASIC program is</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+ 2 RAND USR START
+ 3 RAND USR NEXTGEN
+(4 PAUSE 25 or INPUT A$ - optional extra for FAST users)
+ 5 GOTO 3
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>where START and NEXTGEN are addresses in the machine code program. In the following listing we assume that the first address is 4082. You can quite easily change it if you wish.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tr>
+																		<td>
+<pre>
+EF010110  TABLE     DEFB EF 01 01 10  Data representing the displacements
+10FFFFF0            DEFB 10 FF FF F0  of the neighbouring squares.
+
+call here
+
+0E10      START     LD C,10           C counts the number of rows printed.
+0610      NEWROW    LD B,10           B counts the number of columns.
+2A3240    NEXT      LD HL,(SEED)      This next section generates a
+54                  LD D,H            random number.
+5D                  LD E,L
+29                  ADD HL,HL
+29                  ADD HL,HL
+19                  ADD HL,DE
+29                  ADD HL,HL
+29                  ADD HL,HL
+29                  ADD HL,HL
+19                  ADD HL,DE
+223240              LD (SEED),HL      The new random-number-seed is
+7C                  LD A,H            stored.
+FEC4                CP C4             Decide which character to print,
+3804                JR C,BLACK        based on choice of random number.
+3EB4                LD A,B4
+1802                JR CHAR
+3E80      BLACK     LD A,80
+D7        CHAR      RST 10            Print this character.
+10E3                DJNZ NEXT         Same for the next character in the
+3E76                LD A,76           row.
+D7                  RST 10            Print a newline symbol at the end
+0D                  DEC C             of the row.
+20DB                JR NZ,NEWROW      Same for next row.
+
+C9                  RET               Generation zero printed completely.
+0600      NEXTGEN   LD B,00           B counts the no. of cell positions.
+110043              LD DE,DUMP        DE stores the start of the working-
+                                      area used to compute the next gen.
+2A0C40              LD HL,(D_FILE)
+E5                  PUSH HL           Stack the start of the display-file.
+7E        COPY      LD A,(HL)         Copy the current generation (but
+23                  INC HL            not newlines) to the working space.
+FE76                CP 76
+28FA                JR Z,COPY
+12                  LD (DE),A
+13                  INC DE
+10F6                DJNZ COPY
+
+110043              LD DE,DUMP        Stack the start of the dump.
+D5                  PUSH DE
+0E00      NEXTCELL  LD C,00           C counts the number of neighbours a
+                                      particular cell has.
+D1                  POP DE
+E1                  POP HL            Skip over the next character in the
+7E                  LD A,(HL)         display file if it is a newline.
+FE76                CP 76
+2001                JR NZ,VALID
+23                  INC HL
+E5        VALID     PUSH HL
+EB                  EX DE,HL          Store the position within the dump
+E5                  PUSH HL           of the cell being examined in HL,
+                                      and also stack it.
+118240              LD DE,TABLE       Point DE to table of displacements.
+1A        NEXDIS    LD A,(DE)         Find displacement.
+FE0E                CP 0E             If this "displacement" is 0E we
+280B                JR Z,COUNTED      have reached the end of the table.
+13                  INC DE            Point DE to next item in table.
+85                  ADD A,L           Find neighbouring cell-position.
+6F                  LD L,A
+7E                  LD A,(HL)         Is there a cell there?
+FEB4                CP B4
+20F3                JR NZ,NEXDIS
+0C                  INC C             Increase count if so.
+18F0                JR NEXDIS
+E1        COUNTED   POP HL            Retrieve cell position.
+79                  LD A,C
+FE02                CP 02             Are there less than two neighbours?
+380F                JR C,NOCELL       If so no cell appears.
+FE04                CP 04             Are there four or more?
+300B                JR NC,NOCELL      If so no cell appears.
+FE03                CP 03             Are there precisely three?
+2803                JR Z,CELL         If so, a cell does appear.
+7E                  LD A,(HL)
+1806                JR PUT
+3EB4      CELL      LD A,B4
+1802                JR PUT
+3E80      NOCELL    LD A,80           A now contains the right character.
+E3        PUT       EX (SP),HL        Retrieve print position.
+77                  LD (HL),A         Print character.
+23                  INC HL            Move print position along line.
+E3                  EX (SP),HL        Retrieve cell-position.
+23                  INC HL            Look at next cell-position.
+E5                  PUSH HL           Stack the position.
+7D                  LD A,L            Check the value of L to find out
+A7                  AND A             whether or not we have printed the
+20BF                JR NZ,NEXTCELL    last cell-position.
+E1                  POP HL            Restore the stack to its original
+E1                  POP HL            state and return to BASIC.
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</table>
+																<p>If you used the same addresses as in the listing then START is 16522 and NEXTGEN is 16562. SAVE the program. Do not RUN it yet because if you do it will crash! NEW ROM users <u>MUST</u> first of all type <u>POKE 16389,67</u> followed by <u>NEW</u>, and OLD ROM users should ensure that they have at least 2K of memory. You will then have to reLOAD the program from tape.</p>
+																<p>The first thing you should type is RAND/RANDOMISE. You may now type RUN.</p>
+																<p>An interesting point about this program is that it is capable of producing its own random numbers. The part labelled NEXT does this - you should study how this is achieved, and by all means use the same principle in your own programs.</p>
+																<p>LIFE will print out a randomly constructed generation zero in just ONE SECOND when in the SLOW mode. The successive generations will then be produced at the staggering rate of three and a half generations per second! If you find this is much too rapid you can slow it down by adding a few more lines of BASIC - I suggest Let X=0/LET X=X+1/PRINT AT 17,0;X with the last two being inside the loop - this has the added advantage of telling you how many generations have been shown.</p>
+                                <p>[Download available for 16K ZX81 -> <a href="dload/chapter12-life.p">chapter12-life.p</a>. As I used HEXLD3D to load this high, the instructions are as follows: Set RAMTOP to 4A00 (18944) with POKE 16389,74/NEW. You don't need to type RAND as I added it to the BASIC program. Type RUN to execute Life and press any key to return to BASIC where you can RUN it again. I did first write Life to a line 1 REM statement but the first 3E76 truncated the BASIC listing, so I wrote it to high memory instead following HEXLD3D. Addresses used: 4A82 to 4B77 is occupied by HEXLD3D, TABLE is 4B82, START is 4B8A (19338), NEXTGEN is 4BB2 (19378) and I relocated DUMP to 4D00.]</p>
+																<p>Finally you should follow the manner in which this program, unlike some other LIFE programs, calculates each new generation entirely on the basis of the previous one. It does not work out the new first row and then calculate the second row by counting the neighbours in the now-changed new first row, the second row is determined by the <u>previous</u> status of the first row (this is what the area of memory labelled DUMP in the machine code listing is for), thus each new generation is <u>correctly</u> set up.</p>
+																<p>There are many other pattern generating programs, some much simpler, but none with the elegance of LIFE. If you own 16K you might like to try writing a 24 by 24 LIFE, or even a 24 by 32 version - remember, in machine code there is nothing to stop you printing on the very bottom two lines.</p>
+																<p>The biggest LIFE you could possibly hope to achieve is 48 by 64 using white quarter-squares for cells, but that would be quite a complicated program. If you feel really enthusiastic you might like to have a bash at this monumental task. I will let that decision rest with your sanity.</p>
+																<p>The next chapter completes the discussion on DRAUGHTS and leaves you with the horrifying prospect of completing the program....</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tr>
+																		<td><a href="chapter11.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="chapter13.html">Next</a></td>
+																	</tr>
+																</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>	
+							</table>
+						</td>
+					</tr>	
+					<tr>	
+						<td>&nbsp;</td>
+					</tr>	
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>	
+							</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>	
+				</table>
+			</td>
+		</tr>	
+	</table>
+
+</body>
+</html>
+
+
