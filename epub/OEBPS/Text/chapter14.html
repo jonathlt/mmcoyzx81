@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/favicon.ico" type="image/x-icon"/>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981."/>
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor"/>
+
+<link href="../Styles/main.css" rel="stylesheet" type="text/css"/>
+<script language="JavaScript" src="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tbody><tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tbody><tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tbody><tr>
+									<td width="99%">&#160;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 14
+									</td>
+									<td width="1%">
+										<img src="../Images/logo.gif" alt="logo" width="48px" height="48px"/>
+									</td>
+								</tr>
+							</tbody>
+</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tbody><tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&#160;</td>
+								</tr>
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter14');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tbody><tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tbody><tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tbody><tr>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter13.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter15.html">Next</a></td>
+																	</tr>
+																</tbody>
+</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">Graphics Games</h1>
+																<h4 align="center">SPIRALS</h4>
+																<p>In this fast moving real-time graphics game (intended for use with SLOW) you are placed at the start of a square spiral and must reach the end of it in the minimum possible time. Your score is constantly displayed - it starts of at 99900 and decrements continuously, but you can't cheat by breaking out early with a high score - the program won't allow that. Now and again the score will reach zero before you reach the end of the spiral. If that happens you obviously need more practice!</p>
+																<p>This fascinating and highly amusing game is unfortunately for NEW ROM users with <u>SLOW</u> only. It will not work in FAST because although the program will still consider itself to be running perfectly smoothly, the average human operator won't know what's going on because of the fact that the screen in front of them is completely black.</p>
+																<p>This is a fascinating game to watch - witnessing the score decrease before your very eyes is surprisingly effective. You can make the game as difficult as you like by altering the initial value of the "timing" - held in BC. I've given it 0400, but you could use 0800 for a slower game, 0200 for a faster game, and so on.</p>
+																<p>There is one difficulty built in though - if you hit a wall you don't just bounce off, you actually become embedded in it, and the only way you can get out is to exactly <u>reverse</u> your direction. It can be quite tricky.</p>
+																<p>Well good luck on your race - keep a record of the high scores (no cheating) and see if you can master it.</p>
+																<p>The keys will move you as follows: Any key on the bottom row will move you downwards (except for shift, which has no effect), any key on the top row moves you up. The middle two rows move you left and right, with the lefthand ten keys (QWERTASDFG) moving you to the left, and the ten righthand keys (YUIOPHJKLn/l) moving you to the right. This system was adopted instead of using the cursor controls 5, 6, 7, and 8 for two reasons.</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>It is easier for people to understand and become familiar with.</li>
+																	<li>It is easier to program, since we only need to test one register after the keyboard scan instead of two.</li>
+																</ul>
+																<p>The program lists as follows, and can be relocated to any desired location by changing just <del>one</del> [two] addresses. The program should be called from the point labelled START.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>E1        SPRINT    POP HL              This subroutine prints
+7E                  LD A,(HL)           out a picture of the board,
+23                  INC HL              along with your initial
+E5                  PUSH HL             score. It must however be
+FEFF                CP FF               provided with a list of
+C8                  RET Z               data terminated by FF.
+D7                  RST 10
+18F6                JR SPRINT
+CD-sprint  START    CALL SPRINT         Calls the subroutine. The
+                                        following is data for the
+                                        subroutine.
+DEFB 80 80 80 80 80 80 80 80 80 80 80 76
+     80 15 80 00 00 00 00 00 00 00 <del>00</del> 80 76
+     80 00 80 00 80 80 80 80 80 00 80 76
+     80 00 80 00 80 00 00 00 80 00 80 76
+     80 00 80 00 80 00 80 00 80 00 80 76
+     80 00 80 00 80 80 80 00 80 00 80 76
+     80 00 80 00 00 00 00 00 80 00 80 76
+     80 00 80 80 80 80 80 80 80 00 80 76
+     80 00 00 00 00 00 00 00 00 00 <del>00</del> 80 76
+     80 80 80 80 80 80 80 80 80 80 80 76
+     76
+     3E 34 3A 37 00 38 28 34 37 2A 00 33 34 3C 00 25 25 25 1C 1C FF
+
+2A0C40    SETUP     LD HL,(D_FILE)      This section initialises the
+110E00              LD DE,000E          two "variables" used in our
+19                  ADD HL,DE           program.
+227B40              LD (POSITION),HL
+210000              LD HL,0000
+227940              LD (LASTMOVE),HL
+2A0C40    LOOP      LD HL,(D_FILE)      Decrement the score.
+118B00              LD DE,008B
+19                  ADD HL,DE
+7E        DECIMAL   LD A,(HL)
+A7                  AND A
+2008                JR NZ,POSITIVE      ###########
+0605                LD B,05             #+#       #
+23        RESET     INC HL              # # ##### #
+361C                LD (HL),1C          # # #   # #
+10FB                DJNZ RESET          # # # # # #
+C9                  RET                 # # ### # #
+3D        POSITIVE  DEC A               # #     # #
+FE1B                CP 1B               # ####### #
+2005                JR NZ,OK            #         #
+3625                LD (HL),25          ###########
+2B                  DEC HL
+18EA                JR DECIMAL
+77        OK        LD (HL),A
+010004              LD BC,SPEED         A timed delay. Altering the
+0B        DELAY     DEC BC              initial value of BC changes
+78                  LD A,B              the speed of the game.
+B1                  OR C
+20FB                JR NZ,DELAY
+CDBB02              CALL KSCAN          Scan keyboard. L now contains
+7D                  LD A,L              a value corresponding to the
+2F                  CPL                 direction required.
+6F                  LD L,A
+E681                AND 81
+2805                JR Z,NOTDOWN        Find direction.
+110C00              LD DE,000C
+181C                JR CHKMOVE
+7D        NOTDOWN   LD A,L
+E618                AND 18
+2805                JR Z,NOTUP
+11F4FF              LD DE,FFF4
+1812                JR CHKMOVE
+7D        NOTUP     LD A,L
+E660                AND 60
+2805                JR Z,NOTRIGHT
+110100              LD DE,0001
+1808                JR CHKMOVE
+7D        NOTRIGHT  LD A,L
+E606                AND 6
+28B2                JR Z,LOOP
+11FFFF              LD DE,FFFF
+2A7940    CHKMOVE   LD HL,(LASTMOVE)    Is player embedded in wall?
+7D                  LD A,L
+B4                  OR H
+2807                JR Z,MOVE
+19                  ADD HL,DE           If so, is player reversing?
+7D                  LD A,L
+B4                  OR H
+2802                JR Z,MOVE
+18A1                JR LOOP
+2A7B40    MOVE      LD HL,(POSITION)    Reassign square with black
+7E                  LD A,(HL)           or white space as required.
+E680                AND 80
+77                  LD (HL),A
+19                  ADD HL,DE           Find new position.
+7E                  LD A,(HL)           Draw black or white cross
+F615                OR 15               as appropriate.
+77                  LD (HL),A
+227B40              LD (POSITION),HL
+210000              LD HL,0000          Store direction moved if
+17                  RLA                 a wall has been hit.
+3002                JR NC,NOTHIT
+62                  LD H,D
+6B                  LD L,E
+227940    NOTHIT    LD (LASTMOVE),HL
+2A0C40              LD HL,(D_FILE)      Check to see whether the
+113600              LD DE,0036          finished square has been
+19                  ADD HL,DE           reached.
+ED5B7B40            LD DE,(POSITION)
+ED52                SBC HL,DE
+C8                  RET Z
+C3-loop             JP LOOP
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+                                <p>[Download available for 16K ZX81 -&gt; <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/dload/chapter14-spirals.p">chapter14-spirals.p</a>. As I used HEXLD3D to load this high, the instructions are as follows: Set RAMTOP to 4A00 (18944) with POKE 16389,74/NEW. Type RUN to play the game. Addresses used: 4A82 to 4B77 is occupied by HEXLD3D, SPRINT is 4B82, START is 4B8C (19340), LOOP is 4C2D and the timing value SPEED (default 0400) is held at 4C4C which you'll probably want to double to 0800.]</p>
+                                <a name="breakout"></a>
+																<h4 align="center">BREAKOUT</h4>
+																<p>In this version of BREAKOUT, which incidentally may only be run on a NEW ROM in SLOW, you move the bat with any of the keys on the keyboard - those on the left will move you to the left, and those on the right will move you to the right. The game is intended to be played only by those people with 3.25K or more, but it can be persuaded to run in less if the following few lines of machine code are added to the program - these should precede the main program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>FD362200  EXTRA     LD (IY+22),00
+210003              LD HL,0300
+AF        SPACES    XOR A
+D7                  RST 10
+2B                  DEC HL
+7C                  LD A,H
+B5                  OR L
+20F9                JR NZ,SPACES
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>The reason for this is that the main BREAKOUT program assumes that the screen is initially completely full - that is, that it contains twenty-four rows, each consisting of thirty-two spaces followed by a newline. If your machine has less than 3.25K on board then this will not be so, because of the way that the ROM sets up the screen. To rectify this we first LD (IY+22) with 00. IY is always 4000 at the start of any USR routine, so IY+22 is 4022, which is the system variable DF_SZ. This represents the number of rows in the bottom half of the screen (the part we cannot print to) - by telling the machine that this number is zero it follows that the number of rows that we cannot print to is also zero, thus the whole screen is at our disposal. HL counts the number of spaces to be printed to ensure that we do not try to run off the end of the screen.</p>
+																<p>BREAKOUT is a program in four parts. These parts are:</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>Initialise everything.</li>
+																	<li>Restart the game for each new ball.</li>
+																	<li>Move the ball.</li>
+																	<li>Move the bat.</li>
+																</ul>
+																<p>We will go over each of these steps in scrutinous detail.</p>
+																<p>Firstly to initialise everything. This involves a) printing the playing board, b) defining the initial ball position, and c) setting the initial speed of the game. To print the board:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>20002200 TABLESTART DEFW 0020 0022
+E0FFDEFF            DEFW FFE0 FFDE
+2A0C40    BREAKOUT  LD HL,(D_FILE)    Load all of the bricks into
+118500              LD DE,0085        position.
+19                  ADD HL,DE
+018080              LD BC,8080        B is the number of bricks, C is a
+23        NXBRK     INC HL            constant used quite frequently in
+7E                  LD A,(HL)         this section.
+FE76                CP 76
+28FA                JR Z,NXBRK
+3608                LD (HL),08
+10F6                DJNZ NXBRK
+2A0C40              LD HL,(D_FILE)    Put top wall in position.
+061E                LD B,1E           This part puts in the first thirty
+23        NXBL      INC HL            blocks.
+71                  LD (HL),C
+10FC                DJNZ NXBL
+23                  INC HL
+369C                LD (HL),9C        The current score -zero - is
+23                  INC HL            entered.
+71                  LD (HL),C         The last block is set in place.
+23                  INC HL
+23                  INC HL
+111F00              LD DE,001F        DE is one more than the number of
+0617                LD B,17           spaces between the walls.
+71        SIDES     LD (HL),C         Both side walls are loaded into
+19                  ADD HL,DE         position.
+71                  LD (HL),C
+23                  INC HL
+23                  INC HL
+10F9                DJNZ SIDES
+0620                LD B,20           Now the base-line is drawn in.
+361B      BASE      LD (HL),1B
+23                  INC HL
+10FB                DJNZ BASE
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>You'll notice that in this version of the game I've ensured that a row of full stops is printed below the very bottom of the screen. This provides a convenient test for whether or not the ball has hit the base. Finally, to set the ball position and speed, the procedure is:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>11FCFE              LD DE,FEFC          This is the displacement from
+                                        the current print position to
+                                        the ball's starting point.
+19                  ADD HL,DE           Locate this starting point.
+223C40              LD (BALLINIT),HL    Store it.
+210009              LD HL,0900          This is the initial speed.
+224640              LD (SPEED),HL       Store it.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>This is actually all the initialisation we need. You'll notice several things missing - for example although the ball is located it is not actually printed. The bat is not mentioned at all! The reason is that the bat is redrawn every time the game is restarted, and so is the ball. Why bother to find the initial position then? Well in this version, the ball starts off in a slightly different position each time. This ensures that it is possible to wipe out all of the bricks.</p>
+																<p>The variable SPEED has a dual purpose. Firstly it determines the speed of the game - that is, the speed at which the bat and ball will move (the bat moves at precisely twice the ball speed), but secondly it determines when the game is over. When SPEED decrements to zero (the lower the number, the faster the game) we know that the game is over.</p>
+																<p>Section two of the game does the following tasks:</p>
+																<ul style="list-style-type: lower-alpha;list-style-image: none;">
+																	<li>Change the initial ball position, whilst also noting the <u>current</u> ball position and printing the ball.</li>
+																	<li>Set the initial direction of movement of the ball to up/right.</li>
+																	<li>Change the speed of the game and check for end of game.</li>
+																	<li>Print the bat, and at the same time delete any previous bat symbol that may have been there.</li>
+																	<li>Give the human player a chance to recover from the last session, since presumably [he/]she won't want one ball to leap into the game immediately [after] the last one vanishes.</li>
+																</ul>
+																<p>The section is this. Look at the manner in which the bat is printed and the previous bat overwritten.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>2A3C40    RESTART   LD HL,(BALLINIT)     Change the starting
+23                  INC HL               position of the ball.
+223C40              LD (BALLINIT),HL
+224040              LD (BALLPOS),HL      Start the ball here.
+3634                LD (HL),34           Print the ball.
+21E0FF              LD HL,FFE0           Set the initial direction.
+224440              LD (DIRECTION),HL
+3A4740              LD A,(SPEED)high     Increase the speed.
+3D                  DEC A
+C8                  RET Z                Return to BASIC if lives have
+324740              LD (SPEED)high,A     run out.
+2A0C40              LD HL,(D_FILE)       Reprint the bat in its
+11B702              LD DE,02B7           starting position.
+19                  ADD HL,DE
+3600                LD (HL),00
+3E03                LD A,03              A contains the bat symbol.
+23                  INC HL
+77                  LD (HL),A
+23                  INC HL
+77                  LD (HL),A
+23                  INC HL
+77                  LD (HL),A
+224240              LD (BATPOS),HL       Store the initial bat
+23                  INC HL               position (this is the
+77                  LD (HL),A            position of the centre of the
+23                  INC HL               bat).
+77                  LD (HL),A
+0618                LD B,18              Now erase the rest of the
+23        ERASE     INC HL               row, in case a previous bat
+3600                LD (HL),00           symbol remains there.
+10FB                DJNZ ERASE
+210000              LD HL,0000           Set a very long delay, for
+1803                JR DELAY             the player to recover for the
+                                         next ball.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>The last two lines, which cause a short pause between sessions, will become clear when the start of the next section is given.</p>
+																<p>To move the ball we first of all go through a timed delay loop (controlled by SPEED - the speed of the game) and then <u>unprint</u> the previous position of the ball. The contents of the next square in the direction the ball is travelling are examined, and one of the following will happen:</p>
+																<ul>
+																	<li>If a full stop has been reached then the ball has gone off the bottom of the screen - the game is restarted.</li>
+																	<li>If either a space (i.e. nothing hit) or a brick is located, the ball is reprinted, at this new position.</li>
+																	<li>If anything other than a space is reached, the direction of movement of the ball is changed at random.</li>
+																	<li>If the ball was <u>not</u>reprinted then find the contents of the next square in this new direction and re-examine the situation.</li>
+																	<li>If a brick was hit, the score is increased by 1.</li>
+																</ul>
+																<p>Now, in order that we may choose a new random direction <u>validly</u> we require a table of directions to choose from. These valid directions are 0020, 0022, FFE0, and FFDE. You should store these numbers, low part first, at any address in RAM, and call the start of this table TABLESTART. The program which will then achieve all of this is as follows:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>2A4640    LOOP      LD HL,(SPEED)        This is a short delay loop
+2B        DELAY     DEC HL               which controls the speed of
+7C                  LD A,H               the game.
+B5                  OR L
+20FB                JR NZ,DELAY
+04                  INC B                The ball is only moved every
+CB40                BIT 0,B              <u>other</u> time round the loop, so
+205A                JR NZ,MOVEBAT        that the bat moves twice as
+                                         fast as the ball.
+2A4040    MOVEBALL  LD HL,(BALLPOS)      Current ball position is found.
+3600                LD (HL),00           Erase the ball.
+ED5B4440            LD DE,(DIRECTION)    Find next position of the ball.
+19                  ADD HL,DE
+7E                  LD A,(HL)            Find the contents of this new
+FE1B                CP 1B                position.
+28A6                JR Z,RESTART         Has the ball hit the base?
+4F                  LD C,A               Start next ball if so.
+E6F7                AND F7
+2005                JR NZ,DONTMOVE       Only reprint the ball if the
+3634                LD (HL),34           new position is either empty
+224040              LD (BALLPOS),HL      or contains a brick.
+B1        DONTMOVE  OR C                 Retrieve previous contents.
+283E                JR Z,MOVEBAT         Change direction if not a
+E5                  PUSH HL              space.
+2A3240              LD HL,(SEED)         Generate new direction at
+54                  LD D,H               random.
+5D                  LD E,L
+29                  ADD HL,HL
+29                  ADD HL,HL
+19                  ADD HL,DE
+29                  ADD HL,HL
+29                  ADD HL,HL
+29                  ADD HL,HL
+19                  ADD HL,DE
+223240              LD (SEED),HL
+7C                  LD A,H               Choose this direction from a
+E606                AND 06               table.
+C6tablestartlow     ADD A,TABLESTARTlow
+6F                  LD L,A
+26tablestarthigh    LD H,TABLESTARThigh
+5E                  LD E,(HL)
+23                  INC HL
+56                  LD D,(HL)
+ED534440            LD (DIRECTION),DE
+E1                  POP HL
+79                  LD A,C               If the contents of the square
+FE08                CP 08                is not a brick, then move
+20BF                JR NZ,MOVEBALL       again.
+2A0C40              LD HL,(D_FILE)       Having established that a
+111F00              LD DE,001F           brick has been hit, the score
+19                  ADD HL,DE            is increased by one.
+7E                  LD A,(HL)
+FE80                CP 80
+2002                JR NZ,DIGIT
+3E9C                LA A,9C
+3C        DIGIT     INC A
+FEA6                CP A6
+2005                JR NZ,INCREASED
+369C                LD (HL),9C
+2B                  DEC HL
+18EF                JR CARRY
+77        INCREASED LD (HL),A
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>An interesting point to watch for is the way in which the score is increased. Compare the mechanism to that used in SPIRALS to decrease the score. There are one or two differences between this and the last. Firstly of course we are here using INVERSE digits instead of ordinary digits, though this difference is rather trivial. Secondly the BREAKOUT score <u>increases</u> instead of decreases. Thirdly, the SPIRALS score would terminate at zero, whereas the BREAKOUT score can increase indefinitely.</p>
+																<p>To move the bat, first of all the keyboard is scanned, and if a left-hand key is pressed [then] the bat is moved to the left, provided of course there is not a wall in the way, and if a right-hand key is pressed then the bat is moved to the right, if possible. Note that if a left <u>and</u> right key are pressed simultaneously [then] the bat should not move at all. In our program such a circumstance would cause the bat to move first to the left, and then to the right.</p>
+																<p>Study this, the final part of the program, and watch the way the bat is actually moved. Remember that the variable BATPOS stores the position of the <u>middle</u> of the bat.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>C5        MOVEBAT   PUSH BC           Preserve the value of B.
+CDBB02              CALL KSCAN        Scan the keyboard.
+C1                  POP BC
+7D                  LD A,L
+2F                  CPL
+F5                  PUSH AF           Stack contains a value
+E60F                AND 0F            corresponding to the key pressed.
+2817                JR Z,NOTLEFT      If the player moves left....
+2A4240              LD HL,(BATPOS)    Locate the bat.
+2B                  DEC HL
+2B                  DEC HL
+2B                  DEC HL
+7E                  LD A,(HL)         Is there a wall to our left?
+FE80                CP 80             If so, don't move.
+2829                JR Z,CYCLE1
+3603                LD (HL),03        Extend the bat to the left.
+23                  INC HL
+23                  INC HL
+224240              LD )BATPOS),HL    Store new bat position.
+23                  INC HL
+23                  INC HL
+23                  INC HL
+3600                LD (HL),00        Decrease bat to the right.
+F1        NOTLEFT   POP AF
+E6F0                AND F0
+2819                JR Z,CYCLE2       If the player moves right....
+2A4240              LD HL,(BATPOS)
+23                  INC HL
+23                  INC HL
+23                  INC HL
+7E                  LD A,(HL)         Is there a wall to the right?
+FE80                CP 80             If so, don't move.
+280E                JR Z,CYCLE2
+3603                LD (HL),03        Extend the bat to the right.
+2B                  DEC HL
+2B                  DEC HL
+224240              LD (BATPOS),HL    Store new bat position.
+2B                  DEC HL
+2B                  DEC HL
+2B                  DEC HL
+3600                LD (HL),00        Decrease bat to the left.
+E5                  PUSH HL           Same for next time round.
+E1        CYCLE1    POP HL
+C3loop    CYCLE2    JP LOOP
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+                                <p>[Download available for 16K ZX81 -&gt; <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/dload/chapter14-breakout.p">chapter14-breakout.p</a>. I used HEXLD3D to load this high, but if you set RAMTOP to 4A00 (18944) the game won't run (perhaps HEXLD3D and the game's machine code should have been higher - who knows) so don't set RAMTOP to anything. Type RUN to play the game. Addresses used: 4A82 to 4B77 is occupied by HEXLD3D, TABLESTART is 4B78, BREAKOUT is 4B80 (19328) and LOOP is 4C02. The initial timing value (default 0900) is held at 4BBF which you may want to increase.]</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tbody><tr>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter13.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter15.html">Next</a></td>
+																	</tr>
+																</tbody>
+</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</tbody>
+</table>
+												</td>
+											</tr>
+										</tbody>
+</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>
+							</tbody>
+</table>
+						</td>
+					</tr>
+					<tr>	
+						<td>&#160;</td>
+					</tr>
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tbody><tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>
+							</tbody>
+</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>
+				</tbody>
+</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

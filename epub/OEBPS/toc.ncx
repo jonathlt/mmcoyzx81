@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN"
+   "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="urn:uuid:60f5ef34-7275-4429-a2c4-34d871464783"/>
+    <meta name="dtb:depth" content="3"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>[Title here]</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="navPoint-1" playOrder="1">
+      <navLabel>
+        <text>An Introduction</text>
+      </navLabel>
+      <content src="Text/chapter01.html#sigil_toc_id_1"/>
+    </navPoint>
+    <navPoint id="navPoint-2" playOrder="2">
+      <navLabel>
+        <text>Introduction to Hexadecimal and Machine Code</text>
+      </navLabel>
+      <content src="Text/chapter02.html#sigil_toc_id_2"/>
+      <navPoint id="navPoint-3" playOrder="3">
+        <navLabel>
+          <text>COUNTING IN HEXADECIMAL</text>
+        </navLabel>
+        <content src="Text/chapter02.html#sigil_toc_id_3"/>
+      </navPoint>
+      <navPoint id="navPoint-4" playOrder="4">
+        <navLabel>
+          <text>ABOUT CRASHING</text>
+        </navLabel>
+        <content src="Text/chapter02.html#sigil_toc_id_4"/>
+        <navPoint id="navPoint-5" playOrder="5">
+          <navLabel>
+            <text>HOW TO PREVENT CRASHES</text>
+          </navLabel>
+          <content src="Text/chapter02.html#sigil_toc_id_5"/>
+        </navPoint>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint-6" playOrder="6">
+      <navLabel>
+        <text>Simple Arithmetic</text>
+      </navLabel>
+      <content src="Text/chapter03.html#sigil_toc_id_6"/>
+      <navPoint id="navPoint-7" playOrder="7">
+        <navLabel>
+          <text>&quot;HEXLD&quot; REVISITED</text>
+        </navLabel>
+        <content src="Text/chapter03.html#sigil_toc_id_7"/>
+      </navPoint>
+      <navPoint id="navPoint-8" playOrder="8">
+        <navLabel>
+          <text>THE INSTRUCTION LD</text>
+        </navLabel>
+        <content src="Text/chapter03.html#sigil_toc_id_8"/>
+      </navPoint>
+      <navPoint id="navPoint-9" playOrder="9">
+        <navLabel>
+          <text>LDing From One Variable To Another</text>
+        </navLabel>
+        <content src="Text/chapter03.html#sigil_toc_id_9"/>
+      </navPoint>
+      <navPoint id="navPoint-10" playOrder="10">
+        <navLabel>
+          <text>ADDING CONSTANTS</text>
+        </navLabel>
+        <content src="Text/chapter03.html#sigil_toc_id_10"/>
+      </navPoint>
+      <navPoint id="navPoint-11" playOrder="11">
+        <navLabel>
+          <text>AND FINALLY....</text>
+        </navLabel>
+        <content src="Text/chapter03.html#sigil_toc_id_11"/>
+      </navPoint>
+      <navPoint id="navPoint-12" playOrder="12">
+        <navLabel>
+          <text>SUBTRACTION</text>
+        </navLabel>
+        <content src="Text/chapter03.html#sigil_toc_id_12"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint-13" playOrder="13">
+      <navLabel>
+        <text>Peeking and Poking and More About Loading</text>
+      </navLabel>
+      <content src="Text/chapter04.html#sigil_toc_id_13"/>
+      <navPoint id="navPoint-14" playOrder="14">
+        <navLabel>
+          <text>PEEKING AND POKEING AND MORE ABOUT LD-ING</text>
+        </navLabel>
+        <content src="Text/chapter04.html#sigil_toc_id_14"/>
+      </navPoint>
+      <navPoint id="navPoint-15" playOrder="15">
+        <navLabel>
+          <text>A LESSON IN PEEKING</text>
+        </navLabel>
+        <content src="Text/chapter04.html#sigil_toc_id_15"/>
+      </navPoint>
+      <navPoint id="navPoint-16" playOrder="16">
+        <navLabel>
+          <text>POKEING IN MACHINE CODE</text>
+        </navLabel>
+        <content src="Text/chapter04.html#sigil_toc_id_16"/>
+      </navPoint>
+      <navPoint id="navPoint-17" playOrder="17">
+        <navLabel>
+          <text>HOW TO LOAD BLOCKS</text>
+        </navLabel>
+        <content src="Text/chapter04.html#sigil_toc_id_17"/>
+      </navPoint>
+      <navPoint id="navPoint-18" playOrder="18">
+        <navLabel>
+          <text>REPEATING THINGS</text>
+        </navLabel>
+        <content src="Text/chapter04.html#sigil_toc_id_18"/>
+      </navPoint>
+      <navPoint id="navPoint-19" playOrder="19">
+        <navLabel>
+          <text>UP AND DOWN</text>
+        </navLabel>
+        <content src="Text/chapter04.html#sigil_toc_id_19"/>
+      </navPoint>
+      <navPoint id="navPoint-20" playOrder="20">
+        <navLabel>
+          <text>EXERCISES</text>
+        </navLabel>
+        <content src="Text/chapter04.html#sigil_toc_id_20"/>
+      </navPoint>
+    </navPoint>
+  </navMap>
+</ncx>

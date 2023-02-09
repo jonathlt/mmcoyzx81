@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/favicon.ico" type="image/x-icon"/>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981."/>
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor"/>
+
+<link href="../Styles/main.css" rel="stylesheet" type="text/css"/>
+<script language="JavaScript" src="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+		
+	<table width="100%" class="pageouter" cellpadding="0px" cellspacing="10px">
+		<tbody><tr>
+			<td>
+				<table width="100%" class="page" cellpadding="0px" cellspacing="0px">
+					<tbody><tr>
+<!-- This is the banner vvvv -->	
+						<td>
+							<table width="100%" class="banner" cellpadding="0px" cellspacing="0px">
+								<tbody><tr>
+									<td width="99%">&#160;<a href="http://www.thunor.org.uk">MMCoYZX81</a>: Chapter 15
+									</td>
+									<td width="1%">
+										<img src="../Images/logo.gif" alt="logo" width="48px" height="48px"/>
+									</td>
+								</tr>
+							</tbody>
+</table>
+						</td>
+<!-- This is the banner ^^^^ -->	
+					</tr>
+					<tr>
+						<td>
+							<table width="100%" class="pageinner" cellpadding="0px" cellspacing="0px">
+								<tbody><tr>
+									<td width="1px" class="bannermainmenubridge"></td>
+									<td width="1px" class="bannerlocalmenubridge"></td>
+<!-- This is the local menu vvvv -->	
+									<td class="localmenu"></td>
+<!-- This is the local menu ^^^^ -->	
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td>&#160;</td>
+								</tr>
+								<tr>
+<!-- This is the main menu vvvv -->	
+									<td valign="top">
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<table width='200px' cellpadding='0px' cellspacing='0px'>");
+											document.write("<tr><td>");
+											mainmenuwrite('chapter15');
+											document.write("<\/td><\/tr><\/table>");
+											// -->
+										</script>
+									</td>
+<!-- This is the main menu ^^^^ -->	
+									<td>
+										<script language="JavaScript" type="text/javascript">
+											<!-- 
+											document.write("<img src='images/blank1x1.gif' alt='blank1x1' style='border:0;height:1px;width:10px'>");
+											// -->
+										</script>
+									</td>
+<!-- This is the content vvvv -->	
+									<td valign="top">
+										<table width="100%" class="content" cellpadding="0px" cellspacing="10px">
+											<tbody><tr>
+												<td>
+													<table width="100%" cellpadding="0px" cellspacing="0px">
+														<tbody><tr>
+															<td>
+																<div class="contentjsforidx">
+																	<script language="JavaScript" type="text/javascript">
+																		<!-- 
+																		document.write("-JavaScript = -index");
+																		// -->
+																	</script>
+																	<noscript>+JavaScript = +index</noscript>
+																</div>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tbody><tr>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter14.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter16.html">Next</a></td>
+																	</tr>
+																</tbody>
+</table>
+<!-- This is the content navigation ^^^^ -->	
+																<h1 align="center">Draughts Part Three</h1>
+																<h4 align="center">DRAUGHTS</h4>
+																<p>The story so far... Once upon a time a human being input a move to a ZX computer. The computer checked this move to make sure that no cheating was going on, and cast a wicked spell on the poor human if it was, which meant that the whole move had to be typed in all over again. The move was made. The computer started to search through the board for pieces that it could move. Having found a piece, but not knowing whether or not it could move, it then miraculously found itself at an address called EVALUATE. Where do we go from here?</p>
+																<p>Let's start off by saying that a neutral move - that is a move which achieves nothing, but also loses nothing - has a "priority" of <u>80</u> (hex).</p>
+																<p>The first point worth noting is that if a piece is in imminent danger of being captured then it stands to reason that we ought to move it out of the way - unless something more important crops up. Secondly, if a piece if preventing another piece from being captured, then we should be less likely to move it. Both of these conditions apply regardless of which direction we consider moving the piece. It stands to reason then that we should work out this part of the priority first, before we start analysing each of the different directions. We must therefore work out a numerical value that corresponds to the <u>square</u> that we are looking at. This value will then be added to 80, after which each direction in turn will be analysed.</p>
+																<p>EVALUATE will therefore start off</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4E43: CDF14D    EVALUATE  CALL SQUAREVAL
+      C680                ADD A,80
+      322140              LD (INITIAL),A
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>The last instruction stores the value we've found for use later on in the game. On the OLD ROM the address of INITIAL should be changed to 4019. Now let's take a closer look at the subroutine SQUAREVAL. It will assign a value as follows - starting with zero, if a piece is in danger it will add five, or seven for a king. If it is protecting a piece it will subtract five, or seven for a king. Further, the subroutine, as with all subroutines from now on, must not be allowed to alter the values of any register except A. One way of doing this is to begin the subroutine</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4DF1: C5        SQUAREVAL PUSH BC
+      D5                  PUSH DE
+      E5                  PUSH HL
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Here is the complete subroutine. Follow it through carefully. It should be sufficiently annotated for you to make sense of exactly what's going on.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[Write to 4DF1h.]
+
+C5        SQUAREVAL PUSH BC        Store the current value of the regi-
+D5                  PUSH DE        sters on the stack, to be retrieved
+E5                  PUSH HL        at the end of the subroutine.
+0600                LD B,00        B is being used as a flag here. The
+                                   first time round the loop it will be
+      zero, the second time round it will be one. Watch the checks on B
+      carefully. The loop will check for protection the first time
+      round, but for danger the second time round.
+
+11974C    STARTOFF  LD DE,TABLE    DE is a pointer, which points to the
+                                   table of directions of movement.
+1A        NOWT      LD A,(DE)
+4F                  LD C,A         C now contains such a direction.
+D62E                SUB 2E
+282A                JR Z,EXIT      If this "direction" is 2E we have
+                                   passed the end of the table. We
+                                   should exit with value zero.
+1C                  INC E          Move pointer to next direction in
+                                   table.
+E1                  POP HL
+E5                  PUSH HL        L contains the low part of the
+2640                LD H,40        current square. We retrieve it
+                                   without altering the stack, and
+                                   reassign H to the high part of
+                                   this address.
+7D                  LD A,L         
+81                  ADD A,C        Find square to be looked at in this
+CB40                BIT 0,B        direction. Watch how B affects what
+2001                JR NZ,LA       happens.
+81                  ADD A,C
+6F        LA        LD L,A
+3E7F                LD A,7F        Watch how A is constructed here. If
+B1                  OR C           a human's piece is present A will
+A6                  AND (HL)       end up as 27 UNLESS that piece is a
+FE27                CP 27          non-king which can't move towards
+20E5                JR NZ,NOWT     us. Then it will produce A7. No
+                                   other piece can generate the result
+                                   27.
+7D                  LD A,L
+91                  SUB C          Look at next square towards us. If B
+6F                  LD L,A         is zero we are looking at a possible
+                                   piece being protected. If B is one
+                                   we are looking at ourselves.
+7E                  LD A,(HL)
+37                  SCF            This is another way of checking for
+17                  RLA            a computer's piece regardless of
+CB40                BIT 0,B        whether or not it is a king, but
+2006                JR NZ,LB       watch the carry flag.
+FE79                CP 79
+20D7                JR NZ,NOWT
+7E                  LD A,(HL)
+17                  RLA
+3F        LB        CCF            Now notice the clever way we decide
+3E81                LD A,81        on 5 for a piece, or 7 for a king.
+17                  RLA
+17                  RLA            A now contains 5 or 7 as needed.
+CB40      EXIT      BIT 0,B        The loop is now ended.
+2006                JR NZ,LC
+04                  INC B          This is what happens if B was zero.
+67                  LD H,A         The value 5, 7 or 0 is stored on the
+E3                  EX (SP),HL     stack <u>behind</u> HL.
+E5                  PUSH HL
+18C3                JR STARTOFF
+57        LC        LD D,A         This is what happens if B was one.
+                                   D now contains the current value
+                                   0, 5, or 7.
+7D                  LD A,L         The square behind us is located.
+91                  SUB C
+6F                  LD L,A
+7E                  LD A,(HL)      The contents of this square are
+                                   examined.
+FE80                CP 80          If it is not a blank square we are
+<del>28BD                JR NZ,NOWT     not in danger.</del>
+28BD                JR Z,NOWT      not in danger.
+7A                  LA A,D         The current value is retrieved.
+E1                  POP HL
+D1                  POP DE         D now contains the <u>previous</u> value
+                                   0, 5, or 7.
+92                  SUB D          The final square-value is calculated.
+D1                  POP DE         The remaining registers are removed
+C1                  POP BC         from the stack.
+C9                  RET            End of subroutine.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>This works because if you take a look at the diagram below you'll see very clearly the conditions under which we define a piece as being "in danger" or protecting. Compare carefully what the subroutine does both times round, with each of the diagrams.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>                          +------------+
+                          |            |
+                          |  human's   |
+                          |   piece    |
+     PROTECTING           |            |
+                          |            |
+             +------------+------------+            +------------+
+             |            |                         |            |
+             | computer's |                         |  human's   |
+             |   piece    |                         |   piece    |
+             |            |                         |            |
+             |            |                         |            |
++------------+------------+            +------------+------------+
+|   square   |                         |   square   |
+|   being    |                         |   being    |
+|   valued   |                         |   valued   |
+|     --     |                         |     --     |
+|     us     |                         |     us     |
++------------+            +------------+------------+
+                          |            |
+                          |            |
+                          |   blank    |        IN DANGER
+                          |   square   |
+                          |            |
+                          +------------+
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Now for the rest of that decision making routine EVALUATE. It contains a deliberate mistake - see if you can find it (the program will still run perfectly smoothly even with the mistake still in)! If you can't sus it out on your own I'll tell you later on.</p>
+																<p>This routine is designed to compute a numerical value - a "priority" - for any individual move. Having done so it will compare this priority with those moves stored on the stack. If the new priority is less, it will forget this move and go on to explore a new one. If the new move is <u>equal</u> in priority it will be stored on the stack. If the new priority is <u>more</u> than those on the stack then the list will be abolished, and a new list started.</p>
+																<p>The registers in the routine have the following jobs:</p>
+																<ul>
+																	<li>A - a general purpose working register.</li>
+																	<li>B - counts the number of items in the list. You may remember the CHOOSE routine earlier on relied on B containing this number of items.</li>
+																	<li>C - a general purpose working register.</li>
+																	<li>DE - a pointer which looks at the table of allowable directions of movement.</li>
+																	<li>H - the direction being moved.</li>
+																	<li>L - the low part of the address of the current square.</li>
+																</ul>
+																<p>The routine begins at address 4E43:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[Write to 4E43h.]
+
+CDF14D    EVALUATE  CALL SQUAREVAL     Check for danger and/or
+C680                ADD 80             protection at current square.
+322140              LD (INITIAL),A
+
+11974C              LD DE,TABLE        Set pointer to start of table.
+4D                  LD C,L             Remember low part of the address
+                                       of current square for later use.
+69        NXTMRND   LD L,C             Retrieve the value.
+2640                LD H,40            Assign high part of this address.
+1A        NXTDIR    LD A,(DE)          Select direction of movement.
+1C                  INC E              Move table pointer.
+CB7E                BIT 7,(HL)         Check whether or not we are
+                                       looking at a king.
+2804                JR Z,ANYDIR        If so we can move in any direct.
+CB7F                BIT 7,A            Check whether current direction
+                                       is forward or backward.
+20F6                JR NZ,NXTDIR       If backward pick a new direction.
+FE2E      ANYDIR    CP 2E              If this direction is 2E then we
+CAA04D              JP Z,KPCHKNG       have covered all four directions.
+C5                  PUSH BC            Temporarily stack B - the number
+                                       of items in the list of moves.
+47                  LD B,A             Store current direction temp.
+B1                  ADD A,C            Find the address of the dest-
+6F                  LD L,A             ination square in this direction.
+7E                  LD A,(HL)          Find the contents of this square.
+60                  LD H,B             The direction being moved is now
+                                       stored in H, as required.
+C1                  POP BC             The number of choices of moves on
+                                       the stack - B - is recovered.
+FE80                CP 80              Is this destination square empty?
+20E3      TEST      JR NZ,NXTMRND      If not pick a new direction to
+                                       examine.
+ED537940            LD (SCANSQR),DE    Temporarily store the value of DE
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Note that while we need to temporarily store DE somewhere, we must not stack it, since we are shortly about to use the stack to examine our list. OLD ROM owners should interpret the address (SCANSQR) as 4020.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[Write to 4E70h.]
+
+CDF14D              CALL SQUAREVAL    Check for danger and/or protection
+                                      at destination square.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>This is necessary because a move into danger is bad, and moving to protect another piece is good. Notice that by design the subroutine SQUAREVAL will not change the value of any register except A. One unfortunate flaw in the subroutine means that moving a king into danger will only generate the value five, rather than seven. Can you see why? Follow the subroutine through if you can't. Finally you should note that SQUAREVAL only requires L to be assigned initially, not HL. This is deliberate.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[Write to 4E73h.]
+
+57        NEWPRI    LD D,A            Negate this quantity, since we do
+3A2140              LD A,(INITIAL)    <u>not</u> want to move into danger, and
+92                  SUB D             we <u>do</u> want to move to protect
+57                  LD D,A            another piece. Add in the original
+                                      square value and store the result
+                                      in D.
+1E01                LD E,01           The number one is the number of
+69                  LD L,C            steps involved in this move.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>We now have D containing the computed priority of this move, and E containing the number of steps in this move.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[Write to 4E7Ch.]
+
+E3                  EX (SP),HL        We now have H containing the
+                                      priority of the list, and L con-
+                                      taining the no. of steps for each
+                                      move on the list.
+A7                  AND A
+ED52                SBC HL,DE         Compare these two sets of
+280D                JR Z,EQUAL        quantities.
+19                  ADD HL,DE         Restore HL and the stack-top.
+E3                  EX (SP),HL
+3013                JR NC,FORGETIT    If computed priority is less, then
+                                      do nothing.
+ED7B7B40            LD SP,(LBASE)     Otherwise begin new list.
+0600                LD B,00           Zero items on list so far.
+D5                  PUSH DE           Stack the priority and no. of
+1802                JR NEWITEM        steps.
+19        EQUAL     ADD HL,DE         Restore HL and the stack-top.
+E3                  EX (SP),HL
+04        NEWITEM   INC B             Increase no. of items in list.
+E5                  PUSH HL
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Now H contains the direction moved, and L the low part of the initial square. The top of the stack therefore now looks like this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>+-------------------+-------+---------&gt;
+|initial  direction |no. of |priority &gt;
+|square   one       |steps  |         &gt;
++-------------------+-------+---------&gt;
+|
+sp
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>This is not quite what we want - we want it to look like this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>+-------+---------+-------------------&gt;
+|no. of |priority |initial  direction &gt;
+|steps  |         |square   one       &gt;
++-------+---------+-------------------&gt;
+|
+sp
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>So we now want to swap the first and second bytes at the top of the stack with the third and fourth bytes. We want to do this without altering the position of the stack pointer, and without altering any of the registers. The following will achieve this - follow it through carefully -</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[Write to 4E93h.]
+
+33                  INC SP        Move the stack pointer to the initial
+33                  INC SP        square (final position).
+E3                  EX (SP),HL    Store initial square and direction 1.
+3B                  DEC SP        Move the stack pointer back where it
+3B                  DEC SP        came from.
+E3                  EX (SP),HL    Store the number of steps and priority
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Note that even HL remains unchanged by this method. EVALUATE needs only two more instructions to complete it. These are</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[Write to 4E99h.]
+
+ED5B7940  FORGETIT  LD DE,(SCANSQR)    Restore the previous values of D
+18B0                JR NXTMRND         and E, and do the same for next
+                                       direction.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>As it stands the program will not test whether or not a computer's piece has reached the back row (and thus become a king). This is not a programming error, this is quite deliberate. The reason is that this is something I'd like you to do for yourself. Study the way in which the check on a human's piece is made - the low part of the destination address is compared with the low part of the address of the boundary between the back row and the second row - and make a similar test. You should find this a very simple addition to the program.</p>
+																<p>The EVALUATE routine is now complete. The whole program is now a closed structure - there are no holes in it now, no RET statements temporarily taking the place of subroutines that aren't there. If you now RUN the program (by typing RUN 4) it will actually make moves! Of course it won't do much else, but you should now be able to see how far we've progressed.</p>
+																<p>Oh - there is of course that deliberate mistake to think about. If you didn't notice it in the listing you probably noticed it by playing it. The problem is that the computer <u>won't jump</u>. As you can imagine this leads to a very poor game on its part.</p>
+																<p>The mistake is in the line labelled TEST. It currently says JR NZ,NXTMRND, which means that if a square in any particular direction is simply not empty then it will try a different direction. The line <u>should</u> read JR NZ,WHAT, where WHAT is a routine (which we haven't yet written) which is designed to decide whether the destination square contains a human's piece, whether a jump is possible - even whether or not a multiple jump is possible - and to evaluate the priority of whatever it finds.</p>
+																<p>[Thunor: To fix the deliberate mistake, change the byte at address 4E6Bh to 33h.]</p>
+																<p>Here is one such subroutine. It is not the only possible one, but a suggestion of one means of doing it. This particular version will cope only with single jumps, not with multiple jumps: The routine begins at <del>4E9B</del> [4E9F]:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[Write to 4E9Fh.]
+
+ED537940  WHAT      LD (SCANSQR),DE    Temporarily store value of DE.
+57                  LD D,A             Store the contents of the square
+                                       we are now looking at in D.
+E67F                AND 7F             Is it a human's piece?
+FE27                CP 27
+2806                JR Z,FOUND
+ED5B7940            LD DE,(SCANSQR)    If not, retrieve the original
+<del>1899                JR NXTMRND         value of DE and resume search.</del>
+189F                JR NXTMRND         value of DE and resume search.
+3E81      FOUND     LD A,81            Assign A with either five or
+CB12                RL D               seven depending on whether or not
+3F                  CCF                we have found a king.
+17                  RLA
+17                  RLA
+57                  LD D,A             Store this in D.
+5C                  LD E,H             Store the current direction in E.
+7D                  LD A,L             Find the next square in this
+84                  ADD A,H            direction.
+6F                  LD L,A
+2640                LD H,WKBOARD-low
+7E                  LD A,(HL)          Find the contents of this square.
+63                  LD H,E             Restore H to its previous value.
+FE80                CP 80              Is this square empty?
+2807                JR Z,JUMP
+ED537940            LD DE,(SCANSQR)    If not, restore the original
+C34F4E              JP NXTMRND         value of DE and resume search.
+CDF14D    JUMP      CALL SQUAREVAL     Check for danger and/or
+                                       protection at destination square.
+92                  SUB D              Take contents of square into
+                                       account.
+18A2                JR NEWPRI          Check this new priority to see if
+                                       it's worth stacking.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<a name="chapter15-draughts3download"></a>
+                                <p>[Download available for 16K ZX81 -&gt; <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/dload/chapter15-draughts3.p">chapter15-draughts3.p</a>. That's it for the author supplied code. The author states that to finish it requires that you write the remaining parts yourself! At the moment I don't intend to go any further with the program as I was expecting it to be a complete version. The version here that I am offering for download includes all of the author offered code and the modification to the deliberate mistake. Set RAMTOP to 4A00 (18944) with POKE 16389,74/NEW. Type RUN 4 to play the game. Unfortunately the game crashes when the computer makes a jump. When transcribing, I have a process of checking the code when writing it and then checking again when I've written a sizeable chunk. I've also gone through and checked the hex-code of the program against the listing in <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/appendix06.html">appendix six</a>, and so I believe there is a logic error somewhere that I currently don't have the time to track down.]</p>
+                                <p>[Thunor: For the NEW ROM only, there's a detailed program listing with instructions in <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/appendix06.html">appendix six</a>.]</p>
+																<p>As you can see, the principle for finding a single jump is relatively straightforward. With this routine in place the computer will now play an adequate game of draughts, but although the human player is allowed to make multiple jumps, the computer will not. <u>This addition I leave you to write yourself</u>. I will, however give you a couple of hints.</p>
+																<p>First of all, the registers all have specific uses. All that is, except for A and C. These are as follows:</p>
+																<ul>
+																	<li>B - The number of choices of move available.</li>
+																	<li>D - The priority of the current move.</li>
+																	<li>E - The number of steps in the current move.</li>
+																	<li>H - The direction being moved this step.</li>
+																	<li>L - The low part of the address of the current square (within WKBOARD).</li>
+																</ul>
+																<p>I suggest giving C a use too - it should be used to store <u>which step</u> of a multiple-step move we are currently examining. In other words, on the second step C will be two, on the third step C will be three, and so on. It is fairly easy to preserve the values of all of the registers by making proper use of the stack.</p>
+																<p>Nesting the subroutines and loops properly, so that the same routine is used to check for a third move as is used to check for a second move, is not as difficult as you might think - it merely requires a bit of positive thinking. It also has the advantage that, in theory, the computer can actually make twelve-fold jumps with no extra programming. The looping is not the biggest problem.</p>
+																<p>There are two problems which will face you. These are:</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>Having stored C-1 steps of the current move on the stack, how do we store step C (i.e. how do we insert it into the middle of the stack)?</li>
+																	<li>Having established that the current move now stands at C steps, and can be increased no more, one of the following must happen: If C is less than E then the current move is abolished; if C is equal to E, the stack is left unchanged; if C is greater than E then the whole list of moves on the stack <u>except</u> the current move is abolished.</li>
+																</ul>
+																<p>Let's take a look at the first problem first. Assuming C-1 steps are stacked, the situation we now have is this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>+---+---------+------------------&gt; - &lt;------+------------------&gt; - &lt;------+
+| E |priority |initial dir. dir. &gt;   &lt; dir. |initial dir. dir. &gt;   &lt; dir. |
+|   |         |square   1    2   &gt;   &lt; C-1  |square   1    2   &gt;   &lt;  E   |
++---+---------+------------------&gt; - &lt;------+------------------&gt; - &lt;------+
+|
+sp
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>We wish to insert "direction C" between "direction C-1" and the initial square of the second move. The following subroutine will do just that, but follow it through very carefully because its mechanism is quite intricate.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>C5        ADDASTEP  PUSH BC       The number of bytes at the top of the
+D5                  PUSH DE       stack which need to be shifted down
+E5                  PUSH HL       is C plus two, but once BC, DE, and HL
+3E08                LD A,08       have been pushed onto the stack the
+81                  ADD A,C       actual number is C plus eight.
+210000              LD HL,0000
+44                  LD B,H
+4F                  LD C,A        The number is stored in BC.
+39                  ADD HL,SP     HL points to the top of the stack.
+54                  LD D,H
+5D                  LD E,L
+1B                  DEC DE        DE points to one byte below this.
+EDB0                LDIR          Part of the stack is moved down.
+3B                  DEC SP        The stack pointer is moved also.
+E1                  POP HL
+7C                  LD A,H
+12                  LD (DE),A     The current direction is put in place.
+D1                  POP DE
+C1                  POP BC        The registers are retrieved.
+0C                  INC C         C is increased to indicate that we are
+                                  now at the next step.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>You'll notice that the sequence LD HL,0000/ADD HL,SP is necessary because there is no such instruction as LD HL,SP (even though LD SP,HL is allowed). LDIR is used to shift the required part of the stack down one byte. The exact number of bytes to be shifted must first be very carefully calculated, and stored in BC in order that LDIR will work properly. Coincidentally LDIR will leave DE finally pointing to just the right address for us to store the current direction. Since HL is at the top of the stack we may remove it, and load the current direction (H) into position, via A, <u>before</u> we remove DE and BC. Thus the stack pointer is still where we want it, and none of the values of any register (except A) have been changed.</p>
+																<p>The stack now looks like this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>+---+---------+------------------&gt; - &lt;-----------+-------------&gt; - &lt;------+
+| E |priority |initial dir. dir. &gt;   &lt; dir. dir. |initial dir. &gt;   &lt; dir. |
+|   |         |square   1    2   &gt;   &lt; C-1   C   |square   1   &gt;   &lt;  E   |
++---+---------+------------------&gt; - &lt;-----------+-------------&gt; - &lt;------+
+|
+sp
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Finally, C is incremented because we are now ready to examine the next step.</p>
+																<p>The two procedures involved in the second problem may be solved by careful study of the above process. To abolish the current move is simple - DE is popped, the stack pointer is then incremented by the exact number of bytes, and DE is pushed back again. The second procedure, that of abolishing the whole list except for the current move may be achieved by loading HL with the position within the stack of "direction C", DE with the contents of the variable LBASE, and then using LDDR, however, you'll have to do some thinking in order to work out BC (the number of bytes to be moved) and the new position of the stack pointer. If you understand how ADDASTEP works it will not be all that difficult to do.</p>
+																<p>With this problem to solve, I will leave you. It's not impossible I assure you. Finally, consider the length of this program so far - our addresses still begin with 4E, and we are allowed to go as far as 4FFF (although we need some left over for the screen and the stack). 1K draughts is quite, quite possible. With thought you may even be able to shorten it further.</p>
+																<a name="downloading"></a>
+																<h4 align="center">DOWNLOADING</h4>
+																<p>Although the program is only 1K it is currently stored in the <u>fourth</u> K. To download it into the <u>first</u> K the procedure is this.</p>
+																<p>Change every address beginning with 4C to the corresponding address which begins 40. Do the same for 4D, changing it to 41, change 4E to 42, and 4F to 43.</p>
+																<p>Delete all lines of BASIC except the following:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><u>OLD ROM</u>                            <u>NEW ROM</u>
+1 RANDOMISE USR(printboard)        1 INPUT A$
+2 INPUT A$                         2 RAND USR game
+3 RANDOMISE USR(game)
+4 GO TO 2                (USE <u>ANY</u> FIVE DIGIT NUMBER FOR NOW)
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Reserve enough space for the machine code using a <u>series</u> of REM statements from line 5 onwards. On the OLD ROM a REM statement with 46 characters after the word REM occupies exactly fifty bytes. On the NEW ROM a REM statement with 44 characters after the word REM occupies fifty bytes. The machine code will eventually overwrite not only the characters after the word REM, but the word REM itself and even the line numbers.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>OLD ROM: type POKE 16463,-1
+NEW ROM: type POKE 16535,-1
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>All of your REMs should disappear from the listing.</p>
+																<p>Now, using a machine code program, which you should store somewhere in the third K, copy all of the draughts program <u>from address 4C97 onwards</u>, down to 4097 onwards.</p>
+																<p>OLD ROM: copy the board printing routine to the print immediately after the draughts program proper finishes.</p>
+																<p>NEW ROM: DO NOT copy the board printing routine at all. Instead, leave it at 4C09, and replace the instruction RET by the following machine code program.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>217D40              LD HL,FIRSTLINE    Fool the ROM into thinking that
+222940              LD (NXTLIN),HL     the first line of the program is
+C30703              JP SAVE            about to be executed, then jump
+                                       to the SAVE routine.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Start your cassette recorder up, so that it is recording, not playing, and type as a direct command RAND USR 19487. This should be done in the FAST mode. The program will then do the following tasks:</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>Print the playing board.</li>
+																	<li>Specify that line one is about to be executed.</li>
+																	<li>SAVE the program, <u>and</u> the current display file (with the board pre-set-up) <u>and</u> the fact that line one is about to be executed.</li>
+																</ul>
+																<p>When you re-load from tape you will be in mid-program, with the first move (yours) about to be made.</p>
+																<p>The label "printboard" for the OLD ROM refers to the address at which the board printing routine is to be placed. The label "game" refers to the address 16612.</p>
+																<p>For the OLD ROM, the address WKBOARD should be changed to that of the board printing routine throughout. In this way the same space is effectively used twice. For the NEW ROM, the address WKBOARD should be left unchanged at 403C.</p>
+<!-- This is the content navigation vvvv -->	
+																<table align="center" cellpadding="0px" cellspacing="10px">
+																	<tbody><tr>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter14.html">Previous</a></td>
+																		<td>|</td>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/index.html">Contents</a></td>
+																		<td>|</td>
+																		<td><a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter16.html">Next</a></td>
+																	</tr>
+																</tbody>
+</table>
+<!-- This is the content navigation ^^^^ -->	
+															</td>
+														</tr>
+													</tbody>
+</table>
+												</td>
+											</tr>
+										</tbody>
+</table>
+<!-- This is the icon links vvvv -->	
+<!-- This is the icon links ^^^^ -->	
+									</td>
+<!-- This is the content ^^^^ -->	
+								</tr>
+							</tbody>
+</table>
+						</td>
+					</tr>
+					<tr>	
+						<td>&#160;</td>
+					</tr>
+					<tr>	
+<!-- This is the copyright line vvvv -->	
+						<td>
+							<table width="100%" class="copyright" cellpadding="0px" cellspacing="5px">
+								<tbody><tr>
+									<td><a href="mailto:thunorsif@hotmail.com">Thunor</a> 2009-2011
+									</td>
+								</tr>
+							</tbody>
+</table>
+						</td>
+<!-- This is the copyright line ^^^^ -->	
+					</tr>
+				</tbody>
+</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

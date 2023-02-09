@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/favicon.ico" type="image/x-icon"/>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981."/>
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor"/>
+
+<link href="../Styles/main.css" rel="stylesheet" type="text/css"/>
+<script language="JavaScript" src="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/javascript/functions.js" type="text/javascript"></script>
+
+</head>
+
+<body>		
+																<h1 align="center">Draughts Part One</h1>
+																<h4 align="center">DRAUGHTS</h4>
+																<p>Now that we can enter and edit machine code, it's about time we started using it for something useful, and hopefully interesting. Draughts is a program we have to be very careful with. Here's what it will look like in BASIC:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>1 INPUT A$
+2 RAND/RANDOMISE USR(something)
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>As you can see, the vast, vast majority of it will be entirely in machine code. The machine code will begin immediately after the BASIC program ends. However, in order that we may edit it we shall temporarily store it a little higher up in memory than that - in the fourth K.</p>
+																<a name="hexld3d"></a>
+																<p>Also, in order that we may have the BASIC part of the program at the right location it will be necessary to MOVE the machine code part of HEXLD3. NEW ROM users should start typing POKE 16389,74 and then NEW, and then load the program HEXLD3.</p>
+																<p>Now, to move it, write the following program to the few spare characters at the end of the REM statement:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>010002    MOVE      LD BC,0200
+11004A              LD DE,4A00
+210040              LD HL,4000
+EDB0                LDIR
+C9                  RET           Run this.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Now for the tedious bit. Every address used in the machine code part either begins with 40 or 41. You'll have to go through the listing and change each 40 to a 4A, and each 41 to a 4B (the changes are to be made in the copied version, not the original version). That done change every address in the BASIC parts that calls a USR routine. To make a change you must add 2560 to each number. Now delete line one by typing its line number. The program should still work, but you'll need to type RUN 400 in order to SAVE it. <a name="hexld3oldrombeginsaddress"></a>Make sure that the variable BEGIN (now at 4A3C or 4A93) contains a value of 4A00. New ROM users change line 500 to:</p>
+																<a name="hexld3500to504patch"></a>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><del>500 RAND USR (PEEK 16400+256*PEEK 16401+161) -In this way RETRIEVE</del>
+<del>is called from within the variables area, i.e. address (VARS)+A1.</del>
+500 POKE 19091,PEEK (PEEK 16400+PEEK 16401*256+6+130+17)
+501 POKE 19092,PEEK (PEEK 16400+PEEK 16401*256+6+130+18)
+502 POKE 19095,PEEK (PEEK 16400+PEEK 16401*256+6+130+21)
+503 POKE 19096,PEEK (PEEK 16400+PEEK 16401*256+6+130+22)
+504 RAND USR (PEEK 16400+PEEK 16401*256+6+130+155) -In this way RETRIEVE
+is called from within the variables area, i.e. address (VARS)+6+82h+9B.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>[Thunor: The above NEW ROM modifications were discussed earlier in <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter09.html#addendum">chapter 9's addendum</a>.]</p>
+																<p>[Download available for 16K ZX81 -&gt; <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/dload/chapter11-hexld3d.p">chapter11-hexld3d.p</a>. This is a version of HEXLD3 which includes all of the modifications outlined above i.e. BEGIN (at 4A93) contains the value of 4A00 and HPRINT is at 4A82 etc.]</p>
+																<p>[Thunor: <b>OLD ROM users, please read this before proceeding</b>: DIM is limited to 255 (try DIM O(256) and see for yourself) which equates to 256 elements * 2 bytes = 512 bytes maximum. The last instruction in this chapter is at 4DF0 and with HEXLD3 starting at 4A1A means that 983 bytes must be catered for. Therefore the version that the author is presenting in this book <u>cannot be saved with</u> HEXLD3.]</p>
+																<a name="draughts1"></a>
+																<p>Now type RUN 100 to start the WRITE routine and re-enter the board printing routine. Again you'll need to load it to address 4C09. The listing is the same as it was before. Turn to <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/chapter07.html#draughtsprintplayingboard">chapter seven</a> and simply retype the whole thing.</p>
+																<p>The instruction RAND USR 19477 should now print a picture of a draughts board in the top left hand corner of the screen. Try it and see. Now each part of this program will be explained in great detail, so don't worry if a program this size seems a daunting prospect. Right now we are only going to input the first part. It starts off with some data.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4C97: FAFB0605  TABLE      DEFB FA FB 06 05
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>[Thunor: The "4C97:" on the left is the memory address to write to and is a convention used throughout the remainder of the book.]</p>
+																<p>This represents the directions in which we are about to allow moves. The numbers in the data are -6, -5, 6 and 5, which, in the board numbering system the computer will use, are simply the numbers we add to one square to reach another.</p>
+																<p>The first, and simplest thing to do, is to make a copy of the board as it appears on the screen. The copy is called WKBOARD, for it is the part of RAM on which the computer will do its working out. The address of WKBOARD is to be 403C. That's not a misprint, it really does say four zero three C. For OLD ROM users this is just beyond the end of the BASIC part of the program, but for NEW ROM users it is slap bang in the middle of the system variables. Is this wise?</p>
+																<p>We will in fact be overwriting the 33 byte area PRBUFF and part of the calculating store MEMBOT. This doesn't matter since we will not be using LPRINT, not be attempting to use floating point calculations, and in fact not using this area at all. This will not cause a crash.</p>
+																<p><u>During the construction of this program, OLD ROM users should use the address 4B3C instead</u>, since 403C is in mid-program. You can always change it when your program is complete.</p>
+																<p>Here's the copying routine. You should load this to address <u>4CE4</u>.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>2A0C40    BOARDCOPY LD HL,(D_FILE)    Make a copy of the board
+110D00              LD DE,000D        from the screen to the
+19                  ADD HL,DE         working area.
+113C40/4B           LD DE,WKBOARD
+062A                LD B,2A
+EDA0      NSCOPY    LDI
+23                  INC HL
+10FB                DJNZ,NSCOPY
+C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Notice the way LDI was used instead of LDIR. This is a very useful way of saving space. What we are doing is incrementing HL each time round, so that only the black squares are copied, not the white ones. This loop is repeated 2A (forty-two) times, since in addition to the squares on the board, one or two characters from the border are also copied. Notice that although LDI decrements BC, it is C that is decremented, not B, so that the DJNZ instruction will still count correctly.</p>
+																<p>OLD ROM users can easily check that the routine is working by listing from 4B3C using HEXLD3, after the program is run. NEW ROM users can check by replacing the RET instruction <del>to</del> [with] LD HL,WKBOARD/LD (ADDRESS),HL/JP HLIST. You must not return to BASIC (NEW ROM users that is) since PRBUFF will be wiped out by doing so. You can quite safely return after you've listed.</p>
+																<p>The next part of the program is just as simple. If you take a look at the board printing program, you'll see that the last thing printed is a row of fourteen spaces. What this is is a "window" in which our machine code program can display messages to the user, so the next thing to do is to fill this window with spaces in order to wipe out any error message that may have been there.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4CF5: 000000    NEXTLINE  six NOPs
+4CF8: 000000
+4CFB: 2A0C40    CLWIND    LD HL,(D_FILE)    Find start of window.
+4CFE: 117000              LD DE,0070
+4D01: 19                  ADD HL,DE
+4D02: 060E                LD B,0E           Fill it with fourteen
+4D04: 3600      WIPEOUT   LD (HL),00        spaces.
+4D06: 23                  INC HL
+4D07: 10FB                DJNZ WIPEOUT
+4D09: C9                  RET               Return to BASIC.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Notice that we have actually overwritten the previous routine's RET instruction, so that it will automatically continue into this one.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>    1   2   3   4   5   6   7   8
+  +---+---+---+---+---+---+---+---+
+1 |   |/W/|   |/W/|   |/W/|   |/W/| 1
+  +---+---+---+---+---+---+---+---+
+2 |/W/|   |/W/|   |/W/|   |/W/|   | 2    A         B
+  +---+---+---+---+---+---+---+---+       \       /
+3 |   |/W/|   |/W/|   |/W/|   |/W/| 3      \     /
+  +---+---+---+---+---+---+---+---+         \   /
+4 |///|   |///|   |///|   |///|   | 4        \ /
+  +---+---+---+---+---+---+---+---+           X
+5 |   |///|   |///|   |///|   |///| 5        / \
+  +---+---+---+---+---+---+---+---+         /   \
+6 |/B/|   |/B/|   |/B/|   |/B/|   | 6      /     \
+  +---+---+---+---+---+---+---+---+       /       \
+7 |   |/B/|   |/B/|   |/B/|   |/B/| 7    D         C
+  +---+---+---+---+---+---+---+---+
+8 |/B/|   |/B/|   |/B/|   |/B/|   | 8
+  +---+---+---+---+---+---+---+---+
+    1   2   3   4   5   6   7   8
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>The next part is for NEW ROM users only. OLD ROM users please ignore it.</p>
+																<p>The following will cause line one (that is BASIC line one) to be re-executed as soon as the next RET instruction is received. Note that this overwrites the six NOPs in the previous section.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>[<u>NEW ROM ONLY</u>]
+4CF5: 217D40    NEXTLINE  LD HL,FIRSTLINE
+4CF8: 222940              LD (NXTLIN),HL
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>This fools the ROM into thinking that the next line to be executed begins at address 407D, which is the first byte of the program. It doesn't return to BASIC immediately however, it will continue with draughts until a RET instruction is reached.</p>
+																<p>Now the program seriously starts. We assume that a move has been input as A$, which is the first item in the variable store.</p>
+																<p>Here's how to input a move. Look at the diagram of the board. There are sixty-four squares, but only thirty-two of them are playable. Each square has a coordinate from 11 to 88. Notice that these are printed without seperation. The first digit refers to the number down the left (and right) hand side of the board, and the second digit refers to the number along the top or bottom of the board.</p>
+																<p>There are four different directions you may move in. These are called A (up-left), B (up-right), C (down-right) and D (down-left). This is indicated on the diagram. To input a move simply type in the coordinates and a letter (A, B, C or D). There should be no spaces in this input. For instance, to move from square 61 to 52 you should input "61B".</p>
+																<p>Now for a program to interpret this input. Follow this carefully:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D09: 2A1040    MOVE      LD HL,(VARS)    &lt;- NEW ROM ONLY
+4D09: 2A0840    MOVE      LD HL,(VARS)    &lt;- OLD ROM ONLY
+      23                  INC HL
+      7E                  LD A,(HL)
+      3D                  DEC A
+      3D                  DEC A
+      3D                  DEC A
+      2001                JR NZ,NOTZERO
+      2F                  CPL
+4D14: 5F        NOTZERO   LD E,A
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>A small amount of additional explanation concerning the input here, which applies to OLD ROM users only. To input a simple move, such as from 61 to 52, you in fact need to input "shift W space 61B". A simple move must always be preceded by shift W space, and this also applies to single jumps. Double jumps, triple jumps etc. are a little different, and we shall cover them later. As I have said, this is for OLD ROM users only.</p>
+																<p>The above routine initially loads A with the length of the input string, and then subtracts three, so that for an ordinary move A ends up as zero, for a double jump A ends up as one, for a triple jump A ends up as two, and so on. Then IF A is 00 it is changed to FF. This is so that we can check up on whether or not a player has made a move, or a jump, later on in the game.</p>
+																<p>This quantity, which is ordinarily FF, is stored in the register E. We then continue.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D15: 23                  INC HL           The first character of the
+      23                  INC HL           coordinates is found.
+      7E                  LD A,(HL)
+      47                  LD B,A           This number is multiplied
+      87                  ADD A,A          by eleven, since the board
+      4F                  LD C,A           on screen is eleven
+      87                  ADD A,A          characters across.
+      87                  ADD A,A
+      23                  INC HL           The position within the
+      E5                  PUSH HL          string is stored.
+      80                  ADD A,B
+      81                  ADD A,C
+      86                  ADD A,(HL)       The next coordinate is added.
+      1F                  RRA              Divide by two, since the
+                                           copy contains only the black
+                                           squares.
+      3805                JR C,NOERROR1    If the coordinate points to
+                                           a black square there is no
+                                           cheating.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>In the above routine the first coordinate is multiplied by eleven, by making use of registers B and C, and then the second coordinate is added. Note that if you input "12" as your square then because of the Sinclair character codes the program thinks that the first coordinate is actually 1D, and that the second coordinate is 1E. This actually leads to a result of 5D. Rotating right gives 2E, together with a carry indicating that the player has not cheated by giving a white square instead of a black one. The next five bytes deal with what happens if the player <u>has</u> cheated. These are:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D25: E1        ERROR1    POP HL        Restore the stack pointer.
+      CDA74C              CALL ERROR    Call to an error message
+      1D                  DEFM "1"      subroutine.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>The subroutine ERROR, which requires one byte of data (here the byte 1D, the character code of "1") looks like this:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4C9B: 2E31312A  IMOVE     DEFM "ILLE"       These are the words "ILLEGAL
+      2C263100            DEFM "GAL "       MOVE" - data to be printed.
+      32343B2A            DEFM "MOVE"
+4CA7: E1        ERROR     POP HL            Fetch the byte of data.
+      7E                  LD A,(HL)
+      2A0C40              LD HL,(D_FILE)    Find the start of the window.
+      117000              LD DE,0700
+      19                  ADD HL,DE
+      EB                  EX DE,HL
+      219B4C              LD HL,IMOVE       Copy the words onto the
+      010C00              LD BC,000C        screen.
+      EDB0                LDIR
+      13                  INC DE            Print the byte of data onto
+      12                  LD (DE),A         the screen.
+      C9                  RET               Return to BASIC.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Notice what happens. The message "ILLEGAL MOVE 1" appears on the screen, and no piece is moved. The player is then required to re-input [his/]her move which will then be checked in exactly the same way.</p>
+																<p>If <u>no</u> error is found (yet) the program continues.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D2A: C60E      NOERROR1  ADD A,0E    Find the position of the
+                                      square in WKBOARD.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>0E is simply the required factor to exactly match A to the low part of the address of the working-board square. For instance, adding 0E to 2E gives 3C, and 403C is the start of WKBOARD.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D2C: 6F                  LD L,A
+      2640/4B             LD H,WKBOARD-high
+      4E                  LD C,(HL)          Find which piece is on
+                                             that square.
+      0680                LD B,80            Replace that square by a
+      70                  LD (HL),B          black empty square.
+4D33: E3        LOOP      EX (SP),HL         Store the square position,
+                                             and retrieve the pointer
+                                             to the input string.
+      23                  INC HL
+      227B40              LD (POINTER),HL    Store value. &lt;- NEW ROM ONLY
+      222240              LD (POINTER),HL    Store value. &lt;- OLD ROM ONLY
+      7E                  LD A,(HL)
+      C671                ADD A,71           Find the direction being
+      6F                  LD L,A             moved from the TABLE.
+      264C                LD H,TABLE-high
+      56                  LD D,(HL)
+      E1                  POP HL             Retrieve square position.
+      78                  LD A,B             Check whether the player is
+      A2                  AND D              moving one of her own pieces,
+      2F                  CPL                and in a legal direction.
+      A1                  AND C
+      FE27                CP 27
+      20DE                JR NZ,ERROR1
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>A brief explanation of the last six lines here. A is loaded <del>by</del> [with] 80, D is the direction to be moved, which will be FA, FB, 05, or 06. AND D will therefore produce 00 for a backward direction, and 80 for a forward direction. CPL will change this to FF or 7F. C is the piece to be moved. If it is a black king it will be 27, if it is a black piece it will be A7, so AND D will produce a value of 27 if EITHER the piece being moved is a king, OR if the piece is moving forwards. If you try to move a piece backwards, or give a square which does not contain one of your own pieces, then a value of 27 will NOT be produced. In this case the program will send an "ILLEGAL MOVE 1" error message.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D48: 7D                  LD A,L           Find destination square.
+      82                  ADD A,D
+      6F                  LD L,A
+      7E                  LD A,(HL)        Check the contents of that sq.
+      B8                  CP B             Is it an empty square?
+      2008                JR NZ,NEXT
+      7B                  LD A,E           If so, is this a single
+      3C                  INC A            move?
+      2815                JR Z,CONTINUE
+      CDA74C              CALL ERROR       If not a single move, give
+      1E                  DEFM "2"         "ILLEGAL MOVE 2" message.
+4D57: B0        NEXT      OR B
+      FEBC                CP BC            Does square contain a
+      2804                JR Z,NOERROR3    computer's piece?
+      CDA74C    ERROR3    CALL ERROR       Give message "ILLEGAL MOVE 3"
+      1F                  DEFM "3"         if not.
+4D60: 70        NOERROR3  LD (HL),B        Overwrite computer's piece
+                                           with a black empty square.
+      7D                  LD A,L           Find next destination
+      82                  ADD A,D          square.
+      6F                  LD L,A
+4D64: 7E        CONTENT   LD A,(HL)        Find the contents of the
+                                           new square.
+      B8                  CP B             Is this square empty?
+      20F4                JR NZ,ERROR3     Give "ILLEGAL MOVE 3" if not.
+4D68:           CONTINUE
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>At this stage the program will jump or move as the case may be (in other words it will decide for itself - you don't need a special input) and will so far check for three types of error. These are:</p>
+																<ul style="list-style-type: decimal;list-style-image: none;">
+																	<li>Attempting to move a piece that is not your own, or moving one of your own non-king pieces backwards.</li>
+																	<li>Attempting to make a non-jump move in the middle of a multiple move sequence.</li>
+																	<li>Attempting to move to a square which is non empty.</li>
+																</ul>
+																<p>You may like to check all of these things. This isn't too difficult to do. Simply write JP 4DDE to the end of the program and add the following routine:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4DDE: 2A0C40    BDPRINT   LD HL,(D_FILE)
+      110D00              LD DE,000D
+      19                  ADD HL,DE
+      EB                  EX DE,HL
+      213C40/4B           LD HL,WKBOARD
+      062A                LD B,2A
+      EDA0      LDI       LDI
+      13                  INC DE
+      10FB                DJNZ LDI
+      C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>This will copy the computer's working-board back onto the screen so that you can see what has happened. You can also alter the data for the board-print routine, and so set up a board in mid-game in order to test some of the error checks if you want.</p>
+																<p>To make the program run, add the following BASIC program lines:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><u>OLD ROM</u>                   <u>NEW ROM</u>
+1 INPUT A$                1 INPUT A$
+<del>2 RANDOMISE USR(19683)    2 RAND USR 19683</del>
+2 RANDOMISE USR(19684)    2 RAND USR 19684
+3 RUN                     3 STOP
+4 RANDOMISE USR(19477)    4 RAND USR 19477
+5 RUN                     5 RUN
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>The program is activated by the command RUN 4. Don't forget you can still use HEXLD3 to list, but you must now use RUN 10 to bring this into operation. If you type RUN on its own accidentally you will get an input prompt. <u>Break out immediately!</u> If you don't the results will be unpredictable. I don't think it will crash, but just to be on the safe side....</p>
+																<p>And now a check to determine whether or not the human player has reached the other end of the board. If so, this next routine will automatically change [his/]her piece into a king.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D68: 7D        CONTINUE  LD A,L           If the low part of the
+      FE40                CP 40            current address is less than
+      300C                JR NC,NOKING     40 hex then the other side
+                                           has been reached.
+      7B                  LD A,E           If this is not the last
+      3C                  INC A            move then give an "ILLEGAL
+      FE02                CP 02            MOVE 4" message.
+      3804                JR C,NOERROR4
+      CDA74C              CALL ERROR
+      20                  DEFM "4"
+      0E27      NOERROR4  LD C,27          Make piece a king.
+      71        NOKING    LD (HL),C        Put back on board.
+      E5                  PUSH HL          Store current position on
+                                           board.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Notice the new error check. If a player attempts to make a king in <u>mid-move</u>, that is, if [he/]she jumps to the back row and intends to jump out again in the same go, then an error will be detected and "ILLEGAL MOVE 4" [will be] printed to the screen. This is because according to official rules a piece does not become a king until after you remove your fingers from it. Of course in this game your fingers are never on the piece in the first place, but we presume that this is what the rules are intended to mean.</p>
+																<p>Remember that E contains FF for a single jump, and 01 for a double jump. LD A,E/INC A/CP 02 will only give an error if E is one or more. If E is 00 (which if you've input a multiple jump it will eventually be), the move will go ahead successfully.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D7B: 2A7B40              LD HL,(POINTER)    Retrieve the &lt;- NEW ROM ONLY
+4D7B: 2A2240              LD HL,(POINTER)    Retrieve the &lt;- OLD ROM ONLY
+                                             position pointed to in the
+                                             input string.
+      1D                  DEC E              Decrease the number of moves
+                                             left in a multi-jump seq.
+      7B                  LD A,E             Check whether last move
+      E3                  EX (SP),HL         has been made.
+      17                  RLA
+      30AE                JR NC,LOOP         The input pointer is replaced
+                                             at the top of the stack
+                                             ready for the next time
+                                             round the loop.
+      E1                  POP HL
+4D85: C3DE4D              JP BDPRINT         Exit.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Well, all of the possible error checks have been made, and the program contains a loop which will allow for the inputting of multiple jumps. Here's how a multiple jump should be input. To jump from square 63 first in direction A, then in direction B, then finally in direction C, just input "63ABC" - it's that simple. OLD ROM users need to note the following convention though:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><u>OLD</u>     single moves or single jumps should be preceded by shift W space.
+<u>ROM</u>     double jumps should be preceded by shift E space.
+<u>ONLY</u>    triple jumps should be preceded by shift R space.
+        4-ply jumps should be preceded by shift D space.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>And so on... The sequence is W, E, R, D, F, S, A, T, G. I doubt very much whether you'll ever need a 4-ply jump though. Even using a triple jump seems rather unlikely.</p>
+																<p>The next thing that should happen is that the computer should make a move in response, but we'll leave that to another chapter, since it has a bit of decision making to do. But there is one question to be answered first. What if it now has no pieces left to move? What if the player's last move removed its last piece? This has to be checked for. If this is the case then the player has won, and we must somehow indicate this.</p>
+																<p>Here is the final check:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4D85: 0EBC                LD C,BC
+4D87: CDBC4C              CALL GAMEOVER
+4D8A: C3DE4D              JP BDPRINT
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>And the subroutine....</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4CBC: 213C40/4B GAMEOVER  LD HL,WKBOARD     Look at first square.
+      062A                LD B,2A
+      7E        POSSIBLY  LD A,(HL)         Find contents of square.
+      F680                OR 80             Make it an inverse graphic.
+      B9                  CP C              Is it what we're looking
+      C8                  RET Z             for? If so we're OK and
+                                            can return to draughts.
+      23                  INC HL            Look at next square.
+      10F8                DJNZ POSSIBLY     Try again.
+4CC9: the next six bytes are for the NEW ROM only. OLD ROM users should
+      replace them with six NOPs (00).
+      219740    STOPPROG  LD HL,STOPLINE    Fool the ROM into thinking
+      222940              LD (NXTLIN),HL    that line 3 is to be carried
+                                            out next.
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Now we reach the exciting bit. What happens if the player HAS won? I'm not actually going to tell you - just input it and find out. To test it you'll have to alter the data that sets up the initial board, and arrange it so that you can take all of the computer's pieces.</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre>4CCF: 2A0C40    INVERT    LD HL,(D_FILE)
+      066C                LD B,6C
+      23        COVER     INC HL
+      7E                  LD A,(HL)
+      FE25                CP 25
+      3006                JR NC,NOINV
+      A7                  AND A
+      2803                JR Z,NOINV
+      F680                OR 80
+      77                  LD (HL),A
+      10F2      NOINV     DJNZ COVER
+      E1                  POP HL
+      C9                  RET
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Notice how, in the last two lines the return address is removed from the stack, so that the next item on the stack is the return to BASIC address. The next RET will of course do just that.</p>
+																<p>[Download available for 16K ZX81 -&gt; <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9/dload/chapter11-draughts1.p">chapter11-draughts1.p</a>.]</p>
+																<p>[Thunor: Unfortunately due to the BASIC program and the O$ array expanding in size there isn't enough space remaining below 4A00 to include REM based instructions, therefore I'm printing them here:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td>
+<pre><u>NEW ROM</u>
+***********************
+2009-09-13
+CHAPTER11-DRAUGHTS1
+-----------------------
+TO RUN MACHINE CODE:
+RUN 4
+-----------------------
+LIST:   RUN 10
+WRITE:  RUN 100
+INSERT: RUN 200
+DELETE: RUN 300
+SAVE:   RUN 400
+***********************
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Instructions end.]</p>
+
+</body>
+</html>

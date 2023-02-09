@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker</title>
+
+<link rel="icon" href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9_output/favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9_output/favicon.ico" type="image/x-icon"/>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<meta name="description" content="Mastering Machine Code on Your ZX81 or ZX80 by Toni Baker; Published by Reston Publishing Company 1981."/>
+<meta name="keywords" content="Mastering Machine Code on Your ZX81 or ZX80, Toni Baker, Reston Publishing Company, thunor"/>
+
+<link href="../Styles/main.css" rel="stylesheet" type="text/css"/>
+<!--<script language="JavaScript" src="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9_output/javascript/functions.js" type="text/javascript"></script>-->
+
+</head>
+
+<body>
+		
+<h1 align="center" id="sigil_toc_id_2">Introduction to Hexadecimal and Machine Code</h1>
+																<p>OK, so your ZX80/81 is all fired up and ready, and that ominous <img src="../Images/character-b0.gif" style="vertical-align: middle;" alt="inverse-K"/> is sitting there glaring at you from its little corner and waiting for you to type something in. What do you do?</p>
+																<p>Well the first thing is to set up the machine so that it can accept programs in machine code instead of in BASIC. This is not difficult, but unfortunately for us, when Sinclair designed his machine he forgot to include a button saying GO-INTO-MACHINE-CODE-MODE, so the routine for doing this is going to have to be a BASIC program.</p>
+																<a name="setramtop"></a>
+																<p>If you have a NEW ROM machine type one of the following sequences, depending on how much memory you have:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td class="tb_small">
+<pre><u>1K</u>                <u>4K</u>               <u>16K</u>
+POKE 16388,173    POKE 16388,32    POKE 16388,48
+POKE 16389,67     POKE 16389,78    POKE 16389,117
+NEW               NEW              NEW
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>[Download available for 16K ZX81 -&gt; <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9_output/dload/chapter02-setramtop.p">chapter02-setramtop.p</a>. Well you don't need me to supply you with BASIC 3 line programs, but I do know that from here on in you'll be asked to set RAMTOP to various decimal or hexadecimal addresses and so this heavily modified version of the author's listing will save you a lot of typing (I'm assuming you're using an emulator and are NOT going to load this from tape). I recommend you rename it to something like "s.p" so that you can LOAD "S", select decimal or hex, enter an address and then LOAD "your-program".]</p>
+																<p>The effect of this is quite straightforward. The addresses 16388 and 16389 together hold a system variable called RAMTOP. It contains the address of the first byte which the computer cannot use - at least not for BASIC. Under normal circumstances this address is the one immediately after the last byte in memory, so that the whole of the memory is available for BASIC programming. What we have done is to alter that address, so that some of the memory is unavailable for BASIC, and becomes a safe place in which to store machine code.</p>
+																<p>If you have an OLD ROM machine, don't worry - you can still store machine code in spare areas of the memory, but you MUST NOT type NEW, or you will lose it all.</p>
+																<p>The best addresses in which to store machine code are best found by trial and error. We shall adopt the following standard addresses, which should work perfectly for all of the routines in this book:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td class="tb_small">
+<pre>OLD ROM  1K:  17225
+NEW ROM  1K:  17325
+         4K:  20000
+        16K:  30000
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>Throughout the remainder of this book I shall use the address 30000. Please read this as one of the alternatives above if you have less than 16K.</p>
+																<a name="hexld"></a>
+																<p>OK:- Now we're ready to start. Type in the following BASIC program:</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td class="tb_small">
+<pre>                    10 LET X=30000
+When you have       20 LET A$=""
+typed this program  30 IF A$="" THEN INPUT A$
+in name it          40 IF A$="S" THEN STOP
+"HEXLD" and don't   50 POKE X,16*CODE A$+CODE A$(2)-476
+forget to SAVE      60 LET X=X+1
+it.                 70 LET A$=A$(3 TO )
+                    80 GOTO 30
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>(For the OLD ROM you must replace lines 50 and 70 as follows:)</p>
+																<table align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td class="tb_small">
+<pre>50 POKE X,16*CODE (A$)+CODE (TL$(A$))+36
+70 LET A$=TL$(TL$(A$))
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>[Download available for 16K ZX81 -&gt; <a href="../..//home/jonathan/Documents/src/mmcoyzx81/mmcoyzx81-0.1.9_output/dload/chapter02-hexld.p">chapter02-hexld.p</a>]</p>
+																<p>Can you see how the program works? Or at least what it does? In brief - it will accept a machine code program, and will store it at addresses 30000 onwards. (Or 20000, or whatever.) The program will stop when you input an "S". Note that although it will <u>enter</u> machine code, it will NOT attempt to run it.</p>
+																<a name="whatismachinecode"></a>
+																<p>Now for the big question you've all been dying to ask - what exactly <u>IS</u> machine code? Well machine code, or machine language as it's otherwise known, is another computer language - much like BASIC is - only at a much lower level, which means that very complicated instructions, such as FOR/NEXT loops, are simply not available. However this also makes it quite an easy language to learn. Like BASIC it consists of a set of instructions, each of which tells the computer to do a different, and quite specific, task. One such instruction is RET, which is more or less equivalent to BASIC's RETURN.</p>
+																<p>Unlike BASIC, however, the computer isn't programmed to understand all of the various instructions as we do. If you were to RUN the above program and enter "RET" then this simply would not make sense to the poor old ZX81 (or '80). To make life easier for it, every instruction has a numerical code, which it DOES understand directly. For example the code for RET is 201. Every code lies somewhere in the range 0-255, and it is usually more convenient to write these codes in a system called <u>HEXADECIMAL</u>.</p>
+																<a name="countinginhexadecimal"></a>
+																<h4 align="center" id="sigil_toc_id_3">COUNTING IN HEXADECIMAL</h4>
+																<p>Our friend Mr. Sinclair briefly covers this obscure system of counting in the ZX81 instruction manual by describing an imaginary race of sixteen fingered "Martians" who would regard counting in tens as being equally absurd. In these modern days of science we know enough about Mars to realise that it is extremely unlikely to host sixteen fingered people, but the principle of counting in sixteens is still very sound.</p>
+																<p>Briefly, for those who have not read the ZX81 manual, hexadecimal, or hex for short, is a means of counting which uses sixteen symbols instead of ten. The first ten sysmbols are the same as the ones we're used to. These are:</p>
+																<p align="center">0, 1, 2, 3, 4, 5, 6, 7, 8, 9.</p>
+																<p>There are six new symbols which represent the numbers 10 to 15. These are:</p>
+																<p align="center">A, B, C, D, E, F.</p>
+																<p>The fun really starts when we want to represent numbers bigger than fifteen, for believe it or not, sixteen is written as <u>10!</u> Worse still, seventeen is written <u>11</u>. This continues up as far as twenty-five, written 19, and then when we come to twenty-six we have to start using the new symbols again; twenty-six becomes 1A.</p>
+																<p>A complete table of all of the numbers from 0 to 255 is shown here. This is intended to help you understand the hexadecimal system of counting. You should try to refer to it as little as possible, but don't worry if you find yourself using it all the time at first, you'll find you get used to it much quicker than you expect.</p>
+																<p>The symbols down the left hand side are the first hex digit, the symbols along the top are the second digit. The leading zeros may of course be ommitted if there are any, but it is sometimes more convenient to leave hex codes as two digits rather than one.</p>
+																<p>If there is ever any confusion about whether a number is written in hex or not, you should make it clear by writing a small letter h (standing for hex) or a small letter d (for decimal) after the number, so that 19h means twenty-five, and 19d means nineteen. Usually you won't need to do this because numbers like CD can only possibly be hexadecimal, and number like 118, which are three digits long, can only be decimal. (Computing does not use hex numbers which are three digits long, though it does uses ones which are <u>FOUR</u> digits long).</p>
+																<p>Knowing at least the fundamentals of counting in hex is virtually paramount as far as machine code is concerned, so don't be afraid to keep coming back to this section, or to keep refering to the table - that's what it's there for.</p>
+																<a name="hexconversiontable"></a>
+																<table style="table-layout:fixed;" align="center" cellpadding="0px" cellspacing="0px">
+																	<tbody><tr>
+																		<td class="tb_small">
+<pre>+---------------------------------------------------------------------+
+|       <u>0</u>   <u>1</u>   <u>2</u>   <u>3</u>   <u>4</u>   <u>5</u>   <u>6</u>   <u>7</u>   <u>8</u>   <u>9</u>   <u>A</u>   <u>B</u>   <u>C</u>   <u>D</u>   <u>E</u>   <u>F</u> |
+|   +-----------------------------------------------------------------+
+| <u>0</u> |   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 |
+| <u>1</u> |  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31 |
+| <u>2</u> |  32  33  34  35  36  37  38  39  40  41  42  43  44  45  46  47 |
+| <u>3</u> |  48  49  50  51  52  53  54  55  56  57  58  59  60  61  62  63 |
+| <u>4</u> |  64  65  66  67  68  69  70  71  72  73  74  75  76  77  78  79 |
+| <u>5</u> |  80  81  82  83  84  85  86  87  88  89  90  91  92  93  94  95 |
+| <u>6</u> |  96  97  98  99 100 101 102 103 104 105 106 107 108 109 110 111 |
+| <u>7</u> | 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 |
+| <u>8</u> | 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 |
+| <u>9</u> | 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 |
+| <u>A</u> | 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 |
+| <u>B</u> | 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 |
+| <u>C</u> | 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 |
+| <u>D</u> | 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 |
+| <u>E</u> | 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 |
+| <u>F</u> | 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255 |
++---+-----------------------------------------------------------------+
+</pre>
+																		</td>
+																	</tr>
+																</tbody>
+</table>
+																<p>There are fundamental differences between machine code programming and BASIC programming. One of the most fundamental differences is that of LINE NUMBERS.</p>
+																<p>As you know, every BASIC instruction in a program must be preceded by a line number, so that the computer knows in which order to execute them. If no line number is given the computer will interpret the instruction as a COMMAND and will execute it immediately.</p>
+																<p>In machine code, there are no line numbers. Also, the ZX80/81 will not allow you to use machine code instructions as commands, they MUST form part of a program. The instructions are executed in the order that they are stored. For example, if the computer had just finished executing the instruction which was stored in location 30000, it would then go on to execute the instruction held in location 30001. It will continue in this way until it recieved an instruction telling it to do otherwise.</p>
+																<p>Unlike BASIC, it will NOT automatically stop when it reaches the end of the program. It will plough right on through the addresses, and every time it finds a number which is not zero it will simply treat that number as a code for some instruction and try to execute it. Usually this will result in what is called a CRASH.</p>
+																<a name="aboutcrashing"></a>
+																<h3 align="center" id="sigil_toc_id_4">ABOUT CRASHING</h3>
+																<p>Crashing is the name we give to what happens when your (up until now at least moderately well-behaved) Sinclair machine unwittingly tries to execute something it shouldn't, or if there is a drastic mistake in your machine-coding which will confuse the poor machine and give it a rather nasty headache. The effect of a crash is very unmistakable - The screen will either go blank or will go in to its "LET'S-PRODUCE-SOME-MODERN-ART" mode. If this happens you will get pretty (or otherwise) patterns on your TV not unlike those produced during SAVE.</p>
+																<p>When this happens you will undoubtedly try to break out, by using the BREAK key, and discover to your horror that the BREAK key doesn't work! In fact NONE of the keys will work after a crash, except possibly to produce slight variations in the TV picture. This is the prime reason why we dislike crashes, for THE ONLY WAY TO THEN GET BACK TO NORMAL IS TO DISCONNECT THE POWER SUPPLY! When you reconnect you will of course have lost all of your program and will have to reLOAD it.</p>
+																<p>If a BASIC program contains a mistake it will usually NOT WORK.</p>
+																<p>If a machine-code program contains a mistake it will usually CRASH!</p>
+																<a name="howtopreventcrashes"></a>
+																<h4 align="center" id="sigil_toc_id_5">HOW TO PREVENT CRASHES</h4>
+																<p>We have already stated that a machine code program will not automatically stop at the end of a program - it must be told to do so by a specific instruction. For the ZX80/81, that instruction is RET. (Return - i.e. return to BASIC).</p>
+																<p>There is an instruction similar to STOP in BASIC, that instruction is HALT. <u>DO NOT USE THIS INSTRUCTION!</u> On other computers you can use HALT to end a program, but not on the ZXs. HALT produces a condition similar to a crash, for it means "Do nothing whatsoever until somebody breaks out." The problem is of course that you CAN'T break out because you'll find that the keyboard no longer works. To summarise: To end a machine code program ALWAYS use RET. NEVER use HALT.</p>
+																<p>A program must have at least one return instruction in it somewhere, otherwise it will never return to BASIC, unless you actually disconnect the power supply, and this is not usually a desirable thing to do.</p>
+																<p>This chapter has dealt with how to reserve space for machine code programs, and has given you a program with which to load it. It has not told you how to make use of this program, nor has it explained how to run machine code programs once they have been loaded. The fundamentals of counting in hex have been introduced, and the notion of a crash has been mentioned.</p>
+																<p>Once you have understood this chapter, you may turn to chapter three for your first lesson in machine language programming.</p>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+  <metadata xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:60f5ef34-7275-4429-a2c4-34d871464783</dc:identifier>
+    <dc:language>en</dc:language>
+    <dc:title>[Title here]</dc:title>
+    <meta name="Sigil version" content="1.1.0" />
+    <dc:date xmlns:opf="http://www.idpf.org/2007/opf" opf:event="modification">2023-02-08</dc:date>
+    <meta name="cover" content="MasteringMachineCode.Front.jpg" />
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="main.css" href="Styles/main.css" media-type="text/css"/>
+    <item id="chapter04.html" href="Text/chapter04.html" media-type="application/xhtml+xml"/>
+    <item id="chapter03.html" href="Text/chapter03.html" media-type="application/xhtml+xml"/>
+    <item id="character-b0.gif" href="Images/character-b0.gif" media-type="image/gif"/>
+    <item id="chapter02.html" href="Text/chapter02.html" media-type="application/xhtml+xml"/>
+    <item id="chapter01.html" href="Text/chapter01.html" media-type="application/xhtml+xml"/>
+    <item id="MasteringMachineCode.Front.jpg" href="Images/MasteringMachineCode.Front.jpg" media-type="image/jpeg"/>
+    <item id="cover.xhtml" href="Text/cover.xhtml" media-type="application/xhtml+xml"/>
+    <item id="logo.gif" href="Images/logo.gif" media-type="image/gif"/>
+    <item id="chapter06.html" href="Text/chapter06.html" media-type="application/xhtml+xml"/>
+    <item id="external.gif" href="Images/external.gif" media-type="image/gif"/>
+    <item id="chapter17.html" href="Text/chapter17.html" media-type="application/xhtml+xml"/>
+    <item id="chapter16.html" href="Text/chapter16.html" media-type="application/xhtml+xml"/>
+    <item id="chapter15.html" href="Text/chapter15.html" media-type="application/xhtml+xml"/>
+    <item id="chapter14.html" href="Text/chapter14.html" media-type="application/xhtml+xml"/>
+    <item id="chapter13.html" href="Text/chapter13.html" media-type="application/xhtml+xml"/>
+    <item id="chapter12.html" href="Text/chapter12.html" media-type="application/xhtml+xml"/>
+    <item id="chapter11.html" href="Text/chapter11.html" media-type="application/xhtml+xml"/>
+    <item id="character-01.gif" href="Images/character-01.gif" media-type="image/gif"/>
+    <item id="character-07.gif" href="Images/character-07.gif" media-type="image/gif"/>
+    <item id="character-87.gif" href="Images/character-87.gif" media-type="image/gif"/>
+    <item id="space-graphic-34628TQ1Y5W7RE-inverse-space.png" href="Images/space-graphic-34628TQ1Y5W7RE-inverse-space.png" media-type="image/png"/>
+    <item id="space-graphic-346.png" href="Images/space-graphic-346.png" media-type="image/png"/>
+    <item id="graphic-28TQ.png" href="Images/graphic-28TQ.png" media-type="image/png"/>
+    <item id="graphic-1Y5W.png" href="Images/graphic-1Y5W.png" media-type="image/png"/>
+    <item id="graphic-7RE-inverse-space.png" href="Images/graphic-7RE-inverse-space.png" media-type="image/png"/>
+    <item id="graphic-ASDFGQWERT.png" href="Images/graphic-ASDFGQWERT.png" media-type="image/png"/>
+    <item id="chapter10.html" href="Text/chapter10.html" media-type="application/xhtml+xml"/>
+    <item id="inverse-123456789.png" href="Images/inverse-123456789.png" media-type="image/png"/>
+    <item id="chapter09.html" href="Text/chapter09.html" media-type="application/xhtml+xml"/>
+    <item id="chapter08.html" href="Text/chapter08.html" media-type="application/xhtml+xml"/>
+    <item id="chapter07.html" href="Text/chapter07.html" media-type="application/xhtml+xml"/>
+    <item id="chapter05.html" href="Text/chapter05.html" media-type="application/xhtml+xml"/>
+    <item id="appendix08.html" href="Text/appendix08.html" media-type="application/xhtml+xml"/>
+    <item id="appendix07.html" href="Text/appendix07.html" media-type="application/xhtml+xml"/>
+    <item id="appendix06.html" href="Text/appendix06.html" media-type="application/xhtml+xml"/>
+    <item id="character-05.gif" href="Images/character-05.gif" media-type="image/gif"/>
+    <item id="character-83.gif" href="Images/character-83.gif" media-type="image/gif"/>
+    <item id="character-02.gif" href="Images/character-02.gif" media-type="image/gif"/>
+    <item id="character-04.gif" href="Images/character-04.gif" media-type="image/gif"/>
+    <item id="character-80.gif" href="Images/character-80.gif" media-type="image/gif"/>
+    <item id="character-85.gif" href="Images/character-85.gif" media-type="image/gif"/>
+    <item id="character-03.gif" href="Images/character-03.gif" media-type="image/gif"/>
+    <item id="character-81.gif" href="Images/character-81.gif" media-type="image/gif"/>
+    <item id="character-82.gif" href="Images/character-82.gif" media-type="image/gif"/>
+    <item id="character-84.gif" href="Images/character-84.gif" media-type="image/gif"/>
+    <item id="character-06.gif" href="Images/character-06.gif" media-type="image/gif"/>
+    <item id="character-08.gif" href="Images/character-08.gif" media-type="image/gif"/>
+    <item id="character-09.gif" href="Images/character-09.gif" media-type="image/gif"/>
+    <item id="character-0a.gif" href="Images/character-0a.gif" media-type="image/gif"/>
+    <item id="character-86.gif" href="Images/character-86.gif" media-type="image/gif"/>
+    <item id="character-88.gif" href="Images/character-88.gif" media-type="image/gif"/>
+    <item id="character-89.gif" href="Images/character-89.gif" media-type="image/gif"/>
+    <item id="character-8a.gif" href="Images/character-8a.gif" media-type="image/gif"/>
+    <item id="appendix05.html" href="Text/appendix05.html" media-type="application/xhtml+xml"/>
+    <item id="appendix04.html" href="Text/appendix04.html" media-type="application/xhtml+xml"/>
+    <item id="appendix03.html" href="Text/appendix03.html" media-type="application/xhtml+xml"/>
+    <item id="appendix02.html" href="Text/appendix02.html" media-type="application/xhtml+xml"/>
+    <item id="appendix01.html" href="Text/appendix01.html" media-type="application/xhtml+xml"/>
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="cover.xhtml"/>
+    <itemref idref="chapter01.html"/>
+    <itemref idref="chapter02.html"/>
+    <itemref idref="chapter03.html"/>
+    <itemref idref="chapter04.html"/>
+    <itemref idref="chapter05.html"/>
+    <itemref idref="chapter06.html"/>
+    <itemref idref="chapter07.html"/>
+    <itemref idref="chapter08.html"/>
+    <itemref idref="chapter09.html"/>
+    <itemref idref="chapter10.html"/>
+    <itemref idref="chapter11.html"/>
+    <itemref idref="chapter12.html"/>
+    <itemref idref="chapter13.html"/>
+    <itemref idref="chapter14.html"/>
+    <itemref idref="chapter15.html"/>
+    <itemref idref="chapter16.html"/>
+    <itemref idref="chapter17.html"/>
+    <itemref idref="appendix01.html"/>
+    <itemref idref="appendix02.html"/>
+    <itemref idref="appendix03.html"/>
+    <itemref idref="appendix04.html"/>
+    <itemref idref="appendix05.html"/>
+    <itemref idref="appendix06.html"/>
+    <itemref idref="appendix07.html"/>
+    <itemref idref="appendix08.html"/>
+  </spine>
+  <guide>
+    <reference type="cover" title="Cover" href="Text/cover.xhtml"/>
+  </guide>
+</package>
