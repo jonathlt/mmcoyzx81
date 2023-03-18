@@ -8,4 +8,6 @@ update.sh - update source files after change to epub files
 ### How to edit
 epub files can be edited and previewed by the [Sigil epub editor](https://sigil-ebook.com/sigil/)
 ### Kindle settings for optimum experience
-TBC.
+Font: Bookerly
+Size: 3
+Page Display: Compact
