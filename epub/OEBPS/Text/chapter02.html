@@ -28,7 +28,7 @@
 																<p>If you have a NEW ROM machine type one of the following sequences, depending on how much memory you have:</p>
 																<table align="center" cellpadding="0px" cellspacing="0px">
 																	<tbody><tr>
-																		<td class="tb_small">
+																		<td class="tb_small_1">
 <pre><u>1K</u>                <u>4K</u>               <u>16K</u>
 POKE 16388,173    POKE 16388,32    POKE 16388,48
 POKE 16389,67     POKE 16389,78    POKE 16389,117
@@ -44,7 +44,7 @@ NEW               NEW              NEW
 																<p>The best addresses in which to store machine code are best found by trial and error. We shall adopt the following standard addresses, which should work perfectly for all of the routines in this book:</p>
 																<table align="center" cellpadding="0px" cellspacing="0px">
 																	<tbody><tr>
-																		<td class="tb_small">
+																		<td class="tb_small_1">
 <pre>OLD ROM  1K:  17225
 NEW ROM  1K:  17325
          4K:  20000
@@ -59,7 +59,7 @@ NEW ROM  1K:  17325
 																<p>OK:- Now we're ready to start. Type in the following BASIC program:</p>
 																<table align="center" cellpadding="0px" cellspacing="0px">
 																	<tbody><tr>
-																		<td class="tb_small">
+																		<td class="tb_small_2">
 <pre>                    10 LET X=30000
 When you have       20 LET A$=""
 typed this program  30 IF A$="" THEN INPUT A$
@@ -76,7 +76,7 @@ it.                 70 LET A$=A$(3 TO )
 																<p>(For the OLD ROM you must replace lines 50 and 70 as follows:)</p>
 																<table align="center" cellpadding="0px" cellspacing="0px">
 																	<tbody><tr>
-																		<td class="tb_small">
+																		<td class="tb_small_1">
 <pre>50 POKE X,16*CODE (A$)+CODE (TL$(A$))+36
 70 LET A$=TL$(TL$(A$))
 </pre>

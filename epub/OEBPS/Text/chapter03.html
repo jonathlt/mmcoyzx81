@@ -237,7 +237,7 @@ C9        RET
 																<p>It works like this. Suppose the machine comes across the instruction ADC A,B. It will take the contents of register B, and it will add the contents of register A, as in the previous instruction ADD A,B, and then it will add the CARRY BIT to this new number. Having done this it will store the result in register A, overflowing if necessary. The carry bit will always be reassigned to either zero or one, depending on whether or not there is an overflow.</p>
 																<table align="center" cellpadding="0px" cellspacing="0px">
 																	<tbody><tr>
-																		<td>
+																		<td class="tb_small">
 <pre>So       ADD A,B  effectively means  LET A=A+B
                   followed by        LET CARRY=INT((A+B)/256)
 

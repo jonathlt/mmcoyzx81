@@ -335,6 +335,21 @@ h4 {
 	text-decoration: underline;
 }
 
+.tb_small_1 {
+	font-size: small;
+}
+
+.tb_small_2 {
+	font-size: x-small;
+}
+
 .tb_small {
     font-size: xx-small;
+}
+.tb_medium {
+	font-size: medium;
+}
+
+.tb_large {
+	font-size: large;
 }
